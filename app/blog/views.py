@@ -3,7 +3,7 @@ from calendar import month_name
 
 from blog.models import *
 from blog.forms import *
-from shared.utils import *
+from includes.shared.utils import *
 
 from mcbv.list import ListView
 from mcbv.list_custom import DetailListCreateView
