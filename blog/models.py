@@ -1,15 +1,14 @@
 from django.db.models import *
-from django.contrib.auth.models import User
-from django.contrib import admin
 from django.core.mail import send_mail
 
 from includes.shared.utils import *
 
 notify = False
 
+
 class Post(BaseModel):
-    title   = CharField(max_length=60)
-    body    = TextField()
+    title = CharField(max_length=60)
+    body = TextField()
     created = DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -20,9 +19,9 @@ class Post(BaseModel):
 
 
 class Comment(BaseModel):
-    author  = CharField(max_length=60, blank=True)
-    body    = TextField()
-    post    = ForeignKey(Post, related_name="comments",  blank=True, null=True)
+    author = CharField(max_length=60, blank=True)
+    body = TextField()
+    post = ForeignKey(Post, related_name="comments", blank=True, null=True)
     created = DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -31,9 +30,9 @@ class Comment(BaseModel):
     def save(self, *args, **kwargs):
         """Email when a comment is added."""
         if notify:
-            tpl            = "Comment was was added to '%s' by '%s': \n\n%s"
-            message        = tpl % (self.post, self.author, self.body)
-            from_addr      = "no-reply@mydomain.com"
+            tpl = "Comment was was added to '%s' by '%s': \n\n%s"
+            message = tpl % (self.post, self.author, self.body)
+            from_addr = "no-reply@mydomain.com"
             recipient_list = ["myemail@mydomain.com"]
 
             send_mail("New comment added", message, from_addr, recipient_list)

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
+
 from django.conf import settings
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
@@ -12,6 +13,7 @@ from django.utils import timezone
 from django.views.generic.base import View
 from django.views.generic.detail import BaseDetailView, SingleObjectTemplateResponseMixin
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
+
 
 class YearMixin(object):
     """
@@ -246,9 +248,9 @@ class WeekMixin(object):
         The first day according to the week format is 0 and the last day is 6.
         """
         week_format = self.get_week_format()
-        if week_format == '%W':                 # week starts on Monday
+        if week_format == '%W':  # week starts on Monday
             return date.weekday()
-        elif week_format == '%U':               # week starts on Sunday
+        elif week_format == '%U':  # week starts on Sunday
             return (date.weekday() + 1) % 7
         else:
             raise ValueError("unknown week format: %s" % week_format)
@@ -366,7 +368,7 @@ class BaseDateListView(MultipleObjectMixin, DateMixin, View):
             is_empty = len(qs) == 0 if paginate_by is None else not qs.exists()
             if is_empty:
                 raise Http404(_("No %(verbose_name_plural)s available") % {
-                        'verbose_name_plural': force_text(qs.model._meta.verbose_name_plural)
+                    'verbose_name_plural': force_text(qs.model._meta.verbose_name_plural)
                 })
 
         return qs
@@ -566,6 +568,7 @@ class BaseDayArchiveView(YearMixin, MonthMixin, DayMixin, BaseDateListView):
     """
     List of objects published on a given day.
     """
+
     def get_dated_items(self):
         """
         Return (date_list, items, extra_context) for this request.
@@ -628,6 +631,7 @@ class BaseDateDetailView(YearMixin, MonthMixin, DayMixin, DateMixin, BaseDetailV
     Detail view of a single object on a single date; this differs from the
     standard DetailView by accepting a year/month/day in the URL.
     """
+
     def get_detail_object(self, queryset=None):
         """
         Get the object this request displays.
@@ -643,10 +647,11 @@ class BaseDateDetailView(YearMixin, MonthMixin, DayMixin, DateMixin, BaseDetailV
         qs = queryset or self.get_detail_queryset()
 
         if not self.get_allow_future() and date > datetime.date.today():
-            raise Http404(_("Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False.") % {
-                'verbose_name_plural': qs.model._meta.verbose_name_plural,
-                'class_name': self.__class__.__name__,
-            })
+            raise Http404(
+                _("Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False.") % {
+                    'verbose_name_plural': qs.model._meta.verbose_name_plural,
+                    'class_name': self.__class__.__name__,
+                })
 
         # Filter down a queryset from self.queryset using the date from the
         # URL. This'll get passed as the queryset to DetailView.get_object,

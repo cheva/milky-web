@@ -1,27 +1,24 @@
 import time
 from calendar import month_name
 
-from blog.models import *
 from blog.forms import *
-from includes.shared.utils import *
-
 from includes.mcbv.list import ListView
 from includes.mcbv.list_custom import DetailListCreateView
 
 
 class PostView(DetailListCreateView):
     """Show post, associated comments and an 'add comment' form."""
-    detail_model    = Post
-    list_model      = Comment
+    detail_model = Post
+    list_model = Comment
     modelform_class = CommentForm
-    related_name    = "comments"
-    fk_attr         = "post"
-    template_name   = "blog/post.html"
+    related_name = "comments"
+    fk_attr = "post"
+    template_name = "blog/post.html"
 
 
 class Main(ListView):
-    list_model    = Post
-    paginate_by   = 10
+    list_model = Post
+    paginate_by = 10
     template_name = "blog/list.html"
 
     def months(self):
@@ -30,16 +27,16 @@ class Main(ListView):
 
         # set up variables
         current_year, current_month = time.localtime()[:2]
-        first       = Post.obj.order_by("created")[0]
-        first_year  = first.created.year
+        first = Post.obj.order_by("created")[0]
+        first_year = first.created.year
         first_month = first.created.month
-        months      = list()
+        months = list()
 
         # loop over years and months
-        for year in range(current_year, first_year-1, -1):
+        for year in range(current_year, first_year - 1, -1):
             start, end = 12, 0
-            if year == current_year : start = current_month
-            if year == first_year   : end = first_month - 1
+            if year == current_year: start = current_month
+            if year == first_year: end = first_month - 1
 
             for month in range(start, end, -1):
                 if Post.obj.filter(created__year=year, created__month=month):

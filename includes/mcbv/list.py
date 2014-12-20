@@ -12,14 +12,14 @@ class MultipleObjectMixin(ContextMixin):
     """
     A mixin for views manipulating multiple objects.
     """
-    allow_empty              = True
-    list_queryset            = None
-    list_model               = None
-    paginate_by              = None
+    allow_empty = True
+    list_queryset = None
+    list_model = None
+    paginate_by = None
     list_context_object_name = None
-    paginate_orphans         = 0
-    paginator_class          = Paginator
-    page_kwarg               = 'page'
+    paginate_orphans = 0
+    paginator_class = Paginator
+    page_kwarg = 'page'
 
     def get_list_queryset(self):
         """
@@ -58,8 +58,8 @@ class MultipleObjectMixin(ContextMixin):
             return (paginator, page, page.object_list, page.has_other_pages())
         except InvalidPage as e:
             raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
-                                'page_number': page_number,
-                                'message': str(e)
+                'page_number': page_number,
+                'message': str(e)
             })
 
     def get_paginate_by(self, queryset):
@@ -109,10 +109,10 @@ class MultipleObjectMixin(ContextMixin):
         if "object_list" not in kwargs:
             kwargs["object_list"] = self.get_queryset()
 
-        queryset            = kwargs.pop('object_list')
-        page_size           = self.get_paginate_by(queryset)
+        queryset = kwargs.pop('object_list')
+        page_size = self.get_paginate_by(queryset)
         context_object_name = self.get_list_context_object_name(queryset)
-        page                = None
+        page = None
 
         if page_size:
             paginator, page, queryset, is_paginated = self.paginate_queryset(queryset, page_size)
@@ -140,9 +140,10 @@ class BaseListView(MultipleObjectMixin, View):
     """
     A base view for displaying a list of objects.
     """
+
     def list_get(self, request, *args, **kwargs):
         self.object_list = self.get_list_queryset()
-        allow_empty      = self.get_allow_empty()
+        allow_empty = self.get_allow_empty()
 
         if not allow_empty:
             # When pagination is enabled and object_list is a queryset,
@@ -155,7 +156,7 @@ class BaseListView(MultipleObjectMixin, View):
                 is_empty = len(self.object_list) == 0
             if is_empty:
                 raise Http404(_("Empty list and '%(class_name)s.allow_empty' is False.")
-                        % {'class_name': self.__class__.__name__})
+                              % {'class_name': self.__class__.__name__})
         return self.get_list_context_data(object_list=self.object_list)
 
 

@@ -12,12 +12,12 @@ class SingleObjectMixin(ContextMixin):
     """
     Provides the ability to retrieve a single object for further manipulation.
     """
-    detail_model               = None
+    detail_model = None
     detail_context_object_name = None
-    detail_queryset            = None
-    detail_pk_url_kwarg        = 'dpk'
-    slug_field                 = 'slug'
-    slug_url_kwarg             = 'slug'
+    detail_queryset = None
+    detail_pk_url_kwarg = 'dpk'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
 
     def get_object(self, queryset=None, pk_url_kwarg=None):
         """
@@ -58,7 +58,7 @@ class SingleObjectMixin(ContextMixin):
         return obj
 
     def get_detail_object(self, queryset=None):
-        return self.get_object( queryset or self.get_detail_queryset(), self.detail_pk_url_kwarg )
+        return self.get_object(queryset or self.get_detail_queryset(), self.detail_pk_url_kwarg)
 
     def get_queryset(self, model):
         """
@@ -71,8 +71,8 @@ class SingleObjectMixin(ContextMixin):
             raise ImproperlyConfigured("%(cls)s is missing a queryset. Define "
                                        "%(cls)s.detail_model, %(cls)s.detail_queryset, or override "
                                        "%(cls)s.get_detail_queryset()." % {
-                                            'cls': self.__class__.__name__
-                                    })
+                                           'cls': self.__class__.__name__
+                                       })
 
     def get_detail_queryset(self):
         if self.detail_queryset:
@@ -116,6 +116,7 @@ class BaseDetailView(SingleObjectMixin, View):
     """
     A base view for displaying a single object
     """
+
     def detail_get(self, request, *args, **kwargs):
         self.detail_object = self.get_detail_object()
         return self.get_detail_context_data(detail_object=self.detail_object)

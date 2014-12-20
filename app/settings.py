@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -37,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
-    'includes.shared','includes.mcbv',
+    'includes.shared',
+    'includes.mcbv',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -67,12 +69,12 @@ DATABASES = {
 '''
 DATABASES = {
     'default': {
-        'ENGINE':	'django.db.backends.postgresql_psycopg2',
-        'USER':		'postgres',
-        'PASSWORD':	'postgres',
-        'HOST':		'localhost',
-        'PORT':		'5432',
-        'NAME':		'milky',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'NAME': 'milky',
     }
 }
 

@@ -44,8 +44,8 @@ Depends: python3 (>= 3.4~), python3 (<< 3.5), libc6 (>= 2.4), libpq5 (>= 8.3~))
     $ sudo apt-get install postgresql-server-dev-all
     $ sudo pip install psycopg2
     $ sudo -i -u postgres
-    postgres$ubuntu:~$ createdb milky
-    postgres$ubuntu:~$ psql -d postgres
+    postgres$ createdb milky
+    postgres$ psql -d postgres
     postgres=# \conninfo
     You are connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
     ^d

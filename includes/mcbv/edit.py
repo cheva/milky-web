@@ -6,12 +6,12 @@ from django.db import models
 from django.contrib import messages
 
 from django.utils.functional import curry
-from django.forms.formsets import formset_factory, BaseFormSet, all_valid
+from django.forms.formsets import formset_factory, BaseFormSet
 from django.forms.models import modelformset_factory
 
 from base import TemplateResponseMixin, ContextMixin, View
 from detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, BaseDetailView, DetailView
-from list import MultipleObjectMixin, ListView
+from list import ListView
 
 
 class FormMixin(ContextMixin):
@@ -19,10 +19,10 @@ class FormMixin(ContextMixin):
     A mixin that provides a way to show and handle a form in a request.
     """
 
-    initial         = {}
-    form_class      = None
-    success_url     = None
-    form_kwarg_user = False     # provide request user to form
+    initial = {}
+    form_class = None
+    success_url = None
+    form_kwarg_user = False  # provide request user to form
 
     def get_initial(self):
         """
@@ -87,14 +87,14 @@ class FormMixin(ContextMixin):
 class FormSetMixin(FormMixin):
     """A mixin that provides a way to show and handle a formset in a request."""
     formset_form_class = None
-    formset_initial    = {}
-    formset_class      = BaseFormSet
-    extra              = 0
-    can_delete         = False
+    formset_initial = {}
+    formset_class = BaseFormSet
+    extra = 0
+    can_delete = False
     # ignore_get_args    = ("page", )     # TODO this may be better moved to the form class?
 
-    formset_kwarg_user = False       # provide request user to form
-    success_url        = None
+    formset_kwarg_user = False  # provide request user to form
+    success_url = None
 
     def get_formset_initial(self):
         return self.formset_initial.copy()
@@ -107,8 +107,8 @@ class FormSetMixin(FormMixin):
 
     def get_formset(self, form_class=None):
         form_class = form_class or self.formset_form_class
-        kwargs     = dict()
-        Formset    = formset_factory(form_class, extra=self.extra, can_delete=self.can_delete)
+        kwargs = dict()
+        Formset = formset_factory(form_class, extra=self.extra, can_delete=self.can_delete)
 
         if self.form_kwarg_user:
             kwargs["user"] = self.user
@@ -159,7 +159,7 @@ class FormSetMixin(FormMixin):
 
 
 class ModelFormSetMixin(FormSetMixin):
-    formset_model    = None
+    formset_model = None
     formset_queryset = None
 
     def get_formset_queryset(self):
@@ -171,13 +171,13 @@ class ModelFormSetMixin(FormSetMixin):
             queryset = self.formset_model._default_manager.all()
         else:
             raise ImproperlyConfigured("'%s' must define 'formset_queryset' or 'formset_model'"
-                                        % self.__class__.__name__)
+                                       % self.__class__.__name__)
         return queryset
 
     def get_formset(self, form_class=None):
         form_class = form_class or self.formset_form_class
-        kwargs     = dict()
-        Formset    = modelformset_factory(self.formset_model, extra=self.extra, can_delete=self.can_delete)
+        kwargs = dict()
+        Formset = modelformset_factory(self.formset_model, extra=self.extra, can_delete=self.can_delete)
 
         if self.form_kwarg_user:
             kwargs["user"] = self.user
@@ -187,9 +187,9 @@ class ModelFormSetMixin(FormSetMixin):
 
     def get_formset_kwargs(self):
         kwargs = {
-                  'initial'  : self.get_formset_initial(),
-                  'queryset' : self.get_formset_queryset(),
-                  }
+            'initial': self.get_formset_initial(),
+            'queryset': self.get_formset_queryset(),
+        }
 
         if self.formset_kwarg_user:
             kwargs["user"] = self.request.user
@@ -210,12 +210,12 @@ class ModelFormMixin(FormMixin, SingleObjectMixin):
     """
     A mixin that provides a way to show and handle a modelform in a request.
     """
-    form_model                    = None
-    modelform_class               = None
-    modelform_queryset            = None
+    form_model = None
+    modelform_class = None
+    modelform_queryset = None
     modelform_context_object_name = None
-    modelform_pk_url_kwarg        = 'mfpk'
-    modelform_valid_msg           = None
+    modelform_pk_url_kwarg = 'mfpk'
+    modelform_valid_msg = None
 
     def get_modelform_class(self):
         """Returns the form class to use in this view."""
@@ -284,7 +284,7 @@ class ModelFormMixin(FormMixin, SingleObjectMixin):
         return context
 
     def get_modelform_object(self, queryset=None):
-        return self.get_object( queryset or self.get_modelform_queryset(), self.modelform_pk_url_kwarg )
+        return self.get_object(queryset or self.get_modelform_queryset(), self.modelform_pk_url_kwarg)
 
     def get_modelform_queryset(self):
         if self.modelform_queryset:
@@ -302,16 +302,16 @@ class ProcessFormView(View):
         """
         Handles GET requests and instantiates a blank version of the form.
         """
-        return self.get_context_data( form=self.get_form() )
+        return self.get_context_data(form=self.get_form())
 
     def formset_get(self, request, *args, **kwargs):
-        return self.get_context_data( formset=self.get_formset() )
+        return self.get_context_data(formset=self.get_formset())
 
     def modelform_get(self, request, *args, **kwargs):
         """
         Handles GET requests and instantiates a blank version of the form.
         """
-        return self.get_modelform_context_data( modelform=self.get_modelform() )
+        return self.get_modelform_context_data(modelform=self.get_modelform())
 
     def post(self, request, *args, **kwargs):
         """
@@ -341,20 +341,20 @@ class ProcessFormView(View):
             modelform = self.get_modelform()
 
         if (not form or form and form.is_valid()) and \
-           (not modelform or modelform and modelform.is_valid()) and \
-           (not formset or formset and formset.is_valid()):
+                (not modelform or modelform and modelform.is_valid()) and \
+                (not formset or formset and formset.is_valid()):
 
-            if isinstance(self, FormView)                        : resp = self.form_valid(form)
-            if isinstance(self, (FormSetView, ModelFormSetView)) : resp = self.formset_valid(formset)
-            if isinstance(self, (UpdateView, CreateView))        : resp = self.modelform_valid(modelform)
+            if isinstance(self, FormView): resp = self.form_valid(form)
+            if isinstance(self, (FormSetView, ModelFormSetView)): resp = self.formset_valid(formset)
+            if isinstance(self, (UpdateView, CreateView)): resp = self.modelform_valid(modelform)
             return resp
 
         else:
             context = self.get_context_data()
-            update  = context.update
-            if isinstance(self, FormView)                        : update(self.form_invalid(form))
-            if isinstance(self, (FormSetView, ModelFormSetView)) : update(self.formset_invalid(formset))
-            if isinstance(self, (UpdateView, CreateView))        : update(self.modelform_invalid(modelform))
+            update = context.update
+            if isinstance(self, FormView): update(self.form_invalid(form))
+            if isinstance(self, (FormSetView, ModelFormSetView)): update(self.formset_invalid(formset))
+            if isinstance(self, (UpdateView, CreateView)): update(self.modelform_invalid(modelform))
             return self.render_to_response(context)
 
     # PUT is a valid HTTP verb for creating (with a known URL) or editing an
@@ -366,11 +366,14 @@ class ProcessFormView(View):
 class BaseFormView(FormMixin, ProcessFormView):
     """ A base view for displaying a form """
 
+
 class FormView(TemplateResponseMixin, BaseFormView):
     """ A view for displaying a form, and rendering a template response. """
 
+
 class BaseFormSetView(FormSetMixin, ProcessFormView):
     """A base view for displaying a formset."""
+
 
 class FormSetView(TemplateResponseMixin, BaseFormSetView):
     """A view for displaying a formset, and rendering a template response."""
@@ -379,9 +382,9 @@ class FormSetView(TemplateResponseMixin, BaseFormSetView):
 class BaseModelFormSetView(ModelFormSetMixin, ProcessFormView):
     """A base view for displaying a modelformset."""
 
+
 class ModelFormSetView(TemplateResponseMixin, BaseModelFormSetView):
     """A view for displaying a modelformset, and rendering a template response."""
-
 
 
 class BaseCreateView(ModelFormMixin, ProcessFormView):
@@ -390,6 +393,7 @@ class BaseCreateView(ModelFormMixin, ProcessFormView):
 
     Using this base class requires subclassing to provide a response mixin.
     """
+
     def create_get(self, request, *args, **kwargs):
         self.modelform_object = None
         return self.modelform_get(request, *args, **kwargs)
@@ -415,6 +419,7 @@ class BaseUpdateView(ModelFormMixin, ProcessFormView):
 
     Using this base class requires subclassing to provide a response mixin.
     """
+
     def update_get(self, request, *args, **kwargs):
         self.modelform_object = self.get_modelform_object()
         return self.modelform_get(request, *args, **kwargs)

@@ -18,6 +18,7 @@ class ContextMixin(object):
     A default context mixin that passes the keyword arguments received by
     get_context_data as the template context.
     """
+
     def add_context(self):
         """Convenience method; may be overridden to add context by returning a dictionary."""
         return {}
@@ -68,9 +69,9 @@ class View(object):
             if hasattr(self, 'get') and not hasattr(self, 'head'):
                 self.head = self.get
             self.request = request
-            self.user    = request.user
-            self.args    = args
-            self.kwargs  = kwargs
+            self.user = request.user
+            self.args = args
+            self.kwargs = kwargs
             return self.dispatch(request, *args, **kwargs)
 
         # take name and docstring from class
@@ -99,10 +100,10 @@ class View(object):
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
-            extra={
-                'status_code': 405,
-                'request': self.request
-            }
+                       extra={
+                           'status_code': 405,
+                           'request': self.request
+                       }
         )
         return http.HttpResponseNotAllowed(self._allowed_methods())
 
@@ -139,9 +140,9 @@ class TemplateResponseMixin(object):
         passed to the constructor of the response class.
         """
         return self.response_class(
-            request = self.request,
-            template = self.get_template_names(),
-            context = context,
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
             **response_kwargs
         )
 
@@ -162,16 +163,16 @@ class TemplateResponseMixin(object):
         from edit import FormView, FormSetView, ModelFormSetView, CreateView, UpdateView
         from list import ListView
 
-        args    = [request] + list(args)
+        args = [request] + list(args)
         context = dict()
-        update  = context.update
+        update = context.update
 
-        if isinstance(self, DetailView)                      : update( self.detail_get(*args, **kwargs) )
-        if isinstance(self, FormView)                        : update( self.form_get(*args, **kwargs) )
-        if isinstance(self, (FormSetView, ModelFormSetView)) : update( self.formset_get(*args, **kwargs) )
-        if isinstance(self, CreateView)                      : update( self.create_get(*args, **kwargs) )
-        if isinstance(self, UpdateView)                      : update( self.update_get(*args, **kwargs) )
-        if isinstance(self, ListView)                        : update( self.list_get(*args, **kwargs) )
+        if isinstance(self, DetailView): update(self.detail_get(*args, **kwargs))
+        if isinstance(self, FormView): update(self.form_get(*args, **kwargs))
+        if isinstance(self, (FormSetView, ModelFormSetView)): update(self.formset_get(*args, **kwargs))
+        if isinstance(self, CreateView): update(self.create_get(*args, **kwargs))
+        if isinstance(self, UpdateView): update(self.update_get(*args, **kwargs))
+        if isinstance(self, ListView): update(self.list_get(*args, **kwargs))
 
         update(self.get_context_data(**kwargs))
         return self.render_to_response(context)
@@ -182,6 +183,7 @@ class TemplateView(TemplateResponseMixin, ContextMixin, View):
     A view that renders a template.  This view will also pass into the context
     any keyword arguments passed by the url conf.
     """
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
@@ -219,10 +221,10 @@ class RedirectView(View):
                 return http.HttpResponseRedirect(url)
         else:
             logger.warning('Gone: %s', self.request.path,
-                        extra={
-                            'status_code': 410,
-                            'request': self.request
-                        })
+                           extra={
+                               'status_code': 410,
+                               'request': self.request
+                           })
             return http.HttpResponseGone()
 
     def head(self, request, *args, **kwargs):

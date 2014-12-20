@@ -1,10 +1,10 @@
 # CHANGELOG #
 
-**20.12.2014** 
-Dummy blog added from [lightbird.net](http://lightbird.net/dbe2/blog.html)
-
 **20.12.2014**
 Bootstrap and jQuery added as static files. I do not want to use it as pip modules: it is hard to update and buggy in use.
+
+**20.12.2014** 
+Dummy blog added from [lightbird.net](http://lightbird.net/dbe2/blog.html)
 
 ## README ##
 This README would normally document whatever steps are necessary to get your application up and running.
