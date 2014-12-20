@@ -1,4 +1,4 @@
-#!/var/www/milky/venv/bin/python3
+#!/var/www/milky/venv/bin/python
 from django.core import management
 
 if __name__ == "__main__":
