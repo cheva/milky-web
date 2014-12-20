@@ -1,7 +1,7 @@
 #Clone into new dev project#
-    $ sudo -i -u postgres
-    postgres$ createdb milky
     $ cd /var/www
+    $ sudo -i -u postgres
+    postgres$ createdb milky
     $ git clone https://cheva@bitbucket.org/cheva/django-milky.git ./milky
     $ cd milky
     $ . venv/bin/activate
@@ -26,7 +26,7 @@ Depends: python3 (>= 3.4~), python3 (<< 3.5), libc6 (>= 2.4), libpq5 (>= 8.3~))
 
 ###VENV:###
     $ cd ~/Downloads
-    $ sudo apt-get install curl
+    $ sudo apt-get install curl
     $ sudo pip install https://github.com/pypa/virtualenv/tarball/develop
     $ wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python
     $ wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py
@@ -37,13 +37,13 @@ Depends: python3 (>= 3.4~), python3 (<< 3.5), libc6 (>= 2.4), libpq5 (>= 8.3~))
 
 ##2. DJANGO:##
     $ pip install django
-    $ which django-admin.py
-    $ django-admin.py startproject app
+    $ which django-admin.py
+    $ django-admin.py startproject app
 
 ###POSTGRESQL###
-    $ sudo apt-get install postgresql-server-dev-all
+    $ sudo apt-get install postgresql-server-dev-all
     $ sudo pip install psycopg2
-    $ sudo -i -u postgres
+    $ sudo -i -u postgres
     postgres$ubuntu:~$ createdb milky
     postgres$ubuntu:~$ psql -d postgres
     postgres=# \conninfo
