@@ -5,8 +5,8 @@ from blog.models import *
 from blog.forms import *
 from includes.shared.utils import *
 
-from mcbv.list import ListView
-from mcbv.list_custom import DetailListCreateView
+from includes.mcbv.list import ListView
+from includes.mcbv.list_custom import DetailListCreateView
 
 
 class PostView(DetailListCreateView):
