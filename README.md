@@ -1,4 +1,6 @@
-# README #
+# CHANGELOG #
+20.12.2014 Dummie blog added.
+## README ##
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
