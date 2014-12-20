@@ -7,5 +7,5 @@ urlpatterns = patterns('',
     # url(r'^$', 'app.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^adm.*/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 )
