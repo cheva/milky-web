@@ -58,19 +58,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 '''
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE':	'django.db.backends.sqlite3',
+        'NAME':		os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 '''
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'NAME': 'mysite',
+        'ENGINE':	'django.db.backends.postgresql_psycopg2',
+        'USER':		'postgres',
+        'PASSWORD':	'postgres',
+        'HOST':		'localhost',
+        'PORT':		'5432',
+        'NAME':		'milky',
     }
 }
 
@@ -80,7 +80,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
