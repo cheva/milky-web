@@ -2,8 +2,8 @@ from django.conf.urls import *
 from blog.views import *
 
 urlpatterns = patterns('',
-                       (r'^$', Main.as_view(), {}, 'main'),
-                       (r'^page/(?P<dpk>\d+)/$', Main.as_view(), {}, 'page'),
-                       (r'^post/(?P<dpk>\d+)/$', PostView.as_view(), {}, 'post'),
-                       (r'^post/(?P<post_id>\d+)/comment/$', post_comment, {}, 'comment'),
+                       (r'^$', ListView.as_view(), {}, 'main'),
+                       (r'^page/(?P<page>\d+)/$', ListView.as_view(), {}, 'page'),
+                       (r'^post/(?P<pk>\d+)/$', DetailView.as_view(), {}, 'post'),
+                       (r'^post/(?P<pk>\d+)/comment/$', post_comment, {}, 'comment'),
 )
