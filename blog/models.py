@@ -19,9 +19,9 @@ class Post(BaseModel):
 
 
 class Comment(BaseModel):
-    author = CharField(max_length=60, blank=True)
+    author = CharField(max_length=60)
     body = TextField()
-    post = ForeignKey(Post, related_name="comments", blank=True, null=True)
+    post = ForeignKey(Post, related_name="comments")
     created = DateTimeField(auto_now_add=True)
 
     def __unicode__(self):

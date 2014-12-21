@@ -14,8 +14,9 @@
             </ul>
         {% endfor %}
         <div id="reply">
-            <form action="" method="GET">
+            <form action="{{ url('comment',post.pk) }}" method="POST">
                 <table>
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                     {{ modelform.as_table() }}
                 </table>
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

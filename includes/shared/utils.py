@@ -6,7 +6,6 @@ from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
-from django.shortcuts import render_to_response
 from django.db.models import Model, Manager
 from django import forms
 
@@ -37,7 +36,7 @@ class ContainerFormMixin(object):
         return Container(**self.cleaned_data)
 
 
-class BasicModel(Model):
+class BaseModel(Model):
     class Meta: abstract = True
 
     obj = objects = Manager()
@@ -46,9 +45,6 @@ class BasicModel(Model):
         for k, v in kwargs.items():
             setattr(self, k, v)
         self.save()
-
-
-BaseModel = BasicModel  # TODO: rename all views to BaseModel
 
 
 class BaseError(Exception):
@@ -90,7 +86,7 @@ class Container:
 
     def dict(self): return self.__dict__
 
-    def pp(self): pprint(self.__dict__)
+    def pp(self): print(self.__dict__)
 
 
 class DefaultOrderedDict(OrderedDict):
@@ -150,10 +146,6 @@ def add_csrf(request, **kwargs):
     d = dict(user=request.user, **kwargs)
     d.update(csrf(request))
     return RequestContext(request, d)
-
-
-def render(request, tpl, **kwargs):
-    return render_to_response(tpl, add_csrf(request, **kwargs))
 
 
 def make_paginator(request, items, per_page=50):
