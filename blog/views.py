@@ -29,10 +29,6 @@ def list_view(request, page_num=1):
     return render(request, template, locals())
 
 
-def listing(request):
-    return render_to_response('list.html', {"contacts": contacts})
-
-
 def detail_view(request, pk):
     """
     Post detail view with comment list and comment form

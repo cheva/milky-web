@@ -7,7 +7,6 @@
         {% for post in post_list %}
             <div class="title">
                 <a href="{{ url('post', post.pk) }}">
-                    {{ post.id }}
                     {{ post.title }}
                 </a>
             </div>
@@ -19,6 +18,6 @@
                 </div>
             </ul>
         {% endfor %}
-        {% include "blog/paginator.jinja" %}
+        {% set pg = post_list %}{% include "paginator.jinja" %}
     </div>
 {% endblock %}
