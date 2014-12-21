@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_jinja',
+    'captcha',
     'includes.shared',
     'includes.mcbv',
     'blog',
