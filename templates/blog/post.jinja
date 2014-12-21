@@ -9,15 +9,18 @@
         <hr/>
         {% for comment in comment_list %}
             <ul>
-                <div class="time">{{ comment.author }}</div>
+                <div class="time">
+                    <b>{{ comment.author }}</b><br/>
+                    {{ comment.created|date("Y-m-d H:m") }}
+                </div>
                 <div class="body">{{ comment.body|linebreaks }}</div>
             </ul>
         {% endfor %}
         <div id="reply">
             <form action="{{ url('comment',post.pk) }}" method="POST">
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                 <table>
-                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                    {{ form }}
+                    {{ form.as_table() }}
                 </table>
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <input type="submit" value="Submit"/>

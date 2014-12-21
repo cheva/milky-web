@@ -1,43 +1,41 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 from blog.forms import *
-from django.views import generic
 
 
-class ListView(generic.ListView):
-    model = Post
-    template_name = "blog/list.jinja"
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Post.objects.order_by('-created')[:5]
+def list_view(request):
+    template = 'blog/list.jinja'
+    post_list = Post.objects.order_by('-created')[:10]
+    context = {'post_list': post_list}
+    return render(request, template, locals())
 
 
-class DetailView(generic.DetailView):
-    """Show post, associated comments and an 'add comment' form."""
-    model = Post
-    template_name = "blog/post.jinja"
-
-    def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
-        context['form'] = CommentForm
-        return context
+def detail_view(request, pk):
+    template = 'blog/post.jinja'
+    post = get_object_or_404(Post, pk=pk)
+    comment_list = Comment.objects.order_by('-created')
+    form = CommentForm()
+    return render(request, template, locals())
 
 
-def post_comment(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def post_comment(request, pk):
+    template = 'blog/post.jinja'
+    post = get_object_or_404(Post, pk=pk)
     comment = Comment(author=request.POST['author'], body=request.POST['body'], post=post)
     if request.POST:
-        modelform = CommentForm(request.POST)
+        form = CommentForm(request.POST)
         # Validate the form: the captcha field will automatically check the input
-        if modelform.is_valid():
+        if form.is_valid():
             comment.save()
         else:
             # form error
             error_message = "Form error!"
-            return render(request, "blog/post.jinja", locals())
+            return render(request, template, locals())
     else:
         # empty POST
         error_message = "Wrong request!"
-        return render(request, "blog/post.jinja", locals())
+        return render(request, template, locals())
         pass
-    return HttpResponseRedirect(reverse('post', args=(post.id,)))
+    return redirect(reverse('post', args=(post.id,)))

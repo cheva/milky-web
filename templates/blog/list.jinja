@@ -6,7 +6,8 @@
     <div class="main">
         {% for post in post_list %}
             <div class="title">
-                <a href="{{ url('post',post.pk) }}">
+                <a href="{{ url('post', post.pk) }}">
+                    {{ post.id }}
                     {{ post.title }}
                 </a>
             </div>
@@ -14,7 +15,7 @@
                 <div class="time">{{ post.created }}</div>
                 <div class="body">{{ post.body|truncate(500)|striptags }}</div>
                 <div class="commentlink">
-                    <a href="{{ url('post',post.pk) }}">Comments ({{ post.comments.count() }})</a>
+                    <a href="{{ url('post', post.pk) }}">Comments ({{ post.comments.count() }})</a>
                 </div>
             </ul>
         {% endfor %}

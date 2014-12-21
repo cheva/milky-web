@@ -1,12 +1,10 @@
 from django.db.models import *
 from django.core.mail import send_mail
 
-from includes.shared.utils import *
-
 notify = False
 
 
-class Post(BaseModel):
+class Post(Model):
     title = CharField(max_length=60)
     body = TextField()
     created = DateTimeField(auto_now_add=True)
@@ -18,7 +16,7 @@ class Post(BaseModel):
         return self.title
 
 
-class Comment(BaseModel):
+class Comment(Model):
     author = CharField(max_length=60)
     body = TextField()
     post = ForeignKey(Post, related_name="comments")
