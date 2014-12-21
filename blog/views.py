@@ -26,7 +26,7 @@ def detail_view(request, pk):
     """
     template = 'blog/post.jinja'
     post = get_object_or_404(Post, pk=pk)
-    comment_list = Comment.objects.order_by('-created')
+    comment_list = Comment.objects.filter(post_id=pk).order_by('-created')
     form = CommentForm()
     return render(request, template, locals())
 
