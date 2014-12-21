@@ -2,19 +2,35 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# import pprint
 from blog.forms import *
 
 
-def list_view(request):
+def list_view(request, page_num=1):
     """
     Post list view with comments count and paginator
     :param request:
     :return:
     """
     template = 'blog/list.jinja'
-    post_list = Post.objects.order_by('-created')[:10]
-    context = {'post_list': post_list}
+    post_list = Post.objects.order_by('-created')
+    # paginator
+    # @todo move it to helpers
+    paginator = Paginator(post_list, 10)
+    try:
+        post_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        post_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        post_list = paginator.page(paginator.num_pages)
     return render(request, template, locals())
+
+
+def listing(request):
+    return render_to_response('list.html', {"contacts": contacts})
 
 
 def detail_view(request, pk):
