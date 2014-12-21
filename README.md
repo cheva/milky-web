@@ -1,6 +1,9 @@
 # CHANGELOG #
 
 **20.12.2014**
+Starts real blog app creation, based on [this manual](http://yiiframework.ru/doc/blog/ru/start.overview) 
+
+**20.12.2014**
 Bootstrap and jQuery added as static files. I do not want to use it as pip modules: it is hard to update and buggy in use.
 
 **20.12.2014** 

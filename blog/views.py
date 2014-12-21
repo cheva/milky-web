@@ -13,13 +13,13 @@ class PostView(DetailListCreateView):
     modelform_class = CommentForm
     related_name = "comments"
     fk_attr = "post"
-    template_name = "blog/post.html"
+    template_name = "blog/post.jinja"
 
 
 class Main(ListView):
     list_model = Post
     paginate_by = 10
-    template_name = "blog/list.html"
+    template_name = "blog/list.jinja"
 
     def months(self):
         """Make a list of months to show archive links."""

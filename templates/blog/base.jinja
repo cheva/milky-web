@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}Blog{% endblock %}</title>
+    {% block extrahead %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ static('bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('bootstrap/css/bootstrap-theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('blog/css/blog.css') }}">
+    <script src="{{ static('jquery/jquery-2.1.3.js') }}"></script>
+    <script src="{{ static('bootstrap/js/bootstrap.js') }}"></script>
+<body>
+<div id="container">
+    <h3 id="title"><a href="{{ url('main') }}">Blog</a></h3>
+    <!-- MENU -->
+    <div id="menu">
+        {% block nav_global %}
+            {% if user.is_staff %}
+                <a href="{{ url('admin:index') }}">Admin</a>
+                <a href="{{ url('admin:blog_post_add') }}">Add post</a>
+            {% endif %}
+        {% endblock %}
+    </div>
+    <!-- CONTENT -->
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<div id="footer">
+    {% block footer %}{% endblock %}
+    (≧◡≦) cheva 2014 ツ powered by Django
+</div>
+</body>
+</html>
+

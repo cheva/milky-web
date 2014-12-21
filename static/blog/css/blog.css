@@ -14,27 +14,40 @@
     color: #777;
     font-size: 0.9em;
 }
-a:hover { background: #eeebeb; border-top: 1px solid #aaa; border-bottom: 1px solid #aaa; color: #555; }
+#menu a:hover {
+    background: #eeebeb;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    color: #555;
+}
+
+#title {
+    float:left;
+    margin-top:0px;
+}
+#menu {
+    float:right;
+    margin-top:4px;
+}
+#content {
+    clear:both;
+    border: 1px solid transparent;
+}
 
 #container { margin: auto; width: 800px; border: 0px solid; }
 p { font-size: 1.1em; }
 h3 { margin-right: 30px; display: inline; }
 
-.main      { margin-left: 25px; margin-top: 30px; }
+.main      { margin-left: 25px;}
 .time      { font-size: 0.8em; margin-top: 2px; }
 .comment   { border: 1px solid #eee; padding: 4px; margin-bottom: 12px; }
-.body      { font-size: 1.1em; margin-top: 2px; }
-
-#sidebar { float: right; border: 1px dotted #ccc; padding: 4px; }
-#sidebar a { margin-left: 15px; }
-
+.body      { font-size: 1.1em; margin-top: 2px; text-align: justify}
 
 /* main blog page */
 
 .commentlink  { text-align: right; }
 .step-links a { font-size: 0.89em; }
 .messages     { margin-left: 20px; }
-.pagination   { margin-top: 5px; margin-left: -20px; }
 
 .title { font-size: 1.4em; margin-top: 20px; border-bottom: 1px solid #ccc;
          padding-left: 4px; margin-left: 5px;
@@ -50,3 +63,17 @@ blockquote { margin-bottom: 30px; }
         border-bottom: 1px dotted #aaa;
       }
 
+#footer {
+    margin: 20px auto;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    width: 300px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.pagination {
+    width: 760px;
+    white-space: nowrap;
+    text-align: center;
+}

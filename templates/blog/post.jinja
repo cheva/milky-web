@@ -1,0 +1,26 @@
+{% extends "blog/base.jinja" %}
+{% block content %}
+    <div class="main">
+        <div class="title">{{ post.title }}</div>
+        <ul>
+            <div class="time">{{ post.created }}</div>
+            <div class="body">{{ post.body|linebreaks }}</div>
+        </ul>
+        <hr/>
+        {% for comment in comment_list %}
+            <ul>
+                <div class="time">{{ comment.author }}</div>
+                <div class="body">{{ comment.body|linebreaks }}</div>
+            </ul>
+        {% endfor %}
+        <div id="reply">
+            <form action="" method="POST">
+                <table>
+                    {{ modelform.as_table() }}
+                </table>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <input type="submit" value="Submit"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}
