@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+**21.12.2014**
+Template engine changed to [Jinja2 (django-jinja)](http://niwibe.github.io/django-jinja/) 
+
 **20.12.2014**
 Starts real blog app creation, based on [this manual](http://yiiframework.ru/doc/blog/ru/start.overview) 
 
