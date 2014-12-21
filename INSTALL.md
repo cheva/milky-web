@@ -20,11 +20,11 @@ Depends: python3 (>= 3.4~), python3 (<< 3.5), libc6 (>= 2.4), libpq5 (>= 8.3~))
 2. (dev) Django и Postgres из [учебника djbook.ru](http://djbook.ru/rel1.7/topics/install.html) - за исключением того, что уже стоит
 3. (server) uWSGI и nginx на [примере flask/nginx](http://debian-help.ru/web-servers/zapusk-prilozheniya-na-flask-s-pomoschyu-uwsgi-nginx)
 
-##1. Python 2.7:##
+## Python 2.7:##
     $ python -V
     Python 2.7.6
 
-###VENV:###
+## VENV: ##
     $ cd ~/Downloads
     $ sudo pip install https://github.com/pypa/virtualenv/tarball/develop
     $ wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python
@@ -34,12 +34,12 @@ Depends: python3 (>= 3.4~), python3 (<< 3.5), libc6 (>= 2.4), libpq5 (>= 8.3~))
     $ virtualenv venv
     $ . venv/bin/activate
 
-##2. DJANGO:##
+## DJANGO: ##
     $ pip install django
     $ which django-admin.py
     $ django-admin.py startproject app
 
-###POSTGRESQL###
+## POSTGRESQL ##
     $ sudo apt-get install postgresql-server-dev-all
     $ sudo pip install psycopg2
     $ sudo -i -u postgres
