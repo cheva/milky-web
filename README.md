@@ -1,6 +1,11 @@
 # CHANGELOG #
 
-**21.12.2014**
+**21.12.2014 18:10**
+3rd party utilities removed (Class-based views helpers changed to list_view(request) and detail_view(request, pk) - it is easier and more practical as for me).
+Captcha added to comment form.
+3rd party paginator removed from list view (need to use original)
+
+**21.12.2014 02:00**
 Template engine changed to [Jinja2 (django-jinja)](http://niwibe.github.io/django-jinja/) 
 
 **20.12.2014**
