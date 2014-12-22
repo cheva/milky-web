@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_jinja',
     'captcha',
-    'blog',
+    'projects.main',
+    'projects.blog',
 )
 
 MIDDLEWARE_CLASSES = (
