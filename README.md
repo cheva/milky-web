@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+**23.12.2014**
+Bootstrap blog proto layout and some bootstrap themes added
+
 **21.12.2014**
 3rd party utilities removed (Class-based views helpers changed to list_view(request) and detail_view(request, pk) it is easier and more practical as for me).
 Captcha added to comment form.
