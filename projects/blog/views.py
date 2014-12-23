@@ -12,7 +12,8 @@ def list_view(request, page_num=1):
     :param request:
     :return:
     """
-    template = 'blog/list.jinja'
+    # template = 'blog/list.jinja'
+    template = 'main/list.jinja'
     post_list = Post.objects.order_by('-created')
     # paginator
     # @todo move it to helpers
