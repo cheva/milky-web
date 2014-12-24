@@ -13,7 +13,7 @@ def list_view(request, page_num=1):
     :return:
     """
     # template = 'blog/list.jinja'
-    template = 'main/list.jinja'
+    template = 'blog/_list.jinja'
     post_list = Post.objects.order_by('-created')
     # paginator
     # @todo move it to helpers
@@ -36,7 +36,7 @@ def detail_view(request, pk):
     :param pk:
     :return:
     """
-    template = 'blog/post.jinja'
+    template = 'blog/_post.jinja'
     post = get_object_or_404(Post, pk=pk)
     comment_list = Comment.objects.filter(post_id=pk).order_by('-created')
     form = CommentForm()
