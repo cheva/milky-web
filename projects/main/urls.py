@@ -2,5 +2,5 @@ from django.conf.urls import patterns
 from projects.main.views import *
 
 urlpatterns = patterns('',
-                       (r'^$', main, {}, 'main'),
+                       (r'^$', index, {}, 'index'),
 )

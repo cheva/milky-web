@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-def main(request):
+
+def index(request):
     """
     Innex page
     :param request:
