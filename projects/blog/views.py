@@ -50,7 +50,7 @@ def post_comment(request, pk):
     :param pk:
     :return:
     """
-    template = 'blog/post.jinja'
+    template = 'blog/_post.jinja'
     post = get_object_or_404(Post, pk=pk)
     comment = Comment(author=request.POST['author'], body=request.POST['body'], post=post)
     if request.POST:
@@ -67,4 +67,4 @@ def post_comment(request, pk):
         error_message = "Wrong request!"
         return render(request, template, locals())
         pass
-    return redirect(reverse('post', args=(post.id,)))
+    return redirect(reverse('blog:post', args=(post.id,)))

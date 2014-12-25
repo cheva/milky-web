@@ -10,13 +10,16 @@
                 <small>newest</small>
             </h1>
             {% for post in post_list %}
+                <!-- Post -->
                 <img class="img-responsive" src="http://placehold.it/900x300" alt="">
                 <h2>
                     <a href="{{ url('blog:post', post.pk) }}">{{ post.title }}</a>
                 </h2>
                 <p class="lead">
                     by <a href="#">Cheva</a>
-                    <span class="glyphicon glyphicon-time"></span> {{ post.created|date('Y-m-d H:i') }}
+                    <small>
+                        <span class="glyphicon glyphicon-time"></span> {{ post.created|date('Y-m-d H:i') }}
+                    </small>
                 </p>
                 <hr>
                 <p>{{ post.body|truncate(1000)|striptags }}</p>
