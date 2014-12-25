@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+**24.12.2014**
+Bootstrap layouts and templates applied to main:index, blog:list and blog:post pages.
+
 **23.12.2014**
 Bootstrap blog proto layout and some bootstrap themes added
 
