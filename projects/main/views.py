@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 def index(request):
     """
-    Innex page
+    Index page
     :param request:
     :return render():
     """

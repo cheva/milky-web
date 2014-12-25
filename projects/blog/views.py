@@ -14,8 +14,6 @@ def list_view(request, page_num=1):
     """
     template = 'blog/list.jinja'
     post_list = Post.objects.order_by('-created')
-    # paginator
-    # @todo move it to helpers
     paginator = Paginator(post_list, 10)
     try:
         post_list = paginator.page(page_num)
