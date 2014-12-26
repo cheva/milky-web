@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+**26.12.2014**
+Themes selector and user login/register menus added.
+
 **24.12.2014**
 Bootstrap layouts and templates applied to main:index, blog:list and blog:post pages.
 
