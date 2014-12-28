@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from projects.blog.forms import *
+from helpers import functions
 
 
 def list_view(request, page_num=1):
@@ -13,6 +14,7 @@ def list_view(request, page_num=1):
     :return:
     """
     template = 'blog/list.jinja'
+    local_vars = functions.get_local_vars(request)
     post_list = Post.objects.order_by('-created')
     paginator = Paginator(post_list, 10)
     try:
@@ -34,6 +36,7 @@ def detail_view(request, pk):
     :return:
     """
     template = 'blog/post.jinja'
+    local_vars = functions.get_local_vars(request)
     post = get_object_or_404(Post, pk=pk)
     comment_list = Comment.objects.filter(post_id=pk).order_by('-created')
     form = CommentForm()
@@ -48,6 +51,7 @@ def post_comment(request, pk):
     :return:
     """
     template = 'blog/post.jinja'
+    local_vars = functions.get_local_vars(request)
     post = get_object_or_404(Post, pk=pk)
     comment = Comment(author=request.POST['author'], body=request.POST['body'], post=post)
     if request.POST:

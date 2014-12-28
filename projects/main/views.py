@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from helpers import functions
 
 
 def index(request):
@@ -8,5 +9,5 @@ def index(request):
     :return render():
     """
     template = 'main/index.jinja'
-    test = 'test'
+    local_vars = functions.get_local_vars(request)
     return render(request, template, locals())
