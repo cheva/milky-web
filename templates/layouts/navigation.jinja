@@ -52,10 +52,6 @@
             </ul>
             <ul class="nav navbar-nav navbar-right ">
                 {% block navbar_right %}
-                    <li>
-                        <a href="{{ url('main:index') }}"
-                           alt="Register" title="Register">Register <span class="glyphicon glyphicon-pencil"></span></a>
-                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"
@@ -63,7 +59,7 @@
                                 class="glyphicon glyphicon-user"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {% block navbar_login %}
-                                <form class="navbar-form" role="login">
+                                <form class="navbar-form" role="login" method="post">
                                     <li>
                                         <input type="text" class="form-control" placeholder="login">
                                     </li>
@@ -71,8 +67,12 @@
                                         <input type="password" class="form-control" placeholder="password">
                                     </li>
                                     <li>
-                                        <button alt="Login" title="Login" type="submit" class="btn btn-default"><span
-                                                class="glyphicon glyphicon-user"> Login </span>
+                                        <button alt="Login" title="Login" type="submit" class="btn btn-primary"><span
+                                                class="glyphicon glyphicon-user">Login</span>
+                                        </button>
+                                        <button alt="Register" title="Register" type="Register"
+                                                class="btn btn-info"><span
+                                                class="glyphicon glyphicon-pencil">Register</span>
                                         </button>
                                     </li>
                                 </form>

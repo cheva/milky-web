@@ -15,3 +15,15 @@ footer {
 a {
     cursor: pointer;
 }
+
+/*!
+ * Override bootstrap
+ */
+.navbar-form {
+    margin: 0;
+}
+
+.navbar-form li {
+    padding: 4px;
+    white-space: nowrap;
+}
