@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'captcha',
     'projects.main',
     'projects.blog',
+    'projects.user',
 )
 
 MIDDLEWARE_CLASSES = (

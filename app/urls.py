@@ -6,4 +6,5 @@ urlpatterns = patterns('',
                        url(r'^captcha/', include('captcha.urls')),
                        url(r'^$', include('projects.main.urls', namespace='main')),
                        url(r'^blog/', include('projects.blog.urls', namespace='blog')),
+                       url(r'^user/', include('projects.user.urls', namespace='user')),
 )

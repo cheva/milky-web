@@ -29,6 +29,9 @@
 {% include 'layouts/navigation.jinja' %}
 <!-- Page Content -->
 <div class="container">
+    {% block messages %}
+        {% if error_message %}{{ error_message }}{% endif %}
+    {% endblock %}
     {% block body %}{% endblock %}
     <!-- Footer -->
     <hr>

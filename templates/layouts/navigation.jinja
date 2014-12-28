@@ -71,12 +71,13 @@
                                 class="glyphicon glyphicon-user"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {% block navbar_login %}
-                                <form class="navbar-form" role="login" method="post">
+                                <form class="navbar-form" role="login" method="post" action="{{ url('user:login') }}">
                                     <li>
-                                        <input type="text" class="form-control" placeholder="login">
+                                        <input name="username" type="text" class="form-control" placeholder="username">
                                     </li>
                                     <li>
-                                        <input type="password" class="form-control" placeholder="password">
+                                        <input name="password" type="password" class="form-control"
+                                               placeholder="password">
                                     </li>
                                     <li>
                                         <button alt="Login" title="Login" type="submit" class="btn btn-primary"><span
