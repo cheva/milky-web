@@ -31,9 +31,9 @@
                            alt="Select theme" title="Select theme"><span
                                 class="glyphicon glyphicon-list-alt"></span> Theme <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a id="styleSwitch" title="Classic">Classic</a>
-                            </li>
+                            {#                            <li>#}
+                            {#                                <a id="styleSwitch" title="Classic">Classic</a>#}
+                            {#                            </li>#}
                             <li>
                                 <a id="styleSwitch" title="Cerulean">Cerulean</a>
                             </li>
@@ -45,6 +45,18 @@
                             </li>
                             <li>
                                 <a id="styleSwitch" title="United">United</a>
+                            </li>
+                            <li>
+                                <a id="styleSwitch" title="Cyborg">Cyborg</a>
+                            </li>
+                            <li>
+                                <a id="styleSwitch" title="Darkly">Darkly</a>
+                            </li>
+                            <li>
+                                <a id="styleSwitch" title="Slate">Slate</a>
+                            </li>
+                            <li>
+                                <a id="styleSwitch" title="Superhero">Superhero</a>
                             </li>
                         </ul>
                     </li>
@@ -70,11 +82,12 @@
                                         <button alt="Login" title="Login" type="submit" class="btn btn-primary"><span
                                                 class="glyphicon glyphicon-user">Login</span>
                                         </button>
-                                        <button alt="Register" title="Register" type="Register"
+                                        <button alt="Register" title=" Register" type="submit"
                                                 class="btn btn-info"><span
                                                 class="glyphicon glyphicon-pencil">Register</span>
                                         </button>
                                     </li>
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                                 </form>
                             {% endblock %}
                         </ul>
