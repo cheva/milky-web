@@ -99,9 +99,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = [os.path.join(BASE_DIR, 'static')]
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# manage.py collectstatic # to collect from _DIRS to _ROOT
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # Jinja2 templates
 # http://niwibe.github.io/django-jinja/
