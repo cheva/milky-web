@@ -11,6 +11,8 @@ def index(request):
     :param request:
     :return render():
     """
+    # @todo create static user page
+    messages.warning(request, '<h4>@todo create static user page!</h4>')
     template = 'user/index.jinja'
     local_vars = functions.get_local_vars(request)
     return render(request, template, locals())
