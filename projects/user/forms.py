@@ -3,7 +3,7 @@ from django.contrib.auth.models import User   # fill in custom user info then sa
 from django.contrib.auth.forms import UserCreationForm
 from captcha.fields import CaptchaField
 
-class userRegistrationForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required = True)
     first_name = forms.CharField(required = False)
     last_name = forms.CharField(required = False)
@@ -17,11 +17,11 @@ class userRegistrationForm(UserCreationForm):
 
 
     def save(self,commit = True):   
-        user = super(userRegistrationForm, self).save(commit = False)
+        user = super(UserRegistrationForm, self).save(commit = False)
         user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['First name']
-        user.last_name = self.cleaned_data['Last name']
-        user.birthday = self.cleaned_data['Birthday']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.birthday = self.cleaned_data['birthday']
 
 
         if commit:
