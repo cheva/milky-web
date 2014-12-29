@@ -10,10 +10,7 @@
     {% block extrahead %}{% endblock %}
     <!-- Bootstrap theme CSS -->
     <link id="styleSheet" href="
-
-
-
-            {% if local_vars['style_sheet'] %}{{ local_vars['style_sheet'] }}{% else %}{{ static('bootstrap/css/lumen.min.css') }}{% endif %}"
+            {% if local_vars['style_sheet'] %}{{ local_vars['style_sheet'] }}{% else %}{{ static('bootstrap/css/darkly.min.css') }}{% endif %}"
           rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ static('css/main.css') }}" rel="stylesheet">
