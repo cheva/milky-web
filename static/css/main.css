@@ -29,11 +29,11 @@ a {
 }
 
 .modal-dialog {
-    margin-top:10%;
+    margin-top: 60px;
 }
 
 @media (max-width: 767px) {
-  .modal-dialog-center {
-    margin-top:2%;
-  }
-} 
+    .modal-dialog-center {
+        margin-top: 10px;
+    }
+}

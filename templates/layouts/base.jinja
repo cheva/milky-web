@@ -10,11 +10,15 @@
     {% block extrahead %}{% endblock %}
     <!-- Bootstrap theme CSS -->
     <link id="styleSheet" href="
+
+
+
+
             {% if local_vars['style_sheet'] %}{{ local_vars['style_sheet'] }}{% else %}{{ static('bootstrap/css/darkly.min.css') }}{% endif %}"
           rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ static('css/main.css') }}" rel="stylesheet">
-	<link rel="icon" type="image/png" href="{{ static('images/favicon.png') }}" />
+    <link rel="icon" type="image/png" href="{{ static('images/favicon.png') }}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -52,30 +56,29 @@
         <!-- /.row -->
     </footer>
     <!-- Modal window -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    {% block modal %}
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-    <form class="navbar-form" role="register" method="post" action="{{ url('user:register') }}">---
-      <div class="modal-body">
-	<table>
-	    {{ local_vars['user_registration_form'].as_p() }}
-	</table>
-      </div>
-      <div class="modal-footer">
-	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary btn-save-modal-form">Save changes</button>
-      </div>
-    </form>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {% block modal %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <form role="form" method="post" action="{{ url('user:register') }}">
+                        <div class="modal-body form-group">
+                            {{ local_vars['user_registration_form'].as_bs() }}
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-save-modal-form">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            {% endblock %}
+        </div>
     </div>
-    {% endblock %}
-  </div>
-</div>
     <!-- jQuery -->
     <script src="{{ static('jquery/jquery.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
