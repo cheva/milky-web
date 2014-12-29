@@ -27,3 +27,13 @@ a {
     padding: 4px 0;
     white-space: nowrap;
 }
+
+.modal-dialog {
+    margin-top:10%;
+}
+
+@media (max-width: 767px) {
+  .modal-dialog-center {
+    margin-top:2%;
+  }
+} 
