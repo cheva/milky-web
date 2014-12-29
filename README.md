@@ -1,5 +1,9 @@
 # CHANGELOG #
 
+**29.12.2014**
+Theme selection stored in cookies. Dark themes added. Form processing (login and register) with errors and messages, bs styles in forms also.
+Kolovorot favicon now on pages.
+
 **26.12.2014**
 Themes selector and user login/register menus added.
 
