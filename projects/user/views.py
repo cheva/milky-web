@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.contrib import auth
 from helpers import functions
+from django.core.context_processors import csrf
+from projects.user.forms import userRegistrationForm
 
 
 def index(request):
@@ -60,3 +62,21 @@ def login(request):
         return render(request, template, locals())
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def register(request):
+    template = 'user/index.jinja'
+    if request.method == 'POST':
+        form = userRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+	    messages.success(request, '<h4>Successfully registered!</h4>Congratulations!')
+            return HttpResponseRedirect('user:index')
+	else:
+            messages.error(request, '<h4>Registration error!</h4>User registration error.')
+    else:
+        # Empty POST
+        # @todo create static registration page
+        messages.warning(request, '<h4>@todo create static registration page!</h4>')
+    local_vars = functions.get_local_vars(request)
+    return render(request, template, locals())
