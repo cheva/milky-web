@@ -32,7 +32,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <button type="button" class="close" data-dismiss="alert"><span class="glyphicon glyphicon-remove"></span></button>
                     {{ message|safe }}
                 </div>
             {% endfor %}
@@ -51,7 +51,7 @@
         <!-- /.row -->
     </footer>
     <!-- Modal window -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
             {% block modal %}
                 {% include 'user/register_form.jinja' %}

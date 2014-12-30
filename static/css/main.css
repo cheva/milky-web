@@ -4,8 +4,14 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 80px;
+}
+
+/* Main header without top margin */
+.page-header {
+    margin:10px 0 20px 0;
 }
 
 footer {
@@ -16,9 +22,7 @@ a {
     cursor: pointer;
 }
 
-/*!
- * Override bootstrap
- */
+/* for login form */
 .navbar-form {
     margin: 0;
 }
@@ -28,12 +32,13 @@ a {
     white-space: nowrap;
 }
 
+/* Modal on the top */
 .modal-dialog {
     margin-top: 60px;
 }
-
 @media (max-width: 767px) {
     .modal-dialog-center {
         margin-top: 10px;
     }
 }
+
