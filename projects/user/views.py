@@ -43,6 +43,18 @@ def login(request):
                 messages.error(request, '<h4>Login error!</h4>User is not registered or password error.')
     # Empty POST
     return HttpResponseRedirect(reverse('user:index', args=()))
+	
+	
+def logout(request):
+    """
+    Logout controller
+    :param request:
+    :return render():
+    """
+    template = 'user/index.jinja'
+    auth.logout(request)
+    local_vars = functions.get_local_vars(request)
+    return render(request, template, locals())
 
 
 def register(request):

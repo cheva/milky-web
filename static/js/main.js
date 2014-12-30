@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $("body").on("click", "#styleSwitch", function () {
+    $("body").on("click", ".styleSwitch", function () {
         var styleSheet = staticCss + $(this).attr('title').toLowerCase() + '.min.css';
         setCookie('styleSheet', styleSheet, "Thu, 31 Dec 2099 12:00:00 UTC;", "/");
         setStyleSheet();

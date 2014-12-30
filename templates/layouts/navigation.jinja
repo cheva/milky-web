@@ -31,40 +31,27 @@
                            alt="Select theme" title="Select theme"><span
                                 class="glyphicon glyphicon-list-alt"></span> Theme <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            {#                            <li>#}
-                            {#                                <a id="styleSwitch" title="Classic">Classic</a>#}
-                            {#                            </li>#}
-                            <li>
-                                <a id="styleSwitch" title="Cerulean">Cerulean</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="Lumen">Lumen</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="SpaceLab">SpaceLab</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="United">United</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="Cyborg">Cyborg</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="Darkly">Darkly</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="Slate">Slate</a>
-                            </li>
-                            <li>
-                                <a id="styleSwitch" title="Superhero">Superhero</a>
-                            </li>
+                            <li><a class="styleSwitch" title="Cerulean">Cerulean</a></li>
+                            <li><a class="styleSwitch" title="Lumen">Lumen</a></li>
+                            <li><a class="styleSwitch" title="SpaceLab">SpaceLab</a></li>
+                            <li><a class="styleSwitch" title="United">United</a></li>
+                            <li><a class="styleSwitch" title="Cyborg">Cyborg</a></li>
+                            <li><a class="styleSwitch" title="Darkly">Darkly</a></li>
+                            <li><a class="styleSwitch" title="Slate">Slate</a></li>
+                            <li><a class="styleSwitch" title="Superhero">Superhero</a></li>
                         </ul>
                     </li>
                 {% endblock %}
             </ul>
             <ul class="nav navbar-nav navbar-right ">
                 {% block navbar_right %}
-                    <li class="dropdown">
+						{% if user.is_active %}
+							<li><a href="{{ url('user:index') }}" alt="Cabinet" title="Cabinet">
+							Hi, {{ user }} <span class="glyphicon glyphicon-user"></span></a></li>
+							<li><a href="{{ url('user:logout') }}" alt="Logout" title="Logout">
+							Logout <span class="glyphicon glyphicon-logout"></span></a></li>
+						{% else %}
+                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"
                            alt="Login" title="Login"><span class="caret"></span> Login <span
@@ -92,7 +79,8 @@
                                 </form>
                             {% endblock %}
                         </ul>
-                    </li>
+						</li>
+						{% endif %}
                 {% endblock %}
             </ul>
         </div>
