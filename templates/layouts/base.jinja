@@ -10,10 +10,10 @@
     {% block extrahead %}{% endblock %}
     <!-- Bootstrap theme CSS -->
     <link id="styleSheet" href="{% if local_vars['style_sheet'] %}{{ local_vars['style_sheet'] }}
-    {% else %}{{ static('bootstrap/css/darkly.min.css') }}{% endif %}" rel="stylesheet">
+    {% else %}{{ static('bootstrap/css/darkly.min.css') }}{% endif %}" rel="stylesheet" defer>
     <!-- Custom CSS -->
-    <link href="{{ static('css/main.css') }}" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ static('images/favicon.png') }}"/>
+    <link href="{{ static('css/main.css') }}" rel="stylesheet" defer>
+    <link rel="icon" type="image/png" href="{{ static('images/favicon.png') }}" async/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -59,11 +59,11 @@
         </div>
     </div>
     <!-- jQuery -->
-    <script src="{{ static('jquery/jquery.js') }}"></script>
+    <script src="{{ static('jquery/jquery.min.js') }}" defer></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="{{ static('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ static('bootstrap/js/bootstrap.min.js') }}" defer></script>
     <!-- Custom JS -->
-    <script src="{{ static('js/main.js') }}"></script>
+    <script src="{{ static('js/main.js') }}" defer></script>
 </div>
 <!-- /.container -->
 </body>
