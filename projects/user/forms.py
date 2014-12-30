@@ -2,17 +2,25 @@ from django import forms
 from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 from django.contrib.auth.forms import UserCreationForm
+import datetime
 
 
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
-    birthday = forms.DateField(required=False)
+    email = forms.EmailField(required=True,widget=forms.EmailInput,)
+    # first_name = forms.CharField(required=False,)
+    # last_name = forms.CharField(required=False,)
+    # birthday = forms.DateField(required=False,widget=forms.DateInput(format=('%d-%m-%Y')),initial=datetime.date.today)
     captcha = CaptchaField()
-
     error_css_class = 'class-error'
     required_css_class = 'class-required'
+	
+	
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).count():
+            raise forms.ValidationError(u'Email addresses must be unique.')
+        return email
 
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
@@ -45,4 +53,4 @@ class UserRegistrationForm(UserCreationForm):
         if commit:
             user.save()
 
-        return user
+        return user		

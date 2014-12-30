@@ -14,8 +14,8 @@ def index(request):
     :return render():
     """
     # @todo create static user page
-    messages.warning(request, '<h4>@todo create static user page!</h4>')
     template = 'user/index.jinja'
+    messages.warning(request, '<h4>Todo</h4>Create user:index (cabinet) page!')
     local_vars = functions.get_local_vars(request)
     return render(request, template, locals())
 
@@ -49,12 +49,12 @@ def logout(request):
     """
     Logout controller
     :param request:
-    :return render():
+    :return HttpResponseRedirect():
     """
     template = 'user/index.jinja'
     auth.logout(request)
     local_vars = functions.get_local_vars(request)
-    return render(request, template, locals())
+    return HttpResponseRedirect(reverse('user:index', args=()))
 
 
 def register(request):
