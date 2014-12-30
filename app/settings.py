@@ -31,14 +31,18 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
+    # django core
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 3rd party energizers
     'django_jinja',
     'captcha',
+    'guardian',
+    # my projects
     'projects.main',
     'projects.blog',
     'projects.user',
@@ -57,6 +61,15 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'app.urls'
 
 WSGI_APPLICATION = 'app.wsgi.application'
+
+
+# Guardian
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # default
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+ANONYMOUS_USER_ID = -1
 
 
 # Database
