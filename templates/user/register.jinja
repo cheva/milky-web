@@ -1,0 +1,17 @@
+{% extends 'layouts/base.jinja' %}
+{% block title %}Register form{% endblock %}
+{% block extrahead %}{% endblock %}
+{% block body %}
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-md-8">
+            <h1 class="page-header">
+                New user
+                <small>registration</small>
+            </h1>
+            {% include 'user/register_form.jinja' %}
+        </div>
+        {% include 'layouts//sidebar.jinja' %}
+    </div>
+    <!-- /.row -->
+{% endblock %}

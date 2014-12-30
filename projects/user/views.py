@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib import auth
 from helpers import functions
@@ -19,25 +20,13 @@ def index(request):
     return render(request, template, locals())
 
 
-def cabinet(request, pk):
-    """
-    Personal cabinet page
-    :param request:
-    :return render():
-    """
-    # @todo create cabinet page
-    messages.warning(request, '<h4>@todo create cabinet page!</h4>')
-    template = 'user/index.jinja'
-    local_vars = functions.get_local_vars(request)
-    return render(request, template, locals())
-
-
 def login(request):
     """
     Login controller
     :param request:
-    :return HttpResponseRedirect();
+    :return HttpResponseRedirect():
     """
+    template = 'user/index.jinja'
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -52,31 +41,25 @@ def login(request):
                 messages.error(request, '<h4>Login error!</h4>User is not active.')
             else:
                 messages.error(request, '<h4>Login error!</h4>User is not registered or password error.')
-    else:
-        # Empty POST
-        # @todo create static login page
-        messages.warning(request, '<h4>@todo create static login page!</h4>')
-        template = 'user/index.jinja'
-        local_vars = functions.get_local_vars(request)
-        return render(request, template, locals())
-
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # Empty POST
+    return HttpResponseRedirect(reverse('user:index', args=()))
 
 
 def register(request):
-    template = 'user/index.jinja'
+    """
+    Register controller
+    :param request:
+    :return HttpResponseRedirect():
+    """
+    template = 'user/register.jinja'
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, '<h4>Successfully registered!</h4>Congratulations!')
-            return HttpResponseRedirect('user:index')
+            return HttpResponseRedirect(reverse('user:index', args=()))
         else:
-            # now redirect to static registration page with errors
-            messages.error(request, '<h4>Registration error!</h4>User registration error.')
-    else:
-        # Empty POST
-        # @todo create static registration page
-        messages.warning(request, '<h4>@todo create static registration page!</h4>')
+            messages.error(request, '<h4>Form errors found!</h4>Please read all of the instructions below')
+    # Empty POST
     local_vars = functions.get_local_vars(request)
     return render(request, template, locals())
