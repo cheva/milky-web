@@ -6,8 +6,8 @@
     </div>
     <form role="form" method="post" action="{{ url('user:register') }}">
         <div class="modal-body form-group">
-            {% if form %}
-                {{ form.as_bs() }}
+            {% if register_form %}
+                {{ register_form.as_bs() }}
             {% else %}
                 {{ local_vars['user_registration_form'].as_bs() }}
             {% endif %}

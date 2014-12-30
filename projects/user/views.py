@@ -53,9 +53,9 @@ def register(request):
     """
     template = 'user/register.jinja'
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        register_form = UserRegistrationForm(request.POST)
+        if register_form.is_valid():
+            register_form.save()
             messages.success(request, '<h4>Successfully registered!</h4>Congratulations!')
             return HttpResponseRedirect(reverse('user:index', args=()))
         else:
