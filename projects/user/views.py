@@ -43,8 +43,8 @@ def login(request):
                 messages.error(request, '<h4>Login error!</h4>User is not registered or password error.')
     # Empty POST
     return HttpResponseRedirect(reverse('user:index', args=()))
-	
-	
+
+
 def logout(request):
     """
     Logout controller

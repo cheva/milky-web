@@ -6,15 +6,15 @@ import datetime
 
 
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True,widget=forms.EmailInput,)
+    email = forms.EmailField(required=True, widget=forms.EmailInput, )
     # first_name = forms.CharField(required=False,)
     # last_name = forms.CharField(required=False,)
     # birthday = forms.DateField(required=False,widget=forms.DateInput(format=('%d-%m-%Y')),initial=datetime.date.today)
     captcha = CaptchaField()
     error_css_class = 'class-error'
     required_css_class = 'class-required'
-	
-	
+
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')

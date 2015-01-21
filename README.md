@@ -1,5 +1,11 @@
 # CHANGELOG #
 
+**21.01.2015**
+Search form realized via ajax/json. Search controller in blog:search.
+Buggy, but working. (search query, result link, back to results shows original page, not ajax search result).
+Without paginator(only 25 results).
+Without tags (tags are not realized)
+
 **29.12.2014**
 Theme selection stored in cookies. 
 Dark themes added. 

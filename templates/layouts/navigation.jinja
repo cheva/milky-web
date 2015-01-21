@@ -45,42 +45,42 @@
             </ul>
             <ul class="nav navbar-nav navbar-right ">
                 {% block navbar_right %}
-						{% if user.is_active %}
-							<li><a href="{{ url('user:index') }}" alt="Cabinet" title="Cabinet">
-							Hi, {{ user }} <span class="glyphicon glyphicon-user"></span></a></li>
-							<li><a href="{{ url('user:logout') }}" alt="Logout" title="Logout">
-							Logout <span class="glyphicon glyphicon-logout"></span></a></li>
-						{% else %}
-                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"
-                           alt="Login" title="Login"><span class="caret"></span> Login <span
-                                class="glyphicon glyphicon-user"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            {% block navbar_login %}
-                                <form class="navbar-form" role="login" method="post" action="{{ url('user:login') }}">
-                                    <li>
-                                        <input name="username" type="text" class="form-control" placeholder="username">
-                                    </li>
-                                    <li>
-                                        <input name="password" type="password" class="form-control"
-                                               placeholder="password">
-                                    </li>
-                                    <li>
-                                        <button alt="Login" title="Login" type="submit" class="btn btn-primary"><span
-                                                class="glyphicon glyphicon-user"> Login</span>
-                                        </button>
-                                        <a href='#' alt="Register" title="Register" type="button"
-                                                class="btn btn-info" data-toggle="modal" data-target="#modal"><span
-                                                class="glyphicon glyphicon-pencil"> Register</span>
-                                        </a>
-                                    </li>
-                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                                </form>
-                            {% endblock %}
-                        </ul>
-						</li>
-						{% endif %}
+                    {% if user.is_active %}
+                        <li><a href="{{ url('user:index') }}" alt="Cabinet" title="Cabinet">
+                            Hi, {{ user }} <span class="glyphicon glyphicon-user"></span></a></li>
+                        <li><a href="{{ url('user:logout') }}" alt="Logout" title="Logout">
+                            Logout <span class="glyphicon glyphicon-logout"></span></a></li>
+                    {% else %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false"
+                               alt="Login" title="Login"><span class="caret"></span> Login <span
+                                    class="glyphicon glyphicon-user"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                {% block navbar_login %}
+                                    <form class="navbar-form" role="login" method="post" action="{{ url('user:login') }}">
+                                        <li>
+                                            <input name="username" type="text" class="form-control" placeholder="username">
+                                        </li>
+                                        <li>
+                                            <input name="password" type="password" class="form-control"
+                                                   placeholder="password">
+                                        </li>
+                                        <li>
+                                            <button alt="Login" title="Login" type="submit" class="btn btn-primary"><span
+                                                    class="glyphicon glyphicon-user"> Login</span>
+                                            </button>
+                                            <a href='#' alt="Register" title="Register" type="button"
+                                               class="btn btn-info" data-toggle="modal" data-target="#modal"><span
+                                                    class="glyphicon glyphicon-pencil"> Register</span>
+                                            </a>
+                                        </li>
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                                    </form>
+                                {% endblock %}
+                            </ul>
+                        </li>
+                    {% endif %}
                 {% endblock %}
             </ul>
         </div>

@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Guardian
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # default
+    'django.contrib.auth.backends.ModelBackend',  # default
     'guardian.backends.ObjectPermissionBackend',
 )
 

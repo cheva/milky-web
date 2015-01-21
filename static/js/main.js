@@ -1,8 +1,16 @@
 $(document).ready(function () {
 	
+	// variables
 	var intervalId;
 
-    $("body").on("click", ".styleSwitch", function () {
+	// clear $(".main-content").html() if loading search results
+	// $.methods.search was NOT defined
+	if($('#blog-search-text').val() && $('#blog-search-text').val() != 'undefined'){
+		$(".main-content").html('');
+	}
+
+	// bind actions
+    $(".styleSwitch").unbind('click').bind('click', function (e)  {
         var styleSheet = staticCss + $(this).attr('title').toLowerCase() + '.min.css';
         setCookie('styleSheet', styleSheet, "Thu, 31 Dec 2099 12:00:00 UTC;", "/");
         setStyleSheet();
@@ -26,6 +34,7 @@ $(document).ready(function () {
 		}
 	});
 	
+	// JQuery methods
 	$.methods = {
 		
 		addLoader: function () {
@@ -36,16 +45,19 @@ $(document).ready(function () {
 			// remove loader here
 		},
 		
+		// $.methods.addLoader and  $.methods.removeLoader was defined
 		search: function (text) {
 			$.postsResponse = $.ajax({
+
 				type: "POST",
 				url: "/blog/search/",
 				dataType: "json",
+				async: true,
+
 				data: {
 					'text':text,
 					'csrfmiddlewaretoken':csrf
 				},
-				async: true,
 				
 				beforeSend: function () {
 					$.methods.addLoader();
@@ -64,6 +76,11 @@ $(document).ready(function () {
 			});
 		},
 	};
+	
+	// $.methods.search was defined
+	if($('#blog-search-text').val() && $('#blog-search-text').val() != 'undefined'){
+		$.methods.search($('#blog-search-text').val());
+	}
 
 });
 
