@@ -53,7 +53,9 @@ $(document).ready(function () {
 				
 				success: function (data) {
 					if (data.status === 'ok') {
-						$(".main-content").html("<h1>Search results for : <small>" + data.title + "</small></h1>" + data.content);
+						$(".main-content").html(
+							" <h1>" + data.text + 
+							" <small>search results</small></h1>" + data.content);
 						$("#pagination").html(data.pager);
 						$.methods.removeLoader();
 					}

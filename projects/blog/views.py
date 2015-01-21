@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 from projects.blog.forms import *
 from helpers import functions
 
@@ -77,15 +78,19 @@ def search(request):
 	"""
 	Search results page
 	:param request:
-	:return HttpResponse():
+	:return HttpResponse(json.dumps):
 	"""
+	response_data = {}
 	if request.POST:
 		text = request.POST['text']
+		response_data['status'] = 'ok'
+		response_data['text'] = text
+		response_data['content'] = 'some html here'
+		# search here
+		
 	else:
 		# empty POST
-		error_message = "Wrong request!"
-	response_data = {}
-	response_data['status'] = 'ok'
-	response_data['title'] = text
-	response_data['content'] = 'some html here'
+		local_vars = functions.get_local_vars(request)
+		messages.error(request, '<h4>Bad request!</h4>Fill search form!')
+		return redirect(reverse('blog:main'))
 	return HttpResponse(json.dumps(response_data), content_type="application/json")
