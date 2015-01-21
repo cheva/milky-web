@@ -76,8 +76,7 @@ $(document).ready(function () {
 			});
 		},
 	};
-	
-	// $.methods.search was defined
+	// $.methods.search was defined and #blog-search-text has text
 	if($('#blog-search-text').val() && $('#blog-search-text').val() != 'undefined'){
 		$.methods.search($('#blog-search-text').val());
 	}
