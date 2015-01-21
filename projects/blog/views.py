@@ -1,6 +1,8 @@
+import json
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from projects.blog.forms import *
@@ -69,3 +71,21 @@ def post_comment(request, pk):
         return render(request, template, locals())
         pass
     return redirect(reverse('blog:post', args=(post.id,)))
+	
+	
+def search(request):
+	"""
+	Search results page
+	:param request:
+	:return HttpResponse():
+	"""
+	if request.POST:
+		text = request.POST['text']
+	else:
+		# empty POST
+		error_message = "Wrong request!"
+	response_data = {}
+	response_data['status'] = 'ok'
+	response_data['title'] = text
+	response_data['content'] = 'some html here'
+	return HttpResponse(json.dumps(response_data), content_type="application/json")

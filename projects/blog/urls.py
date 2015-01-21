@@ -6,4 +6,5 @@ urlpatterns = patterns('',
                        (r'^(?P<page_num>\d+)/$', list_view, {}, 'page'),
                        (r'^post/(?P<pk>\d+)/$', detail_view, {}, 'post'),
                        (r'^post/(?P<pk>\d+)/comment/$', post_comment, {}, 'comment'),
+                       (r'^search/$', search, {}, 'search'),
 )

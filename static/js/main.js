@@ -1,4 +1,6 @@
 $(document).ready(function () {
+	
+	var intervalId;
 
     $("body").on("click", ".styleSwitch", function () {
         var styleSheet = staticCss + $(this).attr('title').toLowerCase() + '.min.css';
@@ -6,7 +8,66 @@ $(document).ready(function () {
         setStyleSheet();
     });
 
+	$('#blog-search-text').unbind('keyup').bind('keyup', function (e) {
+		
+		if (!(e.which >= 46 && e.which <= 90 || e.which >= 96 && e.which <= 105 || e.which == 8 || e.which == 13)) {
+			return;
+		}
+		
+		var text = $(this).val();
+		clearInterval(intervalId);
+		
+		if (e.which == 13) {
+			$.methods.search(text);
+		} else {
+			intervalId = setTimeout(function () {
+				$.methods.search(text);
+			}, 500);
+		}
+	});
+	
+	$.methods = {
+		
+		addLoader: function () {
+			// add loader here
+		},
+		
+		removeLoader: function () {
+			// remove loader here
+		},
+		
+		search: function (text) {
+			$.postsResponse = $.ajax({
+				type: "POST",
+				url: "/blog/search/",
+				dataType: "json",
+				data: {
+					'text':text,
+					'csrfmiddlewaretoken':csrf
+				},
+				async: true,
+				
+				beforeSend: function () {
+					$.methods.addLoader();
+				},
+				
+				success: function (data) {
+					if (data.status === 'ok') {
+						$(".main-content").html("<h1>Search results for : <small>" + data.title + "</small></h1>" + data.content);
+						$("#pagination").html(data.pager);
+						$.methods.removeLoader();
+					}
+					$.postsResponse = null;
+				}
+			});
+		},
+	};
+
 });
+
+////////////////////////////////
+// @todo move it to $.methods //
+////////////////////////////////
 
 function setStyleSheet() {
     styleSheet = getCookie('styleSheet');
