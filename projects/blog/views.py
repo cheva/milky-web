@@ -3,9 +3,11 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django.db.models import Q
 from projects.blog.forms import *
 from helpers import functions
 
@@ -85,12 +87,26 @@ def search(request):
 		text = request.POST['text']
 		response_data['status'] = 'ok'
 		response_data['text'] = text
-		response_data['content'] = 'some html here'
 		# search here
-		
+		criterions = Q(title__icontains=text)
+		criterions.add(Q(body__icontains=text), Q.OR)
+		post_list = Post.objects.filter(criterions)[:25]
+		template = 'blog/search.jinja'
+		local_vars = functions.get_local_vars(request)
+		template = loader.get_template(template)
+		response_data['content'] = template.render(locals())
 	else:
 		# empty POST
 		local_vars = functions.get_local_vars(request)
 		messages.error(request, '<h4>Bad request!</h4>Fill search form!')
 		return redirect(reverse('blog:main'))
 	return HttpResponse(json.dumps(response_data), content_type="application/json")
+	
+	
+	
+	
+	
+	
+	
+	
+	
