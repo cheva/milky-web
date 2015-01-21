@@ -51,14 +51,15 @@
         </div>
         <!-- /.row -->
     </footer>
-    <!-- Modal window -->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+{% if user.is_active %}
+{% else %}
+    <!-- Registration Modal window -->
+    <div class="modal fade" id="modal_registration" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            {% block modal %}
-                {% include 'user/register_form.jinja' %}
-            {% endblock %}
+{% include 'user/register_form.jinja' %}
         </div>
     </div>
+{% endif %}
     <!-- jQuery -->
     <script src="{{ static('jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
