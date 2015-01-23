@@ -23,7 +23,7 @@ class Tag(Model):
 	title = CharField(max_length=60)
 	alias = CharField(max_length=60,null=True)
 	count = IntegerField(default=0)
-	post = ForeignKey(Post, related_name="tags")
+	posts = ManyToManyField(Post)
 	
 	def __unicode__(self):
 		return self.title
