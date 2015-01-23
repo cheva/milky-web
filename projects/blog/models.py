@@ -20,6 +20,7 @@ class Post(Model):
 	body = TextField()
 	created = DateTimeField(auto_now_add=True)
 	show = BooleanField(default=True)
+	main = PositiveSmallIntegerField(default=0)
 	tags = ManyToManyField(Tag)
 
 	class Meta:
