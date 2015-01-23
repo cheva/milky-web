@@ -33,7 +33,7 @@
     <div class="row">
 	<!-- Notifications block -->
 	{% if messages %}
-	<div class="modal fade" id="messageModal" tabindex="-1" role="message" aria-hidden="true">
+	<div class="modal fade" id="modal_message" tabindex="-1" role="message" aria-hidden="true" style="z-index:1050">
 	  <div class="modal-dialog">
 	  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	  <span class="glyphicon glyphicon-remove"></span>
@@ -82,9 +82,10 @@
 <script src="{{ static('bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- Custom JS -->
 <script src="{{ static('js/main.js') }}"></script>
-{% if messages %}
-<script>$('#messageModal').modal()</script>
-{% endif %}
+<script>
+if (showRegistrationForm){$('#modal_registration').modal()}
+{% if messages %}$('#modal_message').modal();{% endif %}
+</script>
 </div>
 <!-- /.container -->
 </body>
