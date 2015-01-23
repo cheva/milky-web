@@ -14,7 +14,7 @@ def index(request):
     :return render():
     """
     # @todo create static user page
-    template = 'user/index.jinja'
+    template = 'user/index.jinja2'
     messages.warning(request, '<h4>Todo</h4>Create user:index (cabinet) page!')
     local_vars = functions.get_local_vars(request)
     return render(request, template, locals())
@@ -26,7 +26,7 @@ def login(request):
     :param request:
     :return HttpResponseRedirect():
     """
-    template = 'user/index.jinja'
+    template = 'user/index.jinja2'
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -51,7 +51,7 @@ def logout(request):
     :param request:
     :return HttpResponseRedirect():
     """
-    template = 'user/index.jinja'
+    template = 'user/index.jinja2'
     auth.logout(request)
     local_vars = functions.get_local_vars(request)
     return HttpResponseRedirect(reverse('user:index', args=()))
@@ -63,7 +63,7 @@ def register(request):
     :param request:
     :return HttpResponseRedirect():
     """
-    template = 'user/register.jinja'
+    template = 'user/register.jinja2'
     if request.method == 'POST':
         register_form = UserRegistrationForm(request.POST)
         if register_form.is_valid():

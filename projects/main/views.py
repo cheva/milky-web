@@ -17,7 +17,7 @@ def index(request):
     :param request:
     :return render():
     """
-    template = 'main/index.jinja'
+    template = 'main/index.jinja2'
     local_vars = functions.get_local_vars(request)
     post_list = Post.objects.filter(main__gte=1).order_by('main')
     return render(request, template, locals())

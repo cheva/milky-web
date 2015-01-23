@@ -1,4 +1,4 @@
-{% extends 'layouts/base.jinja' %}
+{% extends 'layouts/base.jinja2' %}
 {% block title %}Blog post | {{ post.title }}{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block body %}
@@ -63,5 +63,5 @@
 			<!-- /.Posted Comments -->
 		</div>
 		<!-- /.Blog Post Content Column -->
-        {% include 'layouts/sidebar.jinja' %}
+        {% include 'layouts/sidebar.jinja2' %}
 {% endblock %}

@@ -18,7 +18,7 @@ def list_view(request, page_num=1):
     :param request:
     :return:
     """
-    template = 'blog/list.jinja'
+    template = 'blog/list.jinja2'
     local_vars = functions.get_local_vars(request)
     post_list = Post.objects.order_by('-created')
     paginator = Paginator(post_list, 10)
@@ -40,7 +40,7 @@ def detail_view(request, pk):
     :param pk:
     :return:
     """
-    template = 'blog/post.jinja'
+    template = 'blog/post.jinja2'
     local_vars = functions.get_local_vars(request)
     post = get_object_or_404(Post, pk=pk)
     comment_list = Comment.objects.filter(post_id=pk).order_by('-created')
@@ -55,7 +55,7 @@ def post_comment(request, pk):
     :param pk:
     :return:
     """
-    template = 'blog/post.jinja'
+    template = 'blog/post.jinja2'
     local_vars = functions.get_local_vars(request)
     post = get_object_or_404(Post, pk=pk)
     comment = Comment(author=request.POST['author'], body=request.POST['body'], post=post)
@@ -91,7 +91,7 @@ def search(request):
         criteria = Q(title__icontains=text)
         criteria.add(Q(body__icontains=text), Q.OR)
         post_list = Post.objects.filter(criteria)[:25]
-        template = 'blog/search.jinja'
+        template = 'blog/search.jinja2'
         local_vars = functions.get_local_vars(request)
         template = loader.get_template(template)
         response_data['content'] = template.render(locals())

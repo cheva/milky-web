@@ -125,4 +125,4 @@ TEMPLATE_LOADERS = (
     'django_jinja.loaders.AppLoader',
 )
 
-DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
+DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja2'
