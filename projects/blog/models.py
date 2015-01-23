@@ -6,7 +6,7 @@ notify = False
 
 class Tag(Model):
 	title = CharField(max_length=60)
-	alias = CharField(max_length=60,null=True)
+	alias = CharField(max_length=60,blank=True,null=True)
 	count = IntegerField(default=0)
 	
 	def __unicode__(self):
@@ -15,8 +15,8 @@ class Tag(Model):
 
 class Post(Model):
 	title = CharField(max_length=60)
-	alias = CharField(max_length=60,null=True)
-	image = ImageField(null=True)
+	alias = CharField(max_length=60,blank=True,null=True)
+	image = ImageField(blank=True, null=True)
 	body = TextField()
 	created = DateTimeField(auto_now_add=True)
 	show = BooleanField(default=True)
