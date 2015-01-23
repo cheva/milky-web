@@ -52,3 +52,12 @@ img {
     margin:0;
     padding:0;
 }
+
+.no-pad-left {
+    padding-left: 0;
+    padding-right: 10px;
+}
+.no-pad {
+    padding-left: 0;
+    padding-right: 0;
+}

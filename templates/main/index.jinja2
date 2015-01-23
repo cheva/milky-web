@@ -31,7 +31,7 @@
                 {% if loop.index is divisibleby(2) %}
                 <div style="clear:both"></div>
                 {% endif %}
-                <div class="col-md-6">
+                <div class="col-md-6 {% if loop.index is divisibleby(2) %}no-pad-left{% else %}no-pad{% endif %}">
                 <div class="well">
                     <!-- Post 2+ -->
                     {% if post.image %}
