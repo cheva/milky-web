@@ -12,17 +12,20 @@
                 by <a href="#">Cheva</a>
                 <small><span class="glyphicon glyphicon-time"></span> {{ post.created|date('Y-m-d H:i') }}</small>
             </p>
-            <hr>
             <!-- Preview Image -->
-            <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+            {% if post.image %}
             <hr>
+			<a href="{{ url('blog:post', post.pk) }}" title="{{ post.title }}">
+			<img class="img-responsive" src="/{{ post.image.url }}" alt="{{ post.title }}">
+			</a>
+			{% endif %}
+			<hr>
             <!-- Post Content -->
             <p>{{ post.body }}</p>
             <!-- Blog Comments -->
             <!-- Comments Form -->
             <div class="well">
                 <h4>Leave a Comment:</h4>
-
                 <form role="form" action="{{ url('blog:comment', post.pk) }}" method="POST">
                     <div class="form-group">
                         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
