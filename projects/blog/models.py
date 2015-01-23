@@ -16,7 +16,7 @@ class Tag(Model):
 class Post(Model):
 	title = CharField(max_length=60)
 	alias = CharField(max_length=60,null=True)
-	image = ImageField(null=True,width_field='900',height_field='300')
+	image = ImageField(null=True)
 	body = TextField()
 	created = DateTimeField(auto_now_add=True)
 	show = BooleanField(default=True)
