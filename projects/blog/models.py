@@ -4,6 +4,15 @@ from django.core.mail import send_mail
 notify = False
 
 
+class Tag(Model):
+	title = CharField(max_length=60)
+	alias = CharField(max_length=60,null=True)
+	count = IntegerField(default=0)
+	
+	def __unicode__(self):
+		return self.title
+
+
 class Post(Model):
 	title = CharField(max_length=60)
 	alias = CharField(max_length=60,null=True)
@@ -11,6 +20,7 @@ class Post(Model):
 	body = TextField()
 	created = DateTimeField(auto_now_add=True)
 	show = BooleanField(default=True)
+	tags = ManyToManyField(Tag)
 
 	class Meta:
 		ordering = ["-created"]
@@ -18,17 +28,7 @@ class Post(Model):
 	def __unicode__(self):
 		return self.title
 
-
-class Tag(Model):
-	title = CharField(max_length=60)
-	alias = CharField(max_length=60,null=True)
-	count = IntegerField(default=0)
-	posts = ManyToManyField(Post)
-	
-	def __unicode__(self):
-		return self.title
-
-
+		
 class Comment(Model):
 	author = CharField(max_length=60)
 	body = TextField()
