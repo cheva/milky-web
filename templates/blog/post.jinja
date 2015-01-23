@@ -2,7 +2,6 @@
 {% block title %}Blog post | {{ post.title }}{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block body %}
-    <div class="row">
         <!-- Blog Post Content Column -->
         <div class="col-lg-8 main-content">
             <!-- Blog Post -->
@@ -36,6 +35,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
+			<!-- /.Comments Form -->
             <!-- Posted Comments -->
             {% for comment in comment_list %}
                 <!-- Comment -->
@@ -55,9 +55,10 @@
                         {{ comment.body|linebreaks }}
                     </div>
                 </div>
+				<!-- /.Comment -->
             {% endfor %}
-        </div>
+			<!-- /.Posted Comments -->
+		</div>
+		<!-- /.Blog Post Content Column -->
         {% include 'layouts/sidebar.jinja' %}
-    </div>
-    <!-- /.row -->
 {% endblock %}

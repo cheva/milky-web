@@ -24,29 +24,45 @@
         var staticCss = "{{ static('bootstrap/css/') }}";
         var csrf = "{{ csrf_token }}";
     </script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 {% include 'layouts/navigation.jinja' %}
 <!-- Page Content -->
 <div class="container">
-    {% block messages %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
-                    <button type="button" class="close" data-dismiss="alert"><span class="glyphicon glyphicon-remove"></span></button>
-                    {{ message|safe }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endblock %}
+    <div class="row">
+	<!-- Notifications block -->
+	{% if messages %}
+	<div class="modal fade" id="messageModal" tabindex="-1" role="message" aria-hidden="true">
+	  <div class="modal-dialog">
+	  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  <span class="glyphicon glyphicon-remove"></span>
+	  </button>
+	  <br /><br />
+		{% for message in messages %}
+			<div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+				<!--button type="button" class="close" data-dismiss="alert">
+				<span class="glyphicon glyphicon-remove"></span>
+				</button-->
+				{{ message|safe }}
+			</div>
+		{% endfor %}
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	{% endif %}
+	
+	<!-- /.Notifications block -->
     {% block body %}{% endblock %}
+	</div>
+    <!-- /.row -->
     <!-- Footer -->
     <hr>
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                2014 ツ <a target="_blank" href="http://linkedin.com/in/cheusov">cheva</a>
-                (◕‿◕) <a target="_blank" href="http://djangoproject.com">Django</a>
+                2014..2015 ツ <a target="_blank" href="http://linkedin.com/in/cheusov">cheva</a>
+                (◕‿◕) <a target="_blank" href="http://djangoproject.com">Django</a><br />
+				<div class="g-plusone" data-annotation="inline" data-width="450" data-href="https://code.google.com/p/milky-web/"></div>
             </div>
         </div>
         <!-- /.row -->
@@ -60,12 +76,15 @@
         </div>
     </div>
 {% endif %}
-    <!-- jQuery -->
-    <script src="{{ static('jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{ static('bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- Custom JS -->
-    <script src="{{ static('js/main.js') }}"></script>
+<!-- jQuery -->
+<script src="{{ static('jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ static('bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- Custom JS -->
+<script src="{{ static('js/main.js') }}"></script>
+{% if messages %}
+<script>$('#messageModal').modal()</script>
+{% endif %}
 </div>
 <!-- /.container -->
 </body>

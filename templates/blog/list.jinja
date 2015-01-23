@@ -2,7 +2,6 @@
 {% block title %}Blog list{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block body %}
-    <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8 main-content">
             <h1 class="page-header">
@@ -26,10 +25,10 @@
                 <a class="btn btn-primary" href="{{ url('blog:post', post.pk) }}">Comments ({{ post.comments.count() }})
                     <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
+				<!-- /.Post -->
             {% endfor %}
             {% set pg = post_list %}{% include "layouts/pager.jinja" %}
         </div>
+		<!-- /.Blog Entries Column -->
         {% include 'layouts//sidebar.jinja' %}
-    </div>
-    <!-- /.row -->
 {% endblock %}
