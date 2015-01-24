@@ -1,5 +1,11 @@
 # CHANGELOG #
 
+**23.01.2015**
+Index page (main:index) ready with templates.
+Images upload and show - done.
+Tags realized but not deployed.
+Modal messages deployed.
+
 **21.01.2015**
 Search form realized via ajax/json. Search controller in blog:search.
 Buggy, but working. (search query, result link, back to results shows original page, not ajax search result).
