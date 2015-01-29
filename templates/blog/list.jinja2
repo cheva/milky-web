@@ -6,7 +6,14 @@
     <div class="col-md-8 main-content" xmlns="http://www.w3.org/1999/html">
         <h1 class="page-header">
             Blog
-            <small>newest</small>
+			{% if tag_alias %}
+            <small>posts with tag</small>
+			{% for tag in tag_list %}
+			#{{ tag.title }}
+			{% endfor %}
+			{% else %}
+            <small>newest posts</small>
+			{% endif %}
         </h1>
         {% for post in post_list %}
             <!-- Post -->
