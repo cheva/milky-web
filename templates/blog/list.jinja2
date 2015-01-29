@@ -28,8 +28,11 @@
             <p class="lead">
                 by <a href="#">Cheva</a>
                 <small>
-                    <span class="glyphicon glyphicon-time"></span> {{ post.created|date('Y-m-d H:i') }}
-                </small>
+                    <span class="glyphicon glyphicon-time"></span> {{ post.created|date('Y-m-d H:i') }}		
+					{% for tag in post.tags.all() %}
+					<a href="{{ url('blog:tag', tag.alias) }}">#{{ tag.title }}</a>
+					{% endfor %}
+				</small>
             </p>
             <p>{{ post.body|truncate(1000)|striptags }}
                 <a href="{{ url('blog:post', post.pk) }}">

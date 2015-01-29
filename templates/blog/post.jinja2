@@ -10,7 +10,12 @@
             <!-- Author -->
             <p class="lead">
                 by <a href="#">Cheva</a>
-                <small><span class="glyphicon glyphicon-time"></span> {{ post.created|date('Y-m-d H:i') }}</small>
+                <small><span class="glyphicon glyphicon-time"></span>
+					{{ post.created|date('Y-m-d H:i') }}
+					{% for tag in post.tags.all() %}
+					<a href="{{ url('blog:tag', tag.alias) }}">#{{ tag.title }}</a>
+					{% endfor %}
+				</small>
             </p>
             <!-- Preview Image -->
             {% if post.image %}
@@ -20,6 +25,7 @@
 			</a>
 			{% endif %}
 			<hr>
+            <!-- /Preview Image -->
             <!-- Post Content -->
             <p>{{ post.body }}</p>
             <!-- Blog Comments -->
@@ -38,7 +44,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
-			<!-- /.Comments Form -->
+			<!-- /Comments Form -->
             <!-- Posted Comments -->
             {% for comment in comment_list %}
                 <!-- Comment -->

@@ -1,9 +1,12 @@
 from projects.user.forms import *
+from projects.blog.models import *
 
 
 def get_local_vars(request):
-    local_vars = {}
-    if "styleSheet" in request.COOKIES:
-        local_vars['style_sheet'] = request.COOKIES["styleSheet"]
-    local_vars["user_registration_form"] = UserRegistrationForm()
-    return local_vars
+	local_vars = {}
+	if "styleSheet" in request.COOKIES:
+		local_vars['style_sheet'] = request.COOKIES["styleSheet"]
+	local_vars["user_registration_form"] = UserRegistrationForm()
+	local_vars["cat_list"] = Tag.objects.all()
+	local_vars["com_list"] = Comment.objects.all().order_by('-created')[:5]
+	return local_vars
