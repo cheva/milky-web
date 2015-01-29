@@ -16,11 +16,35 @@ def list_view(request, page_num=1):
     """
     Post list view with comments count and paginator
     :param request:
-    :return:
+    :param page_num:
+    :return render():
     """
     template = 'blog/list.jinja2'
     local_vars = functions.get_local_vars(request)
     post_list = Post.objects.order_by('-created')
+    paginator = Paginator(post_list, 10)
+    try:
+        post_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        post_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        post_list = paginator.page(paginator.num_pages)
+    return render(request, template, locals())
+
+
+def tag_view(request, tag_alias='', page_num=1):
+    
+    """
+    Post list view for concrete tag
+    :param request:
+    :param tag_alias:
+    :return render():
+    """
+    template = 'blog/list.jinja2'
+    local_vars = functions.get_local_vars(request)
+    post_list = Post.objects.filter(tags__alias=tag_alias).order_by('-created')
     paginator = Paginator(post_list, 10)
     try:
         post_list = paginator.page(page_num)
