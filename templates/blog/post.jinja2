@@ -19,15 +19,16 @@
             </p>
             <!-- Preview Image -->
             {% if post.image %}
-            <hr>
+            <hr />
 			<a href="{{ url('blog:post', post.pk) }}" title="{{ post.title }}">
 			<img class="img-responsive" src="/{{ post.image.url }}" alt="{{ post.title }}">
 			</a>
 			{% endif %}
-			<hr>
+			<hr />
             <!-- /Preview Image -->
             <!-- Post Content -->
-            <p>{{ post.body }}</p>
+            <p>{{ post.body|safe }}</p>
+            <hr />
             <!-- Blog Comments -->
             <!-- Comments Form -->
             <div class="well">
@@ -48,7 +49,7 @@
             <!-- Posted Comments -->
             {% for comment in comment_list %}
                 <!-- Comment -->
-                <hr>
+                <hr />
                 <div class="media">
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">

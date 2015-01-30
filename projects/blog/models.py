@@ -1,5 +1,6 @@
 from django.db.models import *
 from django.core.mail import send_mail
+from django.db import models
 
 notify = False
 

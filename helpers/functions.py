@@ -1,7 +1,11 @@
 from projects.user.forms import *
 from projects.blog.models import *
+import re
+from jinja2 import evalcontextfilter, Markup, escape
 
-
+"""
+local variables and lists in global array
+"""
 def get_local_vars(request):
 	local_vars = {}
 	if "styleSheet" in request.COOKIES:
