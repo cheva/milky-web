@@ -1,0 +1,3575 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2015-04-02 01:51:31 EEST
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION PASSWORD 'md53175bce1d3201d16594cebf9d7eb3f9d';
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+CREATE DATABASE milky WITH TEMPLATE = template0 OWNER = postgres;
+REVOKE ALL ON DATABASE template1 FROM PUBLIC;
+REVOKE ALL ON DATABASE template1 FROM postgres;
+GRANT ALL ON DATABASE template1 TO postgres;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+\connect milky
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.1
+-- Dumped by pg_dump version 9.4.1
+-- Started on 2015-04-02 01:51:31 EEST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 205 (class 3079 OID 11899)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2276 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 183 (class 1259 OID 16654)
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE auth_group OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 16652)
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2277 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- TOC entry 185 (class 1259 OID 16664)
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_group_permissions OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 16662)
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2278 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- TOC entry 181 (class 1259 OID 16644)
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE auth_permission OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 16642)
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_permission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2279 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- TOC entry 187 (class 1259 OID 16674)
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone NOT NULL,
+    is_superuser boolean NOT NULL,
+    username character varying(30) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(75) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE auth_user OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 16684)
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_groups OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 16682)
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_groups_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2280 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+
+
+--
+-- TOC entry 186 (class 1259 OID 16672)
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2281 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+
+
+--
+-- TOC entry 191 (class 1259 OID 16694)
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_user_permissions OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 16692)
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2282 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+
+
+--
+-- TOC entry 195 (class 1259 OID 16770)
+-- Name: blog_comment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE blog_comment (
+    id integer NOT NULL,
+    author character varying(60) NOT NULL,
+    body text NOT NULL,
+    created timestamp with time zone NOT NULL,
+    post_id integer NOT NULL
+);
+
+
+ALTER TABLE blog_comment OWNER TO postgres;
+
+--
+-- TOC entry 194 (class 1259 OID 16768)
+-- Name: blog_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE blog_comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE blog_comment_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2283 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: blog_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE blog_comment_id_seq OWNED BY blog_comment.id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 16781)
+-- Name: blog_post; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE blog_post (
+    id integer NOT NULL,
+    title character varying(60) NOT NULL,
+    body text NOT NULL,
+    created timestamp with time zone NOT NULL,
+    alias character varying(60),
+    image character varying(100),
+    show boolean NOT NULL,
+    main smallint NOT NULL,
+    CONSTRAINT blog_post_main_70ca1f1e_check CHECK ((main >= 0))
+);
+
+
+ALTER TABLE blog_post OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 16779)
+-- Name: blog_post_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE blog_post_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE blog_post_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2284 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: blog_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE blog_post_id_seq OWNED BY blog_post.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 16847)
+-- Name: blog_post_tags; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE blog_post_tags (
+    id integer NOT NULL,
+    post_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE blog_post_tags OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 16845)
+-- Name: blog_post_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE blog_post_tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE blog_post_tags_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2285 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: blog_post_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE blog_post_tags_id_seq OWNED BY blog_post_tags.id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 16803)
+-- Name: blog_tag; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE blog_tag (
+    id integer NOT NULL,
+    title character varying(60) NOT NULL,
+    alias character varying(60),
+    count integer NOT NULL
+);
+
+
+ALTER TABLE blog_tag OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 16801)
+-- Name: blog_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE blog_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE blog_tag_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2286 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: blog_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE blog_tag_id_seq OWNED BY blog_tag.id;
+
+
+--
+-- TOC entry 203 (class 1259 OID 16879)
+-- Name: captcha_captchastore; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE captcha_captchastore (
+    id integer NOT NULL,
+    challenge character varying(32) NOT NULL,
+    response character varying(32) NOT NULL,
+    hashkey character varying(40) NOT NULL,
+    expiration timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE captcha_captchastore OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16877)
+-- Name: captcha_captchastore_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE captcha_captchastore_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE captcha_captchastore_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2287 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: captcha_captchastore_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE captcha_captchastore_id_seq OWNED BY captcha_captchastore.id;
+
+
+--
+-- TOC entry 193 (class 1259 OID 16746)
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE django_admin_log OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 16744)
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2288 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- TOC entry 179 (class 1259 OID 16634)
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE django_content_type OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 16632)
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_content_type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2289 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- TOC entry 173 (class 1259 OID 16597)
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_migrations OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 16595)
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_migrations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2290 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+
+
+--
+-- TOC entry 204 (class 1259 OID 16887)
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_session OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 16618)
+-- Name: guardian_groupobjectpermission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE guardian_groupobjectpermission (
+    id integer NOT NULL,
+    permission_id integer NOT NULL,
+    content_type_id integer NOT NULL,
+    object_pk character varying(255) NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE guardian_groupobjectpermission OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 16616)
+-- Name: guardian_groupobjectpermission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE guardian_groupobjectpermission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE guardian_groupobjectpermission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2291 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: guardian_groupobjectpermission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE guardian_groupobjectpermission_id_seq OWNED BY guardian_groupobjectpermission.id;
+
+
+--
+-- TOC entry 175 (class 1259 OID 16608)
+-- Name: guardian_userobjectpermission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE guardian_userobjectpermission (
+    id integer NOT NULL,
+    permission_id integer NOT NULL,
+    content_type_id integer NOT NULL,
+    object_pk character varying(255) NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE guardian_userobjectpermission OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 16606)
+-- Name: guardian_userobjectpermission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE guardian_userobjectpermission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE guardian_userobjectpermission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2292 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: guardian_userobjectpermission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE guardian_userobjectpermission_id_seq OWNED BY guardian_userobjectpermission.id;
+
+
+--
+-- TOC entry 2027 (class 2604 OID 16657)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- TOC entry 2028 (class 2604 OID 16667)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2026 (class 2604 OID 16647)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- TOC entry 2029 (class 2604 OID 16677)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 2030 (class 2604 OID 16687)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+
+
+--
+-- TOC entry 2031 (class 2604 OID 16697)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2034 (class 2604 OID 16773)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_comment ALTER COLUMN id SET DEFAULT nextval('blog_comment_id_seq'::regclass);
+
+
+--
+-- TOC entry 2035 (class 2604 OID 16784)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_post ALTER COLUMN id SET DEFAULT nextval('blog_post_id_seq'::regclass);
+
+
+--
+-- TOC entry 2038 (class 2604 OID 16850)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_post_tags ALTER COLUMN id SET DEFAULT nextval('blog_post_tags_id_seq'::regclass);
+
+
+--
+-- TOC entry 2037 (class 2604 OID 16806)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_tag ALTER COLUMN id SET DEFAULT nextval('blog_tag_id_seq'::regclass);
+
+
+--
+-- TOC entry 2039 (class 2604 OID 16882)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY captcha_captchastore ALTER COLUMN id SET DEFAULT nextval('captcha_captchastore_id_seq'::regclass);
+
+
+--
+-- TOC entry 2032 (class 2604 OID 16749)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- TOC entry 2025 (class 2604 OID 16637)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- TOC entry 2022 (class 2604 OID 16600)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+
+
+--
+-- TOC entry 2024 (class 2604 OID 16621)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY guardian_groupobjectpermission ALTER COLUMN id SET DEFAULT nextval('guardian_groupobjectpermission_id_seq'::regclass);
+
+
+--
+-- TOC entry 2023 (class 2604 OID 16611)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY guardian_userobjectpermission ALTER COLUMN id SET DEFAULT nextval('guardian_userobjectpermission_id_seq'::regclass);
+
+
+--
+-- TOC entry 2247 (class 0 OID 16654)
+-- Dependencies: 183
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_group (id, name) FROM stdin;
+1	admin
+\.
+
+
+--
+-- TOC entry 2293 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, true);
+
+
+--
+-- TOC entry 2249 (class 0 OID 16664)
+-- Dependencies: 185
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+1	1	1
+2	1	2
+3	1	3
+4	1	4
+6	1	5
+8	1	6
+9	1	7
+10	1	8
+12	1	9
+13	1	10
+14	1	11
+15	1	12
+16	1	13
+17	1	14
+19	1	15
+20	1	16
+21	1	17
+22	1	18
+23	1	19
+24	1	20
+25	1	21
+26	1	22
+27	1	23
+28	1	24
+29	1	25
+30	1	26
+31	1	27
+32	1	28
+33	1	29
+34	1	30
+35	1	31
+36	1	32
+37	1	33
+38	1	34
+39	1	35
+40	1	36
+\.
+
+
+--
+-- TOC entry 2294 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 40, true);
+
+
+--
+-- TOC entry 2245 (class 0 OID 16644)
+-- Dependencies: 181
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add permission	2	add_permission
+5	Can change permission	2	change_permission
+6	Can delete permission	2	delete_permission
+7	Can add group	3	add_group
+8	Can change group	3	change_group
+9	Can delete group	3	delete_group
+10	Can add user	4	add_user
+11	Can change user	4	change_user
+12	Can delete user	4	delete_user
+13	Can add content type	5	add_contenttype
+14	Can change content type	5	change_contenttype
+15	Can delete content type	5	delete_contenttype
+16	Can add session	6	add_session
+17	Can change session	6	change_session
+18	Can delete session	6	delete_session
+19	Can add captcha store	7	add_captchastore
+20	Can change captcha store	7	change_captchastore
+21	Can delete captcha store	7	delete_captchastore
+22	Can add user object permission	8	add_userobjectpermission
+23	Can change user object permission	8	change_userobjectpermission
+24	Can delete user object permission	8	delete_userobjectpermission
+25	Can add group object permission	9	add_groupobjectpermission
+26	Can change group object permission	9	change_groupobjectpermission
+27	Can delete group object permission	9	delete_groupobjectpermission
+28	Can add tag	10	add_tag
+29	Can change tag	10	change_tag
+30	Can delete tag	10	delete_tag
+31	Can add post	11	add_post
+32	Can change post	11	change_post
+33	Can delete post	11	delete_post
+34	Can add comment	12	add_comment
+35	Can change comment	12	change_comment
+36	Can delete comment	12	delete_comment
+\.
+
+
+--
+-- TOC entry 2295 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 36, true);
+
+
+--
+-- TOC entry 2251 (class 0 OID 16674)
+-- Dependencies: 187
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$12000$qE5YiSSOiGSM$n5AOO08BP6IEj6exDfHrGGwbmqE2c4zFP3XIAmZPuC8=	2015-04-02 01:12:15.93202+03	t	cheva			dmitry.cheva@gmail.com	t	t	2015-04-02 00:06:09.192505+03
+\.
+
+
+--
+-- TOC entry 2253 (class 0 OID 16684)
+-- Dependencies: 189
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2296 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+
+
+--
+-- TOC entry 2297 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
+
+
+--
+-- TOC entry 2255 (class 0 OID 16694)
+-- Dependencies: 191
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2298 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 2259 (class 0 OID 16770)
+-- Dependencies: 195
+-- Data for Name: blog_comment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY blog_comment (id, author, body, created, post_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2299 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: blog_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('blog_comment_id_seq', 1, false);
+
+
+--
+-- TOC entry 2261 (class 0 OID 16781)
+-- Dependencies: 197
+-- Data for Name: blog_post; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY blog_post (id, title, body, created, alias, image, show, main) FROM stdin;
+1	Blog post	Body text...	2015-04-02 00:53:36.114227+03	post	static/images/IMG_1105.JPG	t	1
+3	zzz	zzz	2015-04-02 01:09:43.433725+03	zzz	static/images/IMG_1102.JPG	t	3
+2	One more post	One more post One more post One more post One more post 	2015-04-02 01:07:49.075401+03	one_more	static/images/IMG_1102.png	t	3
+4	yyy	yyy yyy	2015-04-02 01:14:48.566999+03	yyy	static/images/Acro_foot_bts_00_00_68_2.jpg	t	5
+\.
+
+
+--
+-- TOC entry 2300 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: blog_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('blog_post_id_seq', 4, true);
+
+
+--
+-- TOC entry 2265 (class 0 OID 16847)
+-- Dependencies: 201
+-- Data for Name: blog_post_tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY blog_post_tags (id, post_id, tag_id) FROM stdin;
+2	1	1
+6	3	1
+7	2	1
+10	4	1
+\.
+
+
+--
+-- TOC entry 2301 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: blog_post_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('blog_post_tags_id_seq', 10, true);
+
+
+--
+-- TOC entry 2263 (class 0 OID 16803)
+-- Dependencies: 199
+-- Data for Name: blog_tag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY blog_tag (id, title, alias, count) FROM stdin;
+1	main	main	0
+\.
+
+
+--
+-- TOC entry 2302 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: blog_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('blog_tag_id_seq', 1, true);
+
+
+--
+-- TOC entry 2267 (class 0 OID 16879)
+-- Dependencies: 203
+-- Data for Name: captcha_captchastore; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY captcha_captchastore (id, challenge, response, hashkey, expiration) FROM stdin;
+37	QIKWHP	qikwhp	2bd2d0ebac5b21ba79aeff0c4b9b3382fcfe0908	2015-04-02 00:37:47.601582+03
+38	HNZHNP	hnzhnp	3547f2b81eeb3e3833a0f604740b168021720f87	2015-04-02 00:37:55.67804+03
+39	DMYWSU	dmywsu	13f8b8c272654c3d99ea399fea9428ed64aa0f09	2015-04-02 00:40:26.717274+03
+40	SUZURR	suzurr	8ccb71ba4a90bc14479de934e10f3f527a1baf8b	2015-04-02 00:40:37.869943+03
+41	PSIPXD	psipxd	37c6b4f822b3c1b789649292adb6eaba9d06206f	2015-04-02 00:40:46.526687+03
+42	NCYFAJ	ncyfaj	3b06375cbbe9d8b026e76c9397533962d4849b52	2015-04-02 00:41:10.27418+03
+43	DWNECT	dwnect	d33c226bef527e6c849490e489604d5fa3b72e66	2015-04-02 00:41:23.477854+03
+45	HOSNPS	hosnps	081b003e366ae0a04ddea25cdd139638070a6ae2	2015-04-02 00:42:04.805513+03
+46	VXZSPQ	vxzspq	89f70187de24838d7f8963b3d423006fa3366499	2015-04-02 00:43:35.660686+03
+47	GMSXZU	gmsxzu	d87357efe0f3b144bfd975a80ec8199be366710e	2015-04-02 00:43:44.112479+03
+48	PDLNVC	pdlnvc	2e7f07c3640e5f469a334a68a28e295d158b9279	2015-04-02 00:45:18.623831+03
+49	BKAIQB	bkaiqb	783e36bc5631811179cb81b901882719da0cb3a3	2015-04-02 00:53:52.535488+03
+50	LGATPM	lgatpm	6f408f835a25e4398beb935c04dc60665118e0aa	2015-04-02 00:55:42.149013+03
+51	OBRTFA	obrtfa	dcc3369f4029f4581f69a10cbfd0e06fe40aa5d2	2015-04-02 00:55:46.802506+03
+52	GBGRMY	gbgrmy	fe2397c6b23475ff592bf0126e9c947f6a0e7c23	2015-04-02 01:11:19.838173+03
+53	WEULQD	weulqd	e57c1f7e853a7b212fced58b1cdf9c708656a34c	2015-04-02 01:13:06.44732+03
+54	DQQJZQ	dqqjzq	1666d2b3680a03b4e447dfcf2896dd4b46727622	2015-04-02 01:13:29.268499+03
+55	HZUVJD	hzuvjd	d7082d9e9066777a15acff8190d8f4d23f11eaff	2015-04-02 01:15:40.509621+03
+56	ORJVKI	orjvki	809532a6905a88489059dc5f688bcd9fff531a3a	2015-04-02 01:15:57.007196+03
+57	YDODAQ	ydodaq	cd9d122304537085250305f988b748ac7182fdb0	2015-04-02 01:16:21.383667+03
+58	JHABBN	jhabbn	a94cedda00df563365386b5cb2200ef534c6273f	2015-04-02 01:16:31.856918+03
+59	LHCNAE	lhcnae	d38578013b6c290d19a94358573bc784107a4ab0	2015-04-02 01:16:39.657895+03
+60	DCKZQH	dckzqh	bda4f11eeb0ce768c6727be3d6589449164c0574	2015-04-02 01:20:33.486466+03
+61	KOPHJJ	kophjj	f7585a01152c2159fe2b99996c81a29259f6f5c1	2015-04-02 01:21:47.551035+03
+\.
+
+
+--
+-- TOC entry 2303 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: captcha_captchastore_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('captcha_captchastore_id_seq', 61, true);
+
+
+--
+-- TOC entry 2257 (class 0 OID 16746)
+-- Dependencies: 193
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2015-04-02 00:53:28.705414+03	1	main	1		10	1
+2	2015-04-02 00:53:36.120708+03	1	Blog post	1		11	1
+3	2015-04-02 00:54:47.476039+03	1	Blog post	2	No fields changed.	11	1
+4	2015-04-02 01:05:51.743159+03	1	main	2	Changed alias.	10	1
+5	2015-04-02 01:07:49.081599+03	2	One more post	1		11	1
+6	2015-04-02 01:08:24.896778+03	2	One more post	2	Changed image.	11	1
+7	2015-04-02 01:09:43.44022+03	3	zzz	1		11	1
+8	2015-04-02 01:10:07.624116+03	3	zzz	2	Changed main.	11	1
+9	2015-04-02 01:10:18.912581+03	2	One more post	2	Changed main.	11	1
+10	2015-04-02 01:14:48.5726+03	4	yyy	1		11	1
+11	2015-04-02 01:15:23.466763+03	4	yyy	2	Changed main.	11	1
+12	2015-04-02 01:16:43.785157+03	4	yyy	2	Changed image.	11	1
+\.
+
+
+--
+-- TOC entry 2304 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 12, true);
+
+
+--
+-- TOC entry 2243 (class 0 OID 16634)
+-- Dependencies: 179
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_content_type (id, name, app_label, model) FROM stdin;
+1	log entry	admin	logentry
+2	permission	auth	permission
+3	group	auth	group
+4	user	auth	user
+5	content type	contenttypes	contenttype
+6	session	sessions	session
+7	captcha store	captcha	captchastore
+8	user object permission	guardian	userobjectpermission
+9	group object permission	guardian	groupobjectpermission
+10	tag	blog	tag
+11	post	blog	post
+12	comment	blog	comment
+\.
+
+
+--
+-- TOC entry 2305 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 12, true);
+
+
+--
+-- TOC entry 2237 (class 0 OID 16597)
+-- Dependencies: 173
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2015-04-01 23:35:43.538812+03
+2	auth	0001_initial	2015-04-01 23:35:44.215638+03
+3	admin	0001_initial	2015-04-01 23:35:44.408371+03
+4	blog	0001_initial	2015-04-01 23:35:44.617097+03
+5	blog	0002_auto_20141221_0708	2015-04-01 23:35:44.683852+03
+6	blog	0003_auto_20150123_1633	2015-04-01 23:35:44.891784+03
+7	blog	0004_auto_20150123_1705	2015-04-01 23:35:45.102018+03
+8	blog	0005_auto_20150123_1713	2015-04-01 23:35:45.277032+03
+9	blog	0006_auto_20150123_1724	2015-04-01 23:35:45.32622+03
+10	blog	0007_auto_20150123_1726	2015-04-01 23:35:45.395115+03
+11	blog	0008_auto_20150123_1729	2015-04-01 23:35:45.465348+03
+12	blog	0009_auto_20150123_1851	2015-04-01 23:35:45.619212+03
+13	blog	0010_auto_20150123_1943	2015-04-01 23:35:45.70984+03
+14	captcha	0001_initial	2015-04-01 23:35:45.80176+03
+15	sessions	0001_initial	2015-04-01 23:35:45.943186+03
+\.
+
+
+--
+-- TOC entry 2306 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 15, true);
+
+
+--
+-- TOC entry 2268 (class 0 OID 16887)
+-- Dependencies: 204
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+mgefvhuvjtfk1n4b6b1ixgtp8n8tsl05	MDQ3YjM3NGVhNDM2YzY1ODQ2ZWVmYjE3NTZiNTZhMDc3NzU3MDQyYzp7Il9hdXRoX3VzZXJfaGFzaCI6IjM5OGZiMzlkMGM4MjI3ZmJjNGQwNTE4ZDYwOTUzZTliYzlmZjU2NjUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjF9	2015-04-16 01:12:15.940558+03
+\.
+
+
+--
+-- TOC entry 2241 (class 0 OID 16618)
+-- Dependencies: 177
+-- Data for Name: guardian_groupobjectpermission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY guardian_groupobjectpermission (id, permission_id, content_type_id, object_pk, group_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2307 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: guardian_groupobjectpermission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('guardian_groupobjectpermission_id_seq', 1, false);
+
+
+--
+-- TOC entry 2239 (class 0 OID 16608)
+-- Dependencies: 175
+-- Data for Name: guardian_userobjectpermission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY guardian_userobjectpermission (id, permission_id, content_type_id, object_pk, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2308 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: guardian_userobjectpermission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('guardian_userobjectpermission_id_seq', 1, false);
+
+
+--
+-- TOC entry 2066 (class 2606 OID 16661)
+-- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 2072 (class 2606 OID 16671)
+-- Name: auth_group_permissions_group_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_key UNIQUE (group_id, permission_id);
+
+
+--
+-- TOC entry 2074 (class 2606 OID 16669)
+-- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2068 (class 2606 OID 16659)
+-- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2062 (class 2606 OID 16651)
+-- Name: auth_permission_content_type_id_codename_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_key UNIQUE (content_type_id, codename);
+
+
+--
+-- TOC entry 2064 (class 2606 OID 16649)
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2082 (class 2606 OID 16689)
+-- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2084 (class 2606 OID 16691)
+-- Name: auth_user_groups_user_id_group_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_key UNIQUE (user_id, group_id);
+
+
+--
+-- TOC entry 2076 (class 2606 OID 16679)
+-- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2088 (class 2606 OID 16699)
+-- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2090 (class 2606 OID 16701)
+-- Name: auth_user_user_permissions_user_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_key UNIQUE (user_id, permission_id);
+
+
+--
+-- TOC entry 2078 (class 2606 OID 16681)
+-- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 2097 (class 2606 OID 16778)
+-- Name: blog_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY blog_comment
+    ADD CONSTRAINT blog_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2099 (class 2606 OID 16789)
+-- Name: blog_post_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY blog_post
+    ADD CONSTRAINT blog_post_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2105 (class 2606 OID 16852)
+-- Name: blog_post_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY blog_post_tags
+    ADD CONSTRAINT blog_post_tags_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2107 (class 2606 OID 16854)
+-- Name: blog_post_tags_post_id_tag_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY blog_post_tags
+    ADD CONSTRAINT blog_post_tags_post_id_tag_id_key UNIQUE (post_id, tag_id);
+
+
+--
+-- TOC entry 2101 (class 2606 OID 16808)
+-- Name: blog_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY blog_tag
+    ADD CONSTRAINT blog_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2109 (class 2606 OID 16886)
+-- Name: captcha_captchastore_hashkey_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY captcha_captchastore
+    ADD CONSTRAINT captcha_captchastore_hashkey_key UNIQUE (hashkey);
+
+
+--
+-- TOC entry 2111 (class 2606 OID 16884)
+-- Name: captcha_captchastore_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY captcha_captchastore
+    ADD CONSTRAINT captcha_captchastore_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2094 (class 2606 OID 16755)
+-- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2057 (class 2606 OID 16641)
+-- Name: django_content_type_app_label_3ec8c61c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_3ec8c61c_uniq UNIQUE (app_label, model);
+
+
+--
+-- TOC entry 2059 (class 2606 OID 16639)
+-- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2041 (class 2606 OID 16605)
+-- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2114 (class 2606 OID 16894)
+-- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- TOC entry 2050 (class 2606 OID 16625)
+-- Name: guardian_groupobjectpermissio_group_id_permission_id_object_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY guardian_groupobjectpermission
+    ADD CONSTRAINT guardian_groupobjectpermissio_group_id_permission_id_object_key UNIQUE (group_id, permission_id, object_pk);
+
+
+--
+-- TOC entry 2055 (class 2606 OID 16623)
+-- Name: guardian_groupobjectpermission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY guardian_groupobjectpermission
+    ADD CONSTRAINT guardian_groupobjectpermission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2045 (class 2606 OID 16613)
+-- Name: guardian_userobjectpermission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY guardian_userobjectpermission
+    ADD CONSTRAINT guardian_userobjectpermission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2048 (class 2606 OID 16615)
+-- Name: guardian_userobjectpermission_user_id_permission_id_object__key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY guardian_userobjectpermission
+    ADD CONSTRAINT guardian_userobjectpermission_user_id_permission_id_object__key UNIQUE (user_id, permission_id, object_pk);
+
+
+--
+-- TOC entry 2069 (class 1259 OID 16708)
+-- Name: auth_group_permissions_0e939a4f; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_group_permissions_0e939a4f ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- TOC entry 2070 (class 1259 OID 16714)
+-- Name: auth_group_permissions_8373b171; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_group_permissions_8373b171 ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 2060 (class 1259 OID 16702)
+-- Name: auth_permission_417f1b1c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_permission_417f1b1c ON auth_permission USING btree (content_type_id);
+
+
+--
+-- TOC entry 2079 (class 1259 OID 16726)
+-- Name: auth_user_groups_0e939a4f; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_groups_0e939a4f ON auth_user_groups USING btree (group_id);
+
+
+--
+-- TOC entry 2080 (class 1259 OID 16720)
+-- Name: auth_user_groups_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_groups_e8701ad4 ON auth_user_groups USING btree (user_id);
+
+
+--
+-- TOC entry 2085 (class 1259 OID 16738)
+-- Name: auth_user_user_permissions_8373b171; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_user_permissions_8373b171 ON auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 2086 (class 1259 OID 16732)
+-- Name: auth_user_user_permissions_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_user_permissions_e8701ad4 ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- TOC entry 2095 (class 1259 OID 16790)
+-- Name: blog_comment_f3aa1999; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX blog_comment_f3aa1999 ON blog_comment USING btree (post_id);
+
+
+--
+-- TOC entry 2102 (class 1259 OID 16861)
+-- Name: blog_post_tags_76f094bc; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX blog_post_tags_76f094bc ON blog_post_tags USING btree (tag_id);
+
+
+--
+-- TOC entry 2103 (class 1259 OID 16855)
+-- Name: blog_post_tags_f3aa1999; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX blog_post_tags_f3aa1999 ON blog_post_tags USING btree (post_id);
+
+
+--
+-- TOC entry 2091 (class 1259 OID 16756)
+-- Name: django_admin_log_417f1b1c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX django_admin_log_417f1b1c ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- TOC entry 2092 (class 1259 OID 16762)
+-- Name: django_admin_log_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX django_admin_log_e8701ad4 ON django_admin_log USING btree (user_id);
+
+
+--
+-- TOC entry 2112 (class 1259 OID 16895)
+-- Name: django_session_de54fa62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX django_session_de54fa62 ON django_session USING btree (expire_date);
+
+
+--
+-- TOC entry 2051 (class 1259 OID 16630)
+-- Name: guardian_groupobjectpermission_content_type_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX guardian_groupobjectpermission_content_type_id ON guardian_groupobjectpermission USING btree (content_type_id);
+
+
+--
+-- TOC entry 2052 (class 1259 OID 16631)
+-- Name: guardian_groupobjectpermission_group_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX guardian_groupobjectpermission_group_id ON guardian_groupobjectpermission USING btree (group_id);
+
+
+--
+-- TOC entry 2053 (class 1259 OID 16629)
+-- Name: guardian_groupobjectpermission_permission_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX guardian_groupobjectpermission_permission_id ON guardian_groupobjectpermission USING btree (permission_id);
+
+
+--
+-- TOC entry 2042 (class 1259 OID 16627)
+-- Name: guardian_userobjectpermission_content_type_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX guardian_userobjectpermission_content_type_id ON guardian_userobjectpermission USING btree (content_type_id);
+
+
+--
+-- TOC entry 2043 (class 1259 OID 16626)
+-- Name: guardian_userobjectpermission_permission_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX guardian_userobjectpermission_permission_id ON guardian_userobjectpermission USING btree (permission_id);
+
+
+--
+-- TOC entry 2046 (class 1259 OID 16628)
+-- Name: guardian_userobjectpermission_user_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX guardian_userobjectpermission_user_id ON guardian_userobjectpermission USING btree (user_id);
+
+
+--
+-- TOC entry 2117 (class 2606 OID 16715)
+-- Name: auth_group_permiss_permission_id_23962d04_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permiss_permission_id_23962d04_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2116 (class 2606 OID 16709)
+-- Name: auth_group_permissions_group_id_58c48ba9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_58c48ba9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2115 (class 2606 OID 16703)
+-- Name: auth_permiss_content_type_id_51277a81_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permiss_content_type_id_51277a81_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2119 (class 2606 OID 16727)
+-- Name: auth_user_groups_group_id_30a071c9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_30a071c9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2118 (class 2606 OID 16721)
+-- Name: auth_user_groups_user_id_24702650_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_24702650_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2121 (class 2606 OID 16739)
+-- Name: auth_user_user_per_permission_id_3d7071f0_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_per_permission_id_3d7071f0_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2120 (class 2606 OID 16733)
+-- Name: auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2124 (class 2606 OID 16796)
+-- Name: blog_comment_post_id_68e49f12_fk_blog_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_comment
+    ADD CONSTRAINT blog_comment_post_id_68e49f12_fk_blog_post_id FOREIGN KEY (post_id) REFERENCES blog_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2125 (class 2606 OID 16856)
+-- Name: blog_post_tags_post_id_5bab89b5_fk_blog_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_post_tags
+    ADD CONSTRAINT blog_post_tags_post_id_5bab89b5_fk_blog_post_id FOREIGN KEY (post_id) REFERENCES blog_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2126 (class 2606 OID 16862)
+-- Name: blog_post_tags_tag_id_4567bd44_fk_blog_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blog_post_tags
+    ADD CONSTRAINT blog_post_tags_tag_id_4567bd44_fk_blog_tag_id FOREIGN KEY (tag_id) REFERENCES blog_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2122 (class 2606 OID 16757)
+-- Name: django_admin_content_type_id_5151027a_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_content_type_id_5151027a_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2123 (class 2606 OID 16763)
+-- Name: django_admin_log_user_id_1c5f563_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_1c5f563_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2275 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2015-04-02 01:51:31 EEST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect postgres
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.1
+-- Dumped by pg_dump version 9.4.1
+-- Started on 2015-04-02 01:51:31 EEST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 2195 (class 1262 OID 12179)
+-- Dependencies: 2194
+-- Name: postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- TOC entry 7 (class 2615 OID 16393)
+-- Name: pgagent; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA pgagent;
+
+
+ALTER SCHEMA pgagent OWNER TO postgres;
+
+--
+-- TOC entry 2196 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: SCHEMA pgagent; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA pgagent IS 'pgAgent system tables';
+
+
+--
+-- TOC entry 193 (class 3079 OID 11899)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2199 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- TOC entry 192 (class 3079 OID 16384)
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2200 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
+
+SET search_path = pgagent, pg_catalog;
+
+--
+-- TOC entry 211 (class 1255 OID 16562)
+-- Name: pga_exception_trigger(); Type: FUNCTION; Schema: pgagent; Owner: postgres
+--
+
+CREATE FUNCTION pga_exception_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+
+    v_jobid int4 := 0;
+
+BEGIN
+
+     IF TG_OP = 'DELETE' THEN
+
+        SELECT INTO v_jobid jscjobid FROM pgagent.pga_schedule WHERE jscid = OLD.jexscid;
+
+        -- update pga_job from remaining schedules
+        -- the actual calculation of jobnextrun will be performed in the trigger
+        UPDATE pgagent.pga_job
+           SET jobnextrun = NULL
+         WHERE jobenabled AND jobid = v_jobid;
+        RETURN OLD;
+    ELSE
+
+        SELECT INTO v_jobid jscjobid FROM pgagent.pga_schedule WHERE jscid = NEW.jexscid;
+
+        UPDATE pgagent.pga_job
+           SET jobnextrun = NULL
+         WHERE jobenabled AND jobid = v_jobid;
+        RETURN NEW;
+    END IF;
+END;
+$$;
+
+
+ALTER FUNCTION pgagent.pga_exception_trigger() OWNER TO postgres;
+
+--
+-- TOC entry 2201 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: FUNCTION pga_exception_trigger(); Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON FUNCTION pga_exception_trigger() IS 'Update the job''s next run time whenever an exception changes';
+
+
+--
+-- TOC entry 208 (class 1255 OID 16557)
+-- Name: pga_is_leap_year(smallint); Type: FUNCTION; Schema: pgagent; Owner: postgres
+--
+
+CREATE FUNCTION pga_is_leap_year(smallint) RETURNS boolean
+    LANGUAGE plpgsql IMMUTABLE
+    AS $_$
+BEGIN
+    IF $1 % 4 != 0 THEN
+        RETURN FALSE;
+    END IF;
+
+    IF $1 % 100 != 0 THEN
+        RETURN TRUE;
+    END IF;
+
+    RETURN $1 % 400 = 0;
+END;
+$_$;
+
+
+ALTER FUNCTION pgagent.pga_is_leap_year(smallint) OWNER TO postgres;
+
+--
+-- TOC entry 2202 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: FUNCTION pga_is_leap_year(smallint); Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON FUNCTION pga_is_leap_year(smallint) IS 'Returns TRUE if $1 is a leap year';
+
+
+--
+-- TOC entry 209 (class 1255 OID 16558)
+-- Name: pga_job_trigger(); Type: FUNCTION; Schema: pgagent; Owner: postgres
+--
+
+CREATE FUNCTION pga_job_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.jobenabled THEN
+        IF NEW.jobnextrun IS NULL THEN
+             SELECT INTO NEW.jobnextrun
+                    MIN(pgagent.pga_next_schedule(jscid, jscstart, jscend, jscminutes, jschours, jscweekdays, jscmonthdays, jscmonths))
+               FROM pgagent.pga_schedule
+              WHERE jscenabled AND jscjobid=OLD.jobid;
+        END IF;
+    ELSE
+        NEW.jobnextrun := NULL;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION pgagent.pga_job_trigger() OWNER TO postgres;
+
+--
+-- TOC entry 2203 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: FUNCTION pga_job_trigger(); Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON FUNCTION pga_job_trigger() IS 'Update the job''s next run time.';
+
+
+--
+-- TOC entry 207 (class 1255 OID 16555)
+-- Name: pga_next_schedule(integer, timestamp with time zone, timestamp with time zone, boolean[], boolean[], boolean[], boolean[], boolean[]); Type: FUNCTION; Schema: pgagent; Owner: postgres
+--
+
+CREATE FUNCTION pga_next_schedule(integer, timestamp with time zone, timestamp with time zone, boolean[], boolean[], boolean[], boolean[], boolean[]) RETURNS timestamp with time zone
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    jscid           ALIAS FOR $1;
+    jscstart        ALIAS FOR $2;
+    jscend          ALIAS FOR $3;
+    jscminutes      ALIAS FOR $4;
+    jschours        ALIAS FOR $5;
+    jscweekdays     ALIAS FOR $6;
+    jscmonthdays    ALIAS FOR $7;
+    jscmonths       ALIAS FOR $8;
+
+    nextrun         timestamp := '1970-01-01 00:00:00-00';
+    runafter        timestamp := '1970-01-01 00:00:00-00';
+
+    bingo            bool := FALSE;
+    gotit            bool := FALSE;
+    foundval        bool := FALSE;
+    daytweak        bool := FALSE;
+    minutetweak        bool := FALSE;
+
+    i                int2 := 0;
+    d                int2 := 0;
+
+    nextminute        int2 := 0;
+    nexthour        int2 := 0;
+    nextday            int2 := 0;
+    nextmonth       int2 := 0;
+    nextyear        int2 := 0;
+
+
+BEGIN
+    -- No valid start date has been specified
+    IF jscstart IS NULL THEN RETURN NULL; END IF;
+
+    -- The schedule is past its end date
+    IF jscend IS NOT NULL AND jscend < now() THEN RETURN NULL; END IF;
+
+    -- Get the time to find the next run after. It will just be the later of
+    -- now() + 1m and the start date for the time being, however, we might want to
+    -- do more complex things using this value in the future.
+    IF date_trunc('MINUTE', jscstart) > date_trunc('MINUTE', (now() + '1 Minute'::interval)) THEN
+        runafter := date_trunc('MINUTE', jscstart);
+    ELSE
+        runafter := date_trunc('MINUTE', (now() + '1 Minute'::interval));
+    END IF;
+
+    --
+    -- Enter a loop, generating next run timestamps until we find one
+    -- that falls on the required weekday, and is not matched by an exception
+    --
+
+    WHILE bingo = FALSE LOOP
+
+        --
+        -- Get the next run year
+        --
+        nextyear := date_part('YEAR', runafter);
+
+        --
+        -- Get the next run month
+        --
+        nextmonth := date_part('MONTH', runafter);
+        gotit := FALSE;
+        FOR i IN (nextmonth) .. 12 LOOP
+            IF jscmonths[i] = TRUE THEN
+                nextmonth := i;
+                gotit := TRUE;
+                foundval := TRUE;
+                EXIT;
+            END IF;
+        END LOOP;
+        IF gotit = FALSE THEN
+            FOR i IN 1 .. (nextmonth - 1) LOOP
+                IF jscmonths[i] = TRUE THEN
+                    nextmonth := i;
+
+                    -- Wrap into next year
+                    nextyear := nextyear + 1;
+                    gotit := TRUE;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+           END LOOP;
+        END IF;
+
+        --
+        -- Get the next run day
+        --
+        -- If the year, or month have incremented, get the lowest day,
+        -- otherwise look for the next day matching or after today.
+        IF (nextyear > date_part('YEAR', runafter) OR nextmonth > date_part('MONTH', runafter)) THEN
+            nextday := 1;
+            FOR i IN 1 .. 32 LOOP
+                IF jscmonthdays[i] = TRUE THEN
+                    nextday := i;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+        ELSE
+            nextday := date_part('DAY', runafter);
+            gotit := FALSE;
+            FOR i IN nextday .. 32 LOOP
+                IF jscmonthdays[i] = TRUE THEN
+                    nextday := i;
+                    gotit := TRUE;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+            IF gotit = FALSE THEN
+                FOR i IN 1 .. (nextday - 1) LOOP
+                    IF jscmonthdays[i] = TRUE THEN
+                        nextday := i;
+
+                        -- Wrap into next month
+                        IF nextmonth = 12 THEN
+                            nextyear := nextyear + 1;
+                            nextmonth := 1;
+                        ELSE
+                            nextmonth := nextmonth + 1;
+                        END IF;
+                        gotit := TRUE;
+                        foundval := TRUE;
+                        EXIT;
+                    END IF;
+                END LOOP;
+            END IF;
+        END IF;
+
+        -- Was the last day flag selected?
+        IF nextday = 32 THEN
+            IF nextmonth = 1 THEN
+                nextday := 31;
+            ELSIF nextmonth = 2 THEN
+                IF pgagent.pga_is_leap_year(nextyear) = TRUE THEN
+                    nextday := 29;
+                ELSE
+                    nextday := 28;
+                END IF;
+            ELSIF nextmonth = 3 THEN
+                nextday := 31;
+            ELSIF nextmonth = 4 THEN
+                nextday := 30;
+            ELSIF nextmonth = 5 THEN
+                nextday := 31;
+            ELSIF nextmonth = 6 THEN
+                nextday := 30;
+            ELSIF nextmonth = 7 THEN
+                nextday := 31;
+            ELSIF nextmonth = 8 THEN
+                nextday := 31;
+            ELSIF nextmonth = 9 THEN
+                nextday := 30;
+            ELSIF nextmonth = 10 THEN
+                nextday := 31;
+            ELSIF nextmonth = 11 THEN
+                nextday := 30;
+            ELSIF nextmonth = 12 THEN
+                nextday := 31;
+            END IF;
+        END IF;
+
+        --
+        -- Get the next run hour
+        --
+        -- If the year, month or day have incremented, get the lowest hour,
+        -- otherwise look for the next hour matching or after the current one.
+        IF (nextyear > date_part('YEAR', runafter) OR nextmonth > date_part('MONTH', runafter) OR nextday > date_part('DAY', runafter) OR daytweak = TRUE) THEN
+            nexthour := 0;
+            FOR i IN 1 .. 24 LOOP
+                IF jschours[i] = TRUE THEN
+                    nexthour := i - 1;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+        ELSE
+            nexthour := date_part('HOUR', runafter);
+            gotit := FALSE;
+            FOR i IN (nexthour + 1) .. 24 LOOP
+                IF jschours[i] = TRUE THEN
+                    nexthour := i - 1;
+                    gotit := TRUE;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+            IF gotit = FALSE THEN
+                FOR i IN 1 .. nexthour LOOP
+                    IF jschours[i] = TRUE THEN
+                        nexthour := i - 1;
+
+                        -- Wrap into next month
+                        IF (nextmonth = 1 OR nextmonth = 3 OR nextmonth = 5 OR nextmonth = 7 OR nextmonth = 8 OR nextmonth = 10 OR nextmonth = 12) THEN
+                            d = 31;
+                        ELSIF (nextmonth = 4 OR nextmonth = 6 OR nextmonth = 9 OR nextmonth = 11) THEN
+                            d = 30;
+                        ELSE
+                            IF pgagent.pga_is_leap_year(nextyear) = TRUE THEN
+                                d := 29;
+                            ELSE
+                                d := 28;
+                            END IF;
+                        END IF;
+
+                        IF nextday = d THEN
+                            nextday := 1;
+                            IF nextmonth = 12 THEN
+                                nextyear := nextyear + 1;
+                                nextmonth := 1;
+                            ELSE
+                                nextmonth := nextmonth + 1;
+                            END IF;
+                        ELSE
+                            nextday := nextday + 1;
+                        END IF;
+
+                        gotit := TRUE;
+                        foundval := TRUE;
+                        EXIT;
+                    END IF;
+                END LOOP;
+            END IF;
+        END IF;
+
+        --
+        -- Get the next run minute
+        --
+        -- If the year, month day or hour have incremented, get the lowest minute,
+        -- otherwise look for the next minute matching or after the current one.
+        IF (nextyear > date_part('YEAR', runafter) OR nextmonth > date_part('MONTH', runafter) OR nextday > date_part('DAY', runafter) OR nexthour > date_part('HOUR', runafter) OR daytweak = TRUE) THEN
+            nextminute := 0;
+            IF minutetweak = TRUE THEN
+        d := 1;
+            ELSE
+        d := date_part('YEAR', runafter)::int2;
+            END IF;
+            FOR i IN d .. 60 LOOP
+                IF jscminutes[i] = TRUE THEN
+                    nextminute := i - 1;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+        ELSE
+            nextminute := date_part('MINUTE', runafter);
+            gotit := FALSE;
+            FOR i IN (nextminute + 1) .. 60 LOOP
+                IF jscminutes[i] = TRUE THEN
+                    nextminute := i - 1;
+                    gotit := TRUE;
+                    foundval := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+            IF gotit = FALSE THEN
+                FOR i IN 1 .. nextminute LOOP
+                    IF jscminutes[i] = TRUE THEN
+                        nextminute := i - 1;
+
+                        -- Wrap into next hour
+                        IF (nextmonth = 1 OR nextmonth = 3 OR nextmonth = 5 OR nextmonth = 7 OR nextmonth = 8 OR nextmonth = 10 OR nextmonth = 12) THEN
+                            d = 31;
+                        ELSIF (nextmonth = 4 OR nextmonth = 6 OR nextmonth = 9 OR nextmonth = 11) THEN
+                            d = 30;
+                        ELSE
+                            IF pgagent.pga_is_leap_year(nextyear) = TRUE THEN
+                                d := 29;
+                            ELSE
+                                d := 28;
+                            END IF;
+                        END IF;
+
+                        IF nexthour = 23 THEN
+                            nexthour = 0;
+                            IF nextday = d THEN
+                                nextday := 1;
+                                IF nextmonth = 12 THEN
+                                    nextyear := nextyear + 1;
+                                    nextmonth := 1;
+                                ELSE
+                                    nextmonth := nextmonth + 1;
+                                END IF;
+                            ELSE
+                                nextday := nextday + 1;
+                            END IF;
+                        ELSE
+                            nexthour := nexthour + 1;
+                        END IF;
+
+                        gotit := TRUE;
+                        foundval := TRUE;
+                        EXIT;
+                    END IF;
+                END LOOP;
+            END IF;
+        END IF;
+
+        -- Build the result, and check it is not the same as runafter - this may
+        -- happen if all array entries are set to false. In this case, add a minute.
+
+        nextrun := (nextyear::varchar || '-'::varchar || nextmonth::varchar || '-' || nextday::varchar || ' ' || nexthour::varchar || ':' || nextminute::varchar)::timestamptz;
+
+        IF nextrun = runafter AND foundval = FALSE THEN
+                nextrun := nextrun + INTERVAL '1 Minute';
+        END IF;
+
+        -- If the result is past the end date, exit.
+        IF nextrun > jscend THEN
+            RETURN NULL;
+        END IF;
+
+        -- Check to ensure that the nextrun time is actually still valid. Its
+        -- possible that wrapped values may have carried the nextrun onto an
+        -- invalid time or date.
+        IF ((jscminutes = '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}' OR jscminutes[date_part('MINUTE', nextrun) + 1] = TRUE) AND
+            (jschours = '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}' OR jschours[date_part('HOUR', nextrun) + 1] = TRUE) AND
+            (jscmonthdays = '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}' OR jscmonthdays[date_part('DAY', nextrun)] = TRUE OR
+            (jscmonthdays = '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,t}' AND
+             ((date_part('MONTH', nextrun) IN (1,3,5,7,8,10,12) AND date_part('DAY', nextrun) = 31) OR
+              (date_part('MONTH', nextrun) IN (4,6,9,11) AND date_part('DAY', nextrun) = 30) OR
+              (date_part('MONTH', nextrun) = 2 AND ((pgagent.pga_is_leap_year(date_part('DAY', nextrun)::int2) AND date_part('DAY', nextrun) = 29) OR date_part('DAY', nextrun) = 28))))) AND
+            (jscmonths = '{f,f,f,f,f,f,f,f,f,f,f,f}' OR jscmonths[date_part('MONTH', nextrun)] = TRUE)) THEN
+
+
+            -- Now, check to see if the nextrun time found is a) on an acceptable
+            -- weekday, and b) not matched by an exception. If not, set
+            -- runafter = nextrun and try again.
+
+            -- Check for a wildcard weekday
+            gotit := FALSE;
+            FOR i IN 1 .. 7 LOOP
+                IF jscweekdays[i] = TRUE THEN
+                    gotit := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+
+            -- OK, is the correct weekday selected, or a wildcard?
+            IF (jscweekdays[date_part('DOW', nextrun) + 1] = TRUE OR gotit = FALSE) THEN
+
+                -- Check for exceptions
+                SELECT INTO d jexid FROM pgagent.pga_exception WHERE jexscid = jscid AND ((jexdate = nextrun::date AND jextime = nextrun::time) OR (jexdate = nextrun::date AND jextime IS NULL) OR (jexdate IS NULL AND jextime = nextrun::time));
+                IF FOUND THEN
+                    -- Nuts - found an exception. Increment the time and try again
+                    runafter := nextrun + INTERVAL '1 Minute';
+                    bingo := FALSE;
+                    minutetweak := TRUE;
+            daytweak := FALSE;
+                ELSE
+                    bingo := TRUE;
+                END IF;
+            ELSE
+                -- We're on the wrong week day - increment a day and try again.
+                runafter := nextrun + INTERVAL '1 Day';
+                bingo := FALSE;
+                minutetweak := FALSE;
+                daytweak := TRUE;
+            END IF;
+
+        ELSE
+            runafter := nextrun + INTERVAL '1 Minute';
+            bingo := FALSE;
+            minutetweak := TRUE;
+        daytweak := FALSE;
+        END IF;
+
+    END LOOP;
+
+    RETURN nextrun;
+END;
+$_$;
+
+
+ALTER FUNCTION pgagent.pga_next_schedule(integer, timestamp with time zone, timestamp with time zone, boolean[], boolean[], boolean[], boolean[], boolean[]) OWNER TO postgres;
+
+--
+-- TOC entry 2204 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: FUNCTION pga_next_schedule(integer, timestamp with time zone, timestamp with time zone, boolean[], boolean[], boolean[], boolean[], boolean[]); Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON FUNCTION pga_next_schedule(integer, timestamp with time zone, timestamp with time zone, boolean[], boolean[], boolean[], boolean[], boolean[]) IS 'Calculates the next runtime for a given schedule';
+
+
+--
+-- TOC entry 210 (class 1255 OID 16560)
+-- Name: pga_schedule_trigger(); Type: FUNCTION; Schema: pgagent; Owner: postgres
+--
+
+CREATE FUNCTION pga_schedule_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF TG_OP = 'DELETE' THEN
+        -- update pga_job from remaining schedules
+        -- the actual calculation of jobnextrun will be performed in the trigger
+        UPDATE pgagent.pga_job
+           SET jobnextrun = NULL
+         WHERE jobenabled AND jobid=OLD.jscjobid;
+        RETURN OLD;
+    ELSE
+        UPDATE pgagent.pga_job
+           SET jobnextrun = NULL
+         WHERE jobenabled AND jobid=NEW.jscjobid;
+        RETURN NEW;
+    END IF;
+END;
+$$;
+
+
+ALTER FUNCTION pgagent.pga_schedule_trigger() OWNER TO postgres;
+
+--
+-- TOC entry 2205 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: FUNCTION pga_schedule_trigger(); Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON FUNCTION pga_schedule_trigger() IS 'Update the job''s next run time whenever a schedule changes';
+
+
+--
+-- TOC entry 206 (class 1255 OID 16554)
+-- Name: pgagent_schema_version(); Type: FUNCTION; Schema: pgagent; Owner: postgres
+--
+
+CREATE FUNCTION pgagent_schema_version() RETURNS smallint
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    -- RETURNS PGAGENT MAJOR VERSION
+    -- WE WILL CHANGE THE MAJOR VERSION, ONLY IF THERE IS A SCHEMA CHANGE
+    RETURN 3;
+END;
+$$;
+
+
+ALTER FUNCTION pgagent.pgagent_schema_version() OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 185 (class 1259 OID 16499)
+-- Name: pga_exception; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_exception (
+    jexid integer NOT NULL,
+    jexscid integer NOT NULL,
+    jexdate date,
+    jextime time without time zone
+);
+
+
+ALTER TABLE pga_exception OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 16497)
+-- Name: pga_exception_jexid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_exception_jexid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_exception_jexid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2206 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: pga_exception_jexid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_exception_jexid_seq OWNED BY pga_exception.jexid;
+
+
+--
+-- TOC entry 179 (class 1259 OID 16417)
+-- Name: pga_job; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_job (
+    jobid integer NOT NULL,
+    jobjclid integer NOT NULL,
+    jobname text NOT NULL,
+    jobdesc text DEFAULT ''::text NOT NULL,
+    jobhostagent text DEFAULT ''::text NOT NULL,
+    jobenabled boolean DEFAULT true NOT NULL,
+    jobcreated timestamp with time zone DEFAULT now() NOT NULL,
+    jobchanged timestamp with time zone DEFAULT now() NOT NULL,
+    jobagentid integer,
+    jobnextrun timestamp with time zone,
+    joblastrun timestamp with time zone
+);
+
+
+ALTER TABLE pga_job OWNER TO postgres;
+
+--
+-- TOC entry 2207 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: TABLE pga_job; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_job IS 'Job main entry';
+
+
+--
+-- TOC entry 2208 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN pga_job.jobagentid; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON COLUMN pga_job.jobagentid IS 'Agent that currently executes this job.';
+
+
+--
+-- TOC entry 178 (class 1259 OID 16415)
+-- Name: pga_job_jobid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_job_jobid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_job_jobid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2209 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: pga_job_jobid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_job_jobid_seq OWNED BY pga_job.jobid;
+
+
+--
+-- TOC entry 175 (class 1259 OID 16394)
+-- Name: pga_jobagent; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_jobagent (
+    jagpid integer NOT NULL,
+    jaglogintime timestamp with time zone DEFAULT now() NOT NULL,
+    jagstation text NOT NULL
+);
+
+
+ALTER TABLE pga_jobagent OWNER TO postgres;
+
+--
+-- TOC entry 2210 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: TABLE pga_jobagent; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_jobagent IS 'Active job agents';
+
+
+--
+-- TOC entry 177 (class 1259 OID 16405)
+-- Name: pga_jobclass; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_jobclass (
+    jclid integer NOT NULL,
+    jclname text NOT NULL
+);
+
+
+ALTER TABLE pga_jobclass OWNER TO postgres;
+
+--
+-- TOC entry 2211 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: TABLE pga_jobclass; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_jobclass IS 'Job classification';
+
+
+--
+-- TOC entry 176 (class 1259 OID 16403)
+-- Name: pga_jobclass_jclid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_jobclass_jclid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_jobclass_jclid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2212 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: pga_jobclass_jclid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_jobclass_jclid_seq OWNED BY pga_jobclass.jclid;
+
+
+--
+-- TOC entry 187 (class 1259 OID 16514)
+-- Name: pga_joblog; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_joblog (
+    jlgid integer NOT NULL,
+    jlgjobid integer NOT NULL,
+    jlgstatus character(1) DEFAULT 'r'::bpchar NOT NULL,
+    jlgstart timestamp with time zone DEFAULT now() NOT NULL,
+    jlgduration interval,
+    CONSTRAINT pga_joblog_jlgstatus_check CHECK ((jlgstatus = ANY (ARRAY['r'::bpchar, 's'::bpchar, 'f'::bpchar, 'i'::bpchar, 'd'::bpchar])))
+);
+
+
+ALTER TABLE pga_joblog OWNER TO postgres;
+
+--
+-- TOC entry 2213 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: TABLE pga_joblog; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_joblog IS 'Job run logs.';
+
+
+--
+-- TOC entry 2214 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN pga_joblog.jlgstatus; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON COLUMN pga_joblog.jlgstatus IS 'Status of job: r=running, s=successfully finished, f=failed, i=no steps to execute, d=aborted';
+
+
+--
+-- TOC entry 186 (class 1259 OID 16512)
+-- Name: pga_joblog_jlgid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_joblog_jlgid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_joblog_jlgid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: pga_joblog_jlgid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_joblog_jlgid_seq OWNED BY pga_joblog.jlgid;
+
+
+--
+-- TOC entry 181 (class 1259 OID 16443)
+-- Name: pga_jobstep; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_jobstep (
+    jstid integer NOT NULL,
+    jstjobid integer NOT NULL,
+    jstname text NOT NULL,
+    jstdesc text DEFAULT ''::text NOT NULL,
+    jstenabled boolean DEFAULT true NOT NULL,
+    jstkind character(1) NOT NULL,
+    jstcode text NOT NULL,
+    jstconnstr text DEFAULT ''::text NOT NULL,
+    jstdbname name DEFAULT ''::name NOT NULL,
+    jstonerror character(1) DEFAULT 'f'::bpchar NOT NULL,
+    jscnextrun timestamp with time zone,
+    CONSTRAINT pga_jobstep_check CHECK ((((jstconnstr <> ''::text) AND (jstkind = 's'::bpchar)) OR ((jstconnstr = ''::text) AND ((jstkind = 'b'::bpchar) OR (jstdbname <> ''::name))))),
+    CONSTRAINT pga_jobstep_check1 CHECK ((((jstdbname <> ''::name) AND (jstkind = 's'::bpchar)) OR ((jstdbname = ''::name) AND ((jstkind = 'b'::bpchar) OR (jstconnstr <> ''::text))))),
+    CONSTRAINT pga_jobstep_jstkind_check CHECK ((jstkind = ANY (ARRAY['b'::bpchar, 's'::bpchar]))),
+    CONSTRAINT pga_jobstep_jstonerror_check CHECK ((jstonerror = ANY (ARRAY['f'::bpchar, 's'::bpchar, 'i'::bpchar])))
+);
+
+
+ALTER TABLE pga_jobstep OWNER TO postgres;
+
+--
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: TABLE pga_jobstep; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_jobstep IS 'Job step to be executed';
+
+
+--
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: COLUMN pga_jobstep.jstkind; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON COLUMN pga_jobstep.jstkind IS 'Kind of jobstep: s=sql, b=batch';
+
+
+--
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: COLUMN pga_jobstep.jstonerror; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON COLUMN pga_jobstep.jstonerror IS 'What to do if step returns an error: f=fail the job, s=mark step as succeeded and continue, i=mark as fail but ignore it and proceed';
+
+
+--
+-- TOC entry 180 (class 1259 OID 16441)
+-- Name: pga_jobstep_jstid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_jobstep_jstid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_jobstep_jstid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: pga_jobstep_jstid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_jobstep_jstid_seq OWNED BY pga_jobstep.jstid;
+
+
+--
+-- TOC entry 189 (class 1259 OID 16531)
+-- Name: pga_jobsteplog; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_jobsteplog (
+    jslid integer NOT NULL,
+    jsljlgid integer NOT NULL,
+    jsljstid integer NOT NULL,
+    jslstatus character(1) DEFAULT 'r'::bpchar NOT NULL,
+    jslresult integer,
+    jslstart timestamp with time zone DEFAULT now() NOT NULL,
+    jslduration interval,
+    jsloutput text,
+    CONSTRAINT pga_jobsteplog_jslstatus_check CHECK ((jslstatus = ANY (ARRAY['r'::bpchar, 's'::bpchar, 'i'::bpchar, 'f'::bpchar, 'd'::bpchar])))
+);
+
+
+ALTER TABLE pga_jobsteplog OWNER TO postgres;
+
+--
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: TABLE pga_jobsteplog; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_jobsteplog IS 'Job step run logs.';
+
+
+--
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN pga_jobsteplog.jslstatus; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON COLUMN pga_jobsteplog.jslstatus IS 'Status of job step: r=running, s=successfully finished,  f=failed stopping job, i=ignored failure, d=aborted';
+
+
+--
+-- TOC entry 2222 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN pga_jobsteplog.jslresult; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON COLUMN pga_jobsteplog.jslresult IS 'Return code of job step';
+
+
+--
+-- TOC entry 188 (class 1259 OID 16529)
+-- Name: pga_jobsteplog_jslid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_jobsteplog_jslid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_jobsteplog_jslid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2223 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: pga_jobsteplog_jslid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_jobsteplog_jslid_seq OWNED BY pga_jobsteplog.jslid;
+
+
+--
+-- TOC entry 183 (class 1259 OID 16469)
+-- Name: pga_schedule; Type: TABLE; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pga_schedule (
+    jscid integer NOT NULL,
+    jscjobid integer NOT NULL,
+    jscname text NOT NULL,
+    jscdesc text DEFAULT ''::text NOT NULL,
+    jscenabled boolean DEFAULT true NOT NULL,
+    jscstart timestamp with time zone DEFAULT now() NOT NULL,
+    jscend timestamp with time zone,
+    jscminutes boolean[] DEFAULT '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}'::boolean[] NOT NULL,
+    jschours boolean[] DEFAULT '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}'::boolean[] NOT NULL,
+    jscweekdays boolean[] DEFAULT '{f,f,f,f,f,f,f}'::boolean[] NOT NULL,
+    jscmonthdays boolean[] DEFAULT '{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}'::boolean[] NOT NULL,
+    jscmonths boolean[] DEFAULT '{f,f,f,f,f,f,f,f,f,f,f,f}'::boolean[] NOT NULL,
+    CONSTRAINT pga_schedule_jschours_size CHECK ((array_upper(jschours, 1) = 24)),
+    CONSTRAINT pga_schedule_jscminutes_size CHECK ((array_upper(jscminutes, 1) = 60)),
+    CONSTRAINT pga_schedule_jscmonthdays_size CHECK ((array_upper(jscmonthdays, 1) = 32)),
+    CONSTRAINT pga_schedule_jscmonths_size CHECK ((array_upper(jscmonths, 1) = 12)),
+    CONSTRAINT pga_schedule_jscweekdays_size CHECK ((array_upper(jscweekdays, 1) = 7))
+);
+
+
+ALTER TABLE pga_schedule OWNER TO postgres;
+
+--
+-- TOC entry 2224 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: TABLE pga_schedule; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TABLE pga_schedule IS 'Job schedule exceptions';
+
+
+--
+-- TOC entry 182 (class 1259 OID 16467)
+-- Name: pga_schedule_jscid_seq; Type: SEQUENCE; Schema: pgagent; Owner: postgres
+--
+
+CREATE SEQUENCE pga_schedule_jscid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pga_schedule_jscid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2225 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: pga_schedule_jscid_seq; Type: SEQUENCE OWNED BY; Schema: pgagent; Owner: postgres
+--
+
+ALTER SEQUENCE pga_schedule_jscid_seq OWNED BY pga_schedule.jscid;
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 191 (class 1259 OID 16585)
+-- Name: test; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE test (
+    id integer NOT NULL,
+    name text NOT NULL,
+    age integer NOT NULL,
+    address character(50),
+    salary real
+);
+
+
+ALTER TABLE test OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 16583)
+-- Name: test_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE test_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE test_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2226 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: test_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE test_id_seq OWNED BY test.id;
+
+
+SET search_path = pgagent, pg_catalog;
+
+--
+-- TOC entry 2018 (class 2604 OID 16502)
+-- Name: jexid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_exception ALTER COLUMN jexid SET DEFAULT nextval('pga_exception_jexid_seq'::regclass);
+
+
+--
+-- TOC entry 1988 (class 2604 OID 16420)
+-- Name: jobid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_job ALTER COLUMN jobid SET DEFAULT nextval('pga_job_jobid_seq'::regclass);
+
+
+--
+-- TOC entry 1987 (class 2604 OID 16408)
+-- Name: jclid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_jobclass ALTER COLUMN jclid SET DEFAULT nextval('pga_jobclass_jclid_seq'::regclass);
+
+
+--
+-- TOC entry 2019 (class 2604 OID 16517)
+-- Name: jlgid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_joblog ALTER COLUMN jlgid SET DEFAULT nextval('pga_joblog_jlgid_seq'::regclass);
+
+
+--
+-- TOC entry 1994 (class 2604 OID 16446)
+-- Name: jstid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_jobstep ALTER COLUMN jstid SET DEFAULT nextval('pga_jobstep_jstid_seq'::regclass);
+
+
+--
+-- TOC entry 2023 (class 2604 OID 16534)
+-- Name: jslid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_jobsteplog ALTER COLUMN jslid SET DEFAULT nextval('pga_jobsteplog_jslid_seq'::regclass);
+
+
+--
+-- TOC entry 2004 (class 2604 OID 16472)
+-- Name: jscid; Type: DEFAULT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_schedule ALTER COLUMN jscid SET DEFAULT nextval('pga_schedule_jscid_seq'::regclass);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2027 (class 2604 OID 16588)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY test ALTER COLUMN id SET DEFAULT nextval('test_id_seq'::regclass);
+
+
+SET search_path = pgagent, pg_catalog;
+
+--
+-- TOC entry 2183 (class 0 OID 16499)
+-- Dependencies: 185
+-- Data for Name: pga_exception; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_exception (jexid, jexscid, jexdate, jextime) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2227 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: pga_exception_jexid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_exception_jexid_seq', 1, false);
+
+
+--
+-- TOC entry 2177 (class 0 OID 16417)
+-- Dependencies: 179
+-- Data for Name: pga_job; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_job (jobid, jobjclid, jobname, jobdesc, jobhostagent, jobenabled, jobcreated, jobchanged, jobagentid, jobnextrun, joblastrun) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2228 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: pga_job_jobid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_job_jobid_seq', 1, false);
+
+
+--
+-- TOC entry 2173 (class 0 OID 16394)
+-- Dependencies: 175
+-- Data for Name: pga_jobagent; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_jobagent (jagpid, jaglogintime, jagstation) FROM stdin;
+26810	2015-03-22 14:53:12.08822+02	mintcraft
+\.
+
+
+--
+-- TOC entry 2175 (class 0 OID 16405)
+-- Dependencies: 177
+-- Data for Name: pga_jobclass; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_jobclass (jclid, jclname) FROM stdin;
+1	Routine Maintenance
+2	Data Import
+3	Data Export
+4	Data Summarisation
+5	Miscellaneous
+\.
+
+
+--
+-- TOC entry 2229 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: pga_jobclass_jclid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_jobclass_jclid_seq', 5, true);
+
+
+--
+-- TOC entry 2185 (class 0 OID 16514)
+-- Dependencies: 187
+-- Data for Name: pga_joblog; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_joblog (jlgid, jlgjobid, jlgstatus, jlgstart, jlgduration) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2230 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: pga_joblog_jlgid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_joblog_jlgid_seq', 1, false);
+
+
+--
+-- TOC entry 2179 (class 0 OID 16443)
+-- Dependencies: 181
+-- Data for Name: pga_jobstep; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_jobstep (jstid, jstjobid, jstname, jstdesc, jstenabled, jstkind, jstcode, jstconnstr, jstdbname, jstonerror, jscnextrun) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: pga_jobstep_jstid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_jobstep_jstid_seq', 1, false);
+
+
+--
+-- TOC entry 2187 (class 0 OID 16531)
+-- Dependencies: 189
+-- Data for Name: pga_jobsteplog; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_jobsteplog (jslid, jsljlgid, jsljstid, jslstatus, jslresult, jslstart, jslduration, jsloutput) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2232 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: pga_jobsteplog_jslid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_jobsteplog_jslid_seq', 1, false);
+
+
+--
+-- TOC entry 2181 (class 0 OID 16469)
+-- Dependencies: 183
+-- Data for Name: pga_schedule; Type: TABLE DATA; Schema: pgagent; Owner: postgres
+--
+
+COPY pga_schedule (jscid, jscjobid, jscname, jscdesc, jscenabled, jscstart, jscend, jscminutes, jschours, jscweekdays, jscmonthdays, jscmonths) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2233 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: pga_schedule_jscid_seq; Type: SEQUENCE SET; Schema: pgagent; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pga_schedule_jscid_seq', 1, false);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2189 (class 0 OID 16585)
+-- Dependencies: 191
+-- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY test (id, name, age, address, salary) FROM stdin;
+1	John Doe	33	Street 1 - 23, City, Country                      	2000
+\.
+
+
+--
+-- TOC entry 2234 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('test_id_seq', 1, true);
+
+
+SET search_path = pgagent, pg_catalog;
+
+--
+-- TOC entry 2044 (class 2606 OID 16504)
+-- Name: pga_exception_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_exception
+    ADD CONSTRAINT pga_exception_pkey PRIMARY KEY (jexid);
+
+
+--
+-- TOC entry 2034 (class 2606 OID 16430)
+-- Name: pga_job_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_job
+    ADD CONSTRAINT pga_job_pkey PRIMARY KEY (jobid);
+
+
+--
+-- TOC entry 2029 (class 2606 OID 16402)
+-- Name: pga_jobagent_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_jobagent
+    ADD CONSTRAINT pga_jobagent_pkey PRIMARY KEY (jagpid);
+
+
+--
+-- TOC entry 2032 (class 2606 OID 16413)
+-- Name: pga_jobclass_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_jobclass
+    ADD CONSTRAINT pga_jobclass_pkey PRIMARY KEY (jclid);
+
+
+--
+-- TOC entry 2047 (class 2606 OID 16522)
+-- Name: pga_joblog_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_joblog
+    ADD CONSTRAINT pga_joblog_pkey PRIMARY KEY (jlgid);
+
+
+--
+-- TOC entry 2037 (class 2606 OID 16460)
+-- Name: pga_jobstep_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_jobstep
+    ADD CONSTRAINT pga_jobstep_pkey PRIMARY KEY (jstid);
+
+
+--
+-- TOC entry 2050 (class 2606 OID 16542)
+-- Name: pga_jobsteplog_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_jobsteplog
+    ADD CONSTRAINT pga_jobsteplog_pkey PRIMARY KEY (jslid);
+
+
+--
+-- TOC entry 2040 (class 2606 OID 16490)
+-- Name: pga_schedule_pkey; Type: CONSTRAINT; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pga_schedule
+    ADD CONSTRAINT pga_schedule_pkey PRIMARY KEY (jscid);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2052 (class 2606 OID 16593)
+-- Name: test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY test
+    ADD CONSTRAINT test_pkey PRIMARY KEY (id);
+
+
+SET search_path = pgagent, pg_catalog;
+
+--
+-- TOC entry 2041 (class 1259 OID 16511)
+-- Name: pga_exception_datetime; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX pga_exception_datetime ON pga_exception USING btree (jexdate, jextime);
+
+
+--
+-- TOC entry 2042 (class 1259 OID 16510)
+-- Name: pga_exception_jexscid; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX pga_exception_jexscid ON pga_exception USING btree (jexscid);
+
+
+--
+-- TOC entry 2030 (class 1259 OID 16414)
+-- Name: pga_jobclass_name; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX pga_jobclass_name ON pga_jobclass USING btree (jclname);
+
+
+--
+-- TOC entry 2045 (class 1259 OID 16528)
+-- Name: pga_joblog_jobid; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX pga_joblog_jobid ON pga_joblog USING btree (jlgjobid);
+
+
+--
+-- TOC entry 2038 (class 1259 OID 16496)
+-- Name: pga_jobschedule_jobid; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX pga_jobschedule_jobid ON pga_schedule USING btree (jscjobid);
+
+
+--
+-- TOC entry 2035 (class 1259 OID 16466)
+-- Name: pga_jobstep_jobid; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX pga_jobstep_jobid ON pga_jobstep USING btree (jstjobid);
+
+
+--
+-- TOC entry 2048 (class 1259 OID 16553)
+-- Name: pga_jobsteplog_jslid; Type: INDEX; Schema: pgagent; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX pga_jobsteplog_jslid ON pga_jobsteplog USING btree (jsljlgid);
+
+
+--
+-- TOC entry 2063 (class 2620 OID 16563)
+-- Name: pga_exception_trigger; Type: TRIGGER; Schema: pgagent; Owner: postgres
+--
+
+CREATE TRIGGER pga_exception_trigger AFTER INSERT OR DELETE OR UPDATE ON pga_exception FOR EACH ROW EXECUTE PROCEDURE pga_exception_trigger();
+
+
+--
+-- TOC entry 2235 (class 0 OID 0)
+-- Dependencies: 2063
+-- Name: TRIGGER pga_exception_trigger ON pga_exception; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TRIGGER pga_exception_trigger ON pga_exception IS 'Update the job''s next run time whenever an exception changes';
+
+
+--
+-- TOC entry 2061 (class 2620 OID 16559)
+-- Name: pga_job_trigger; Type: TRIGGER; Schema: pgagent; Owner: postgres
+--
+
+CREATE TRIGGER pga_job_trigger BEFORE UPDATE ON pga_job FOR EACH ROW EXECUTE PROCEDURE pga_job_trigger();
+
+
+--
+-- TOC entry 2236 (class 0 OID 0)
+-- Dependencies: 2061
+-- Name: TRIGGER pga_job_trigger ON pga_job; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TRIGGER pga_job_trigger ON pga_job IS 'Update the job''s next run time.';
+
+
+--
+-- TOC entry 2062 (class 2620 OID 16561)
+-- Name: pga_schedule_trigger; Type: TRIGGER; Schema: pgagent; Owner: postgres
+--
+
+CREATE TRIGGER pga_schedule_trigger AFTER INSERT OR DELETE OR UPDATE ON pga_schedule FOR EACH ROW EXECUTE PROCEDURE pga_schedule_trigger();
+
+
+--
+-- TOC entry 2237 (class 0 OID 0)
+-- Dependencies: 2062
+-- Name: TRIGGER pga_schedule_trigger ON pga_schedule; Type: COMMENT; Schema: pgagent; Owner: postgres
+--
+
+COMMENT ON TRIGGER pga_schedule_trigger ON pga_schedule IS 'Update the job''s next run time whenever a schedule changes';
+
+
+--
+-- TOC entry 2057 (class 2606 OID 16505)
+-- Name: pga_exception_jexscid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_exception
+    ADD CONSTRAINT pga_exception_jexscid_fkey FOREIGN KEY (jexscid) REFERENCES pga_schedule(jscid) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2054 (class 2606 OID 16436)
+-- Name: pga_job_jobagentid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_job
+    ADD CONSTRAINT pga_job_jobagentid_fkey FOREIGN KEY (jobagentid) REFERENCES pga_jobagent(jagpid) ON UPDATE RESTRICT ON DELETE SET NULL;
+
+
+--
+-- TOC entry 2053 (class 2606 OID 16431)
+-- Name: pga_job_jobjclid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_job
+    ADD CONSTRAINT pga_job_jobjclid_fkey FOREIGN KEY (jobjclid) REFERENCES pga_jobclass(jclid) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2058 (class 2606 OID 16523)
+-- Name: pga_joblog_jlgjobid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_joblog
+    ADD CONSTRAINT pga_joblog_jlgjobid_fkey FOREIGN KEY (jlgjobid) REFERENCES pga_job(jobid) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2055 (class 2606 OID 16461)
+-- Name: pga_jobstep_jstjobid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_jobstep
+    ADD CONSTRAINT pga_jobstep_jstjobid_fkey FOREIGN KEY (jstjobid) REFERENCES pga_job(jobid) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2059 (class 2606 OID 16543)
+-- Name: pga_jobsteplog_jsljlgid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_jobsteplog
+    ADD CONSTRAINT pga_jobsteplog_jsljlgid_fkey FOREIGN KEY (jsljlgid) REFERENCES pga_joblog(jlgid) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2060 (class 2606 OID 16548)
+-- Name: pga_jobsteplog_jsljstid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_jobsteplog
+    ADD CONSTRAINT pga_jobsteplog_jsljstid_fkey FOREIGN KEY (jsljstid) REFERENCES pga_jobstep(jstid) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2056 (class 2606 OID 16491)
+-- Name: pga_schedule_jscjobid_fkey; Type: FK CONSTRAINT; Schema: pgagent; Owner: postgres
+--
+
+ALTER TABLE ONLY pga_schedule
+    ADD CONSTRAINT pga_schedule_jscjobid_fkey FOREIGN KEY (jscjobid) REFERENCES pga_job(jobid) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2198 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2015-04-02 01:51:31 EEST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.1
+-- Dumped by pg_dump version 9.4.1
+-- Started on 2015-04-02 01:51:31 EEST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 2031 (class 1262 OID 1)
+-- Dependencies: 2030
+-- Name: template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template for new databases';
+
+
+--
+-- TOC entry 172 (class 3079 OID 11899)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2034 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- TOC entry 2033 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2015-04-02 01:51:31 EEST
+
+--
+-- PostgreSQL database dump complete
+--
+
+-- Completed on 2015-04-02 01:51:31 EEST
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
