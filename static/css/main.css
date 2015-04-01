@@ -61,3 +61,8 @@ img {
     padding-left: 0;
     padding-right: 0;
 }
+
+.errorlist li {
+    font-weight: bold;
+    color: #ff3366;
+}

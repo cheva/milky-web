@@ -9,7 +9,7 @@ class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput, )
     # first_name = forms.CharField(required=False,)
     # last_name = forms.CharField(required=False,)
-    # birthday = forms.DateField(required=False,widget=forms.DateInput(format=('%d-%m-%Y')),initial=datetime.date.today)
+    # birthday = forms.DateField(required=False,)
     captcha = CaptchaField()
     error_css_class = 'class-error'
     required_css_class = 'class-required'
@@ -46,11 +46,11 @@ class UserRegistrationForm(UserCreationForm):
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.birthday = self.cleaned_data['birthday']
+        # user.first_name = self.cleaned_data['first_name']
+        # user.last_name = self.cleaned_data['last_name']
+        # user.birthday = self.cleaned_data['birthday']
 
         if commit:
             user.save()
 
-        return user		
+        return user
