@@ -1,9 +1,12 @@
 # CHANGELOG #
 
+**01.04.2015**
+User registration form simplyfied.
+Some little changes.
+
 **29.01.2015**
 Tags deployed. Latest comments also. Main Blog software process finished.
 Continue with bugfixing. 
-Starting Game software process.
 
 **23.01.2015**
 Index page (main:index) ready with templates.
