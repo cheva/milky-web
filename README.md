@@ -1,12 +1,12 @@
 # CHANGELOG #
 
 **01.04.2015**
-User registration form simplyfied.
+User registration form simplified.
 Some little changes.
 
 **29.01.2015**
 Tags deployed. Latest comments also. Main Blog software process finished.
-Continue with bugfixing. 
+Continue with bug fixing.
 
 **23.01.2015**
 Index page (main:index) ready with templates.
@@ -49,6 +49,3 @@ Starts real blog app creation, based on [this manual](http://yiiframework.ru/doc
 **20.12.2014**
 Bootstrap and jQuery added as static files. I do not want to use it as pip modules: 
 it is hard to update and buggy in use.
-
-**20.12.2014**
-Dummy blog added from [lightbird.net](http://lightbird.net/dbe2/blog.html)

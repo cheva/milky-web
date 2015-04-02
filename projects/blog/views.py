@@ -1,13 +1,14 @@
+# from django.template import RequestContext
+# from django.db.models import Q
 import json
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from django.template import RequestContext, loader
+from django.template import loader
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
-from django.db.models import Q
 from projects.blog.forms import *
 from helpers import functions
 
@@ -35,44 +36,43 @@ def list_view(request, page_num=1):
 
 
 def tag_view(request, tag_alias='', page_num=1):
-    
-	"""
-	Post list view for concrete tag
-	:param request:
-	:param tag_alias:
-	:param page_num:
-	:return render():
-	"""
-	template = 'blog/list.jinja2'
-	local_vars = functions.get_local_vars(request)
-	post_list = Post.objects.filter(tags__alias=tag_alias).order_by('-created')
-	tag_list = Tag.objects.filter(alias=tag_alias)
-	paginator = Paginator(post_list, 10)
-	try:
-		post_list = paginator.page(page_num)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		post_list = paginator.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		post_list = paginator.page(paginator.num_pages)
-	return render(request, template, locals())
+    """
+    Post list view for concrete tag
+    :param request:
+    :param tag_alias:
+    :param page_num:
+    :return render():
+    """
+    template = 'blog/list.jinja2'
+    local_vars = functions.get_local_vars(request)
+    post_list = Post.objects.filter(tags__alias=tag_alias).order_by('-created')
+    tag_list = Tag.objects.filter(alias=tag_alias)
+    paginator = Paginator(post_list, 10)
+    try:
+        post_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        post_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        post_list = paginator.page(paginator.num_pages)
+    return render(request, template, locals())
 
 
 def detail_view(request, pk):
-	"""
-	Post detail view with comment list and comment form
-	:param request:
-	:param pk:
-	:return render():
-	"""
-	template = 'blog/post.jinja2'
-	local_vars = functions.get_local_vars(request)
-	post = get_object_or_404(Post, pk=pk)
-	print post.body
-	comment_list = Comment.objects.filter(post_id=pk).order_by('-created')
-	form = CommentForm()
-	return render(request, template, locals())
+    """
+    Post detail view with comment list and comment form
+    :param request:
+    :param pk:
+    :return render():
+    """
+    template = 'blog/post.jinja2'
+    local_vars = functions.get_local_vars(request)
+    post = get_object_or_404(Post, pk=pk)
+    print post.body
+    comment_list = Comment.objects.filter(post_id=pk).order_by('-created')
+    form = CommentForm()
+    return render(request, template, locals())
 
 
 def post_comment(request, pk):

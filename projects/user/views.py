@@ -26,7 +26,6 @@ def login(request):
     :param request:
     :return HttpResponseRedirect():
     """
-    template = 'user/index.jinja2'
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -51,9 +50,7 @@ def logout(request):
     :param request:
     :return HttpResponseRedirect():
     """
-    template = 'user/index.jinja2'
     auth.logout(request)
-    local_vars = functions.get_local_vars(request)
     return HttpResponseRedirect(reverse('user:index', args=()))
 
 
