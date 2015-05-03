@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+**03.05.2015**
+Cleaned and prepared for OpenShift branch.
+
 **01.04.2015**
 User registration form simplified.
 Some little changes.

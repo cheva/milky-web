@@ -1,4 +1,5 @@
 ```
+* 1cafe97 : some
 * fcee0ff : Revert OpenShift changes to create new branch
 * 6a4ef0d : started with Pyblog application on OpenShift v0.1
 * d8ca9aa : openshift scripts
