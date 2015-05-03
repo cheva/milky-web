@@ -88,7 +88,7 @@ DATABASES = {
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
-        'NAME': 'milky',
+        'NAME': 'pyblog',
     }
 }
 
