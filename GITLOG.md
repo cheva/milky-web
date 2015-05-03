@@ -1,4 +1,7 @@
 ```
+* d8ca9aa : openshift scripts
+* 670abc6 : openshift scripts
+* 6441b9c : openshift scripts
 * 3a62a35 : some
 * a621327 : changed names on hubs
 *   7f3a7e3 : merged
