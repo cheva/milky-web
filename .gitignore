@@ -1,8 +1,9 @@
-*.pyc
-__pycache__
+*.py[co]
+*.sw[po]
+*.bak
+*.orig
+*~
 .idea
-/*.cproject
-/*.project
-/*.pydevproject
-/static/
-/nbproject/private/
+.project
+.pydevproject
+wsgi/venv
