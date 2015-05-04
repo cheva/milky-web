@@ -1,4 +1,12 @@
 ```
+*   dda50f5 : New OpenShift application created and merged down
+|\  
+| * ea78fd4 : Creating template
+* f5b310b : openshift merged
+* 16ed310 : openshift settings
+* cc1bffe : wsgi ready
+* 04abe22 : venv removed
+* fe56d32 : docs
 * 1cafe97 : some
 * fcee0ff : Revert OpenShift changes to create new branch
 * 6a4ef0d : started with Pyblog application on OpenShift v0.1

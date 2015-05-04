@@ -1,2 +1,5 @@
 git add -A && git commit -am "$1"
 git push origin master:master
+git push bucket master:master
+if [ "$2" ]; then 
+    git push openshift master:master
