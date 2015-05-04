@@ -28,16 +28,6 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-<!-- FB app SDK -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=565472013561660&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- /FB app SDK -->
 {% include 'layouts/navigation.jinja2' %}
 <!-- Page Content -->
 <div class="container">
@@ -71,11 +61,11 @@
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                2014..2015 ツ <a target="_blank" href="http://linkedin.com/in/cheusov">cheva</a>
+                2014<big>..</big>2015<br />
+                <big>ツ</big> <a target="_blank" href="http://linkedin.com/in/cheusov">cheva</a>
                 (◕‿◕) <a target="_blank" href="http://djangoproject.com">Django</a><br />
-                <a href="https://code.google.com/p/milky-web/" target="_blank">project @ Google Code</a><br />
-                <div class="g-plusone" data-annotation="inline" data-width="400" data-href="https://code.google.com/p/milky-web/"></div><br />
-				<div class="fb-follow" data-href="https://www.facebook.com/milkyweb" data-width="400" data-colorscheme="light" data-layout="standard" data-show-faces="true"></div>
+                Hosted somewhere .<small>o</small><big>O</big>n
+                <a target="_blank" href="https://www.openshift.com/">OpenShift</a> clouds
             </div>
         </div>
         <!-- /.row -->
@@ -89,19 +79,19 @@
             </div>
         </div>
     {% endif %}
-    <!-- jQuery -->
-    <script src="{{ static('jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{ static('bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- Custom JS -->
-    <script src="{{ static('js/main.js') }}"></script>
-    <script>
-        if (showRegistrationForm) {
-            $('#modal_registration').modal()
-        }
-        {% if messages %}$('#modal_message').modal();{% endif %}
-    </script>
 </div>
 <!-- /.container -->
+<!-- jQuery -->
+<script src="{{ static('jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ static('bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- Custom JS -->
+<script src="{{ static('js/main.js') }}"></script>
+<script>
+    if (showRegistrationForm) {
+        $('#modal_registration').modal()
+    }
+    {% if messages %}$('#modal_message').modal();{% endif %}
+</script>
 </body>
 </html>
