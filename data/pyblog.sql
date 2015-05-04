@@ -102,7 +102,7 @@ ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
 
 CREATE TABLE auth_permission (
     id integer NOT NULL,
-    name character varying(255) NOT NULL,
+    name character varying(50) NOT NULL,
     content_type_id integer NOT NULL,
     codename character varying(100) NOT NULL
 );
@@ -138,12 +138,12 @@ ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
 CREATE TABLE auth_user (
     id integer NOT NULL,
     password character varying(128) NOT NULL,
-    last_login timestamp with time zone,
+    last_login timestamp with time zone NOT NULL,
     is_superuser boolean NOT NULL,
     username character varying(30) NOT NULL,
     first_name character varying(30) NOT NULL,
     last_name character varying(30) NOT NULL,
-    email character varying(254) NOT NULL,
+    email character varying(75) NOT NULL,
     is_staff boolean NOT NULL,
     is_active boolean NOT NULL,
     date_joined timestamp with time zone NOT NULL
@@ -468,6 +468,7 @@ ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
 
 CREATE TABLE django_content_type (
     id integer NOT NULL,
+    name character varying(100) NOT NULL,
     app_label character varying(100) NOT NULL,
     model character varying(100) NOT NULL
 );
@@ -733,7 +734,6 @@ ALTER TABLE ONLY guardian_userobjectpermission ALTER COLUMN id SET DEFAULT nextv
 --
 
 COPY auth_group (id, name) FROM stdin;
-1	admins
 \.
 
 
@@ -741,7 +741,7 @@ COPY auth_group (id, name) FROM stdin;
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_group_id_seq', 1, true);
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
 
 
 --
@@ -749,30 +749,6 @@ SELECT pg_catalog.setval('auth_group_id_seq', 1, true);
 --
 
 COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
-1	1	1
-2	1	2
-3	1	3
-4	1	4
-5	1	5
-6	1	6
-7	1	7
-8	1	8
-9	1	9
-10	1	10
-11	1	11
-12	1	12
-13	1	13
-14	1	14
-15	1	15
-16	1	16
-17	1	17
-18	1	18
-19	1	19
-20	1	20
-21	1	21
-22	1	22
-23	1	23
-24	1	24
 \.
 
 
@@ -780,7 +756,7 @@ COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_group_permissions_id_seq', 24, true);
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
 
 
 --
@@ -806,24 +782,24 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 16	Can add session	6	add_session
 17	Can change session	6	change_session
 18	Can delete session	6	delete_session
-19	Can add post	7	add_post
-20	Can change post	7	change_post
-21	Can delete post	7	delete_post
-22	Can add comment	8	add_comment
-23	Can change comment	8	change_comment
-24	Can delete comment	8	delete_comment
-25	Can add captcha store	9	add_captchastore
-26	Can change captcha store	9	change_captchastore
-27	Can delete captcha store	9	delete_captchastore
-28	Can add user object permission	10	add_userobjectpermission
-29	Can change user object permission	10	change_userobjectpermission
-30	Can delete user object permission	10	delete_userobjectpermission
-31	Can add group object permission	11	add_groupobjectpermission
-32	Can change group object permission	11	change_groupobjectpermission
-33	Can delete group object permission	11	delete_groupobjectpermission
-34	Can add tag	12	add_tag
-35	Can change tag	12	change_tag
-36	Can delete tag	12	delete_tag
+19	Can add captcha store	7	add_captchastore
+20	Can change captcha store	7	change_captchastore
+21	Can delete captcha store	7	delete_captchastore
+22	Can add user object permission	8	add_userobjectpermission
+23	Can change user object permission	8	change_userobjectpermission
+24	Can delete user object permission	8	delete_userobjectpermission
+25	Can add group object permission	9	add_groupobjectpermission
+26	Can change group object permission	9	change_groupobjectpermission
+27	Can delete group object permission	9	delete_groupobjectpermission
+28	Can add tag	10	add_tag
+29	Can change tag	10	change_tag
+30	Can delete tag	10	delete_tag
+31	Can add post	11	add_post
+32	Can change post	11	change_post
+33	Can delete post	11	delete_post
+34	Can add comment	12	add_comment
+35	Can change comment	12	change_comment
+36	Can delete comment	12	delete_comment
 \.
 
 
@@ -839,10 +815,8 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 36, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-15	pbkdf2_sha256$12000$RSppilWm6iyN$9oxSMUdQ9cQ3C/vuvAkORpLXemVkAe4d6iYqKC742X4=	2015-04-02 02:17:35.071554+03	f	dmitrycheva			dmitrycheva@ya.ru	f	t	2015-04-02 02:17:24.950435+03
-1	pbkdf2_sha256$12000$b1UFgNIk3RcH$9c2dfgjacS8uyH9FVva4PmFvuVFzFURhpDcjNU5eLNI=	2015-04-03 18:00:30.037707+03	t	cheva	Dmitry	Cheva	dmitry.cheva@gmail.com	t	t	2014-12-20 12:50:04+02
--1		2014-12-30 17:59:26.714591+02	f	AnonymousUser				f	t	2014-12-30 17:59:26.714681+02
-14	pbkdf2_sha256$12000$JGvl1ptWCdWv$6nMQz0qC/vLxtvQPfyS1Qw0xauFGVgO/yRZJcUKLdA4=	2015-01-20 17:24:28.444023+02	f	dcheva				f	t	2015-01-20 17:24:01.718038+02
+-1		2015-05-04 04:19:16.82669+03	f	AnonymousUser				f	t	2015-05-04 04:19:16.826773+03
+1	pbkdf2_sha256$15000$JU0GdRIRmhIc$aWjfrSZpv0JUNU7B733hEkKsgIefUyf2TLKNdBUwn9g=	2015-05-04 04:21:26.237363+03	t	cheva	Dmitry	Cheva	dmitry.cheva@gmail.com	t	t	2015-05-04 04:21:09.26449+03
 \.
 
 
@@ -851,7 +825,6 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 --
 
 COPY auth_user_groups (id, user_id, group_id) FROM stdin;
-1	1	1
 \.
 
 
@@ -859,14 +832,14 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, true);
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 15, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
 
 
 --
@@ -997,128 +970,11 @@ SELECT pg_catalog.setval('blog_tag_id_seq', 4, true);
 --
 
 COPY captcha_captchastore (id, challenge, response, hashkey, expiration) FROM stdin;
-1436	MWEJLE	mwejle	cdc18baf835e7f37fe0f2989dfb576ece0074c38	2015-04-02 02:23:12.559002+03
-1443	TAATGB	taatgb	6996106d448e03806815da672677352ab71cb88f	2015-04-02 08:25:21.719088+03
-1450	OEWWUD	oewwud	b14d178dbb5999cbbc132bd098a17a4ddd0510c5	2015-04-02 08:27:36.379574+03
-1457	RQBZAV	rqbzav	69b4d1599da0d81d87242227f0e7883c0b581206	2015-04-02 08:29:59.574831+03
-1458	KFRRJS	kfrrjs	fe38d217b9420975ddf11254e4886be32d32d59c	2015-04-02 08:29:59.6106+03
-1465	DMXOLJ	dmxolj	6a0eafd020e7aee299df6b841a1c772f10a4ca6b	2015-04-02 08:51:34.401121+03
-1474	XAKREY	xakrey	01b932a4b90af19352fcdf71e7eff598573da277	2015-04-02 08:59:51.19939+03
-1480	NUUSBC	nuusbc	ed0ac87afdcac11a500baa2c803a078e0614b9e4	2015-04-02 16:25:06.071906+03
-1494	NBNNZZ	nbnnzz	f7d446a2889f62483d26fb844c8fdba6531a7e22	2015-04-03 14:00:34.835873+03
-1500	GDVWXH	gdvwxh	7357c3652e349f3c7a5e7709b04b384ec7660d89	2015-04-03 17:46:13.260654+03
-1506	BUFEOT	bufeot	5d754e8d5df56c78c8424b6ec0dc1b66ed27e5f3	2015-04-03 17:54:53.487083+03
-1512	WNEMGG	wnemgg	da917b3abb751c794fbf19886d0d1c0a196536f4	2015-04-03 18:03:31.334877+03
-1521	RRKKUX	rrkkux	38d31c10938865d55c3128ec7003421adff038fd	2015-05-03 20:10:43.028566+03
-1527	USIPMS	usipms	214eb554973a84fe0a51b48d9d96a7f1ce728601	2015-05-03 20:11:56.69287+03
-1533	FGCVFW	fgcvfw	0b7a492356c38e32bba4823f48f7cde88f775c5b	2015-05-03 20:33:55.796522+03
-1540	CCKYGA	cckyga	9731a7f23dda72b192551eaaef90582743a6d86a	2015-05-03 22:09:47.934621+03
-1546	FSUA	fsua	655a63de736aa37c3eb1cb6798078a2b074ff96c	2015-05-04 00:59:44.061496+03
-1552	YJXN	yjxn	a37e8614db0144a5d75b9f8ec1ae1d46befad58b	2015-05-04 02:38:31.767882+03
-1437	PNJAKR	pnjakr	b8ee87f7e5cd5969458eb641395f4436ab5e6f20	2015-04-02 08:23:51.179322+03
-1444	NEFOGX	nefogx	23fbc5901f363bf63156d828b6dfdff2572f5ee8	2015-04-02 08:26:11.87508+03
-1445	FRQKMF	frqkmf	a268f4280f779f7214a2e9476872875b8ab9f23e	2015-04-02 08:26:11.916978+03
-1451	JOHGFC	johgfc	40fc6dd1c301bc797a7601bc996aecbc404772e3	2015-04-02 08:28:35.390046+03
-1459	FDYYBD	fdyybd	c6a9ee1f3fd4115388136212aea7869de3e8721e	2015-04-02 08:30:45.533511+03
-1466	MJDWQO	mjdwqo	1320f6d00e89feb4cb52658efe9d3b62d08ce48a	2015-04-02 08:51:47.010277+03
-1467	CUJUER	cujuer	c22ba1157d0b8c4fc9f5accbf1635d1c081d31e6	2015-04-02 08:51:47.043662+03
-1475	MSKLOV	msklov	a35a376038963e9746d0b2f998f1a368138002c6	2015-04-02 09:16:43.803889+03
-1481	OYZTME	oyztme	e0ab1bbca73ac602ad0027b03808ef52c93fbe9d	2015-04-02 16:25:18.660864+03
-1487	UKGJSF	ukgjsf	c101ff7d8a4196fd0c6d52adad6837f2735af643	2015-04-03 13:49:54.569854+03
-1495	IJWTMT	ijwtmt	499082029d711a37655cd4f4eda7d441c4ac19b9	2015-04-03 14:02:02.160916+03
-1501	KBIWOE	kbiwoe	7e5c6366bac169fc2674ef415f35c2f2566fd190	2015-04-03 17:46:15.315951+03
-1507	DGIWDG	dgiwdg	e0631789ae3f1c854006c1e611f6034b793cafe2	2015-04-03 17:54:58.512104+03
-1513	UOWFQO	uowfqo	820957ca18616c1fe7056e09c591c6a63139c8c0	2015-05-03 20:08:00.733034+03
-1522	CLLEDQ	clledq	6ee499d8b311c0321e29ff1d310474da4410f5a3	2015-05-03 20:10:50.88898+03
-1528	WIQRTI	wiqrti	8440ca230b6bb4a3fef46c552e559729929ca654	2015-05-03 20:12:02.382564+03
-1534	LMLQAE	lmlqae	3f5e295c885bbfd3612e698d8d0be1d2d473b47a	2015-05-03 21:40:08.501635+03
-1541	DCRNWE	dcrnwe	abe2a9b56aed3f4ebb6769fc1bd9a8d29f536aec	2015-05-03 22:40:09.506365+03
-1547	SAXZ	saxz	e9c183de304de3fed0f482c5908406281edc2bf7	2015-05-04 01:52:06.143409+03
-1553	YIRC	yirc	148d141d1ef0f83baa8ccdf97929c2175a1c63a9	2015-05-04 03:03:01.324743+03
-1438	IUURDE	iuurde	48ae5d31fa36e6f67fb4373f66b68a9745750bbe	2015-04-02 08:24:04.496524+03
-1446	FNMPFB	fnmpfb	ae7ee0fc5bc7fcf54c7fc7646537d381a3e77c37	2015-04-02 08:26:30.80678+03
-1452	KUTNGJ	kutngj	4f743033b837cc57ba1686a36f522b24fbabd48c	2015-04-02 08:29:13.180655+03
-1453	TLXLNR	tlxlnr	efcba6ce56501dac8cb81f65081588dc0fc55000	2015-04-02 08:29:13.217942+03
-1460	ATWLUY	atwluy	8155f9389739b31c825f7b472812fbf3938da0bc	2015-04-02 08:30:48.818665+03
-1461	YWRRMP	ywrrmp	6e0d1974e46ccc0f9ea3f2d56b007064edc6acf6	2015-04-02 08:30:48.856251+03
-1468	TOELDF	toeldf	3d40d83828589d224fbd4186210e21066a31e41f	2015-04-02 08:55:45.260587+03
-1476	BFWBUK	bfwbuk	e1c67a6ab243b6911fcf16295c5e141b96741684	2015-04-02 09:22:14.07162+03
-1482	GGWZNM	ggwznm	d200f63b3576b3d4c7a21f3bdde8a61e111093fa	2015-04-02 16:25:44.133678+03
-1488	HCVSIC	hcvsic	0e88e895f6234f8fe1167051013b410590c486a7	2015-04-03 13:52:01.974059+03
-1489	OEQISL	oeqisl	459965255fa2a54640b4e857438421ee2366a3c9	2015-04-03 13:52:02.011312+03
-1496	RUNJGK	runjgk	d6f3523c564a3bf2e3d314d52fbd80ddde164393	2015-04-03 14:04:27.95756+03
-1502	APFDRH	apfdrh	e4960193d003b054aeb5b9ad1cd7dff180b1f39a	2015-04-03 17:46:17.853343+03
-1508	XGHTWK	xghtwk	f39daacc20152eeef77df93d1c7f798f48cabb61	2015-04-03 17:55:49.980786+03
-1514	UYODHC	uyodhc	070464b639f9a23abd50eecd7d0db4ab76565578	2015-05-03 20:08:07.852153+03
-1515	SBUHRM	sbuhrm	5578936647b298879ea70b66d990cebdb2c6d229	2015-05-03 20:08:07.897728+03
-1523	PXEZWJ	pxezwj	3d88f78eb67a15f287f738f94475815465cb4671	2015-05-03 20:11:09.484673+03
-1529	XPCPML	xpcpml	aa2080f2d4e3cdaed67e3d1956def67e0550128e	2015-05-03 20:17:42.605633+03
-1535	FJQNCT	fjqnct	ba7456c575e9c837d58ecd9cca3aba3ed9088cb6	2015-05-03 21:52:12.593939+03
-1542	OZYJXF	ozyjxf	e813a3ad1004eb8ae3cf7f657c18678f33a138fe	2015-05-03 23:22:44.224441+03
-1548	OCKO	ocko	1f59cfbb15fa2fe8b0683d68c3f8c499585f07bd	2015-05-04 01:52:13.634817+03
-1432	QDETQA	qdetqa	0640fcb6cd1d54ba8178c344f0993df91a574c2f	2015-04-02 02:20:58.664152+03
-1554	SVIX	svix	6a2ed103f1feb5ddd780b51102fbc306713d2f2b	2015-05-04 03:21:33.795737+03
-1439	GZQMBD	gzqmbd	c4db057949f6793f7a898a58256b8642344cb53f	2015-04-02 08:24:32.127824+03
-1447	FDLFMG	fdlfmg	7445fb4fe88e31109f040900cf1627ebfc9e51dd	2015-04-02 08:26:51.505929+03
-1454	XGKSFP	xgksfp	777379ff7411aef4f281e277a6fd1d71d23144fb	2015-04-02 08:29:50.579408+03
-1462	TMIXHW	tmixhw	fa9e3eede562adc5d307e0aa5d2d6a371b32ad3f	2015-04-02 08:39:22.131045+03
-1469	KSLKSR	kslksr	1b9ad12e0ae8ff5f5c47857e0d672024113b39bb	2015-04-02 08:58:45.569696+03
-1477	QXRFGZ	qxrfgz	786f1c3bbd10b42599424a3065b37e39f44e7ecd	2015-04-02 09:22:24.372606+03
-1483	JQVZJA	jqvzja	69d3ec898ec935599de25fe541af1767348339e4	2015-04-02 16:26:10.809298+03
-1490	RSPUHX	rspuhx	21388c915721f19dce23d3a6ef5f9515f950d494	2015-04-03 13:52:15.420653+03
-1497	GJLMBJ	gjlmbj	d390f6ee0a02f8e9eab7fc18556be947365f6c75	2015-04-03 14:05:56.613805+03
-1503	SDJNHO	sdjnho	ff8ff56ce9024d17211666d126820b8be7436b82	2015-04-03 17:47:17.693242+03
-1509	FPILKM	fpilkm	fa086978a174908c1d0af9af36ae003c7742fdbc	2015-04-03 17:55:53.531039+03
-1516	QYQMQR	qyqmqr	caee9be421d7a8da4a7473c396b469af6d8d71b9	2015-05-03 20:09:53.820172+03
-1517	ZFWLMZ	zfwlmz	f242ea0f38e80a77c931b2dcdb9eb642b3a2e7d0	2015-05-03 20:09:53.868087+03
-1524	VIIOPU	viiopu	1f3e941f2aaa8d523dbc58afbc463a18c52af3c4	2015-05-03 20:11:34.92417+03
-1530	QIHTVI	qihtvi	1bf175b2f033663efc01ad7cfa3b6c1c85423d58	2015-05-03 20:18:30.423073+03
-1536	AUDOSE	audose	299aa95fa137b2999e3879728db00e40433b4ca5	2015-05-03 22:09:23.158173+03
-1543	NVZSAM	nvzsam	d990cebc6c9ad4a68f684aa06828cf4af93fc71b	2015-05-03 23:24:38.238144+03
-1549	ECHC	echc	9b5c53e155cc5a02e7c15bf2b4784bfb6a0d84ae	2015-05-04 02:05:46.013136+03
-1433	DSFVSP	dsfvsp	abf87359a3349ed74edd382c7a31810525852e9a	2015-04-02 02:21:02.513768+03
-1440	YHZTSB	yhztsb	4dcb0a48f467b0de51bc3bf7e37bf8526e1a36fd	2015-04-02 08:24:35.065679+03
-1441	IIFNBP	iifnbp	5b0fa3f24e266805d7e8cf21f8efe3bac21f018d	2015-04-02 08:24:35.135133+03
-1448	FFEOKN	ffeokn	8033bfa945409e8c09f358756dd16d12dd994b58	2015-04-02 08:27:23.260977+03
-1455	JNDRTA	jndrta	428746bfebc5e48a06f0406050bcafdbb747311e	2015-04-02 08:29:53.703227+03
-1463	AOOZSN	aoozsn	eef5263a489ca57a820c38a1f6c4f20f295b260b	2015-04-02 08:44:11.945127+03
-1470	HEUSVY	heusvy	786df2f5da695d6a802e5fceeb4580cbe53f04f5	2015-04-02 08:58:55.796227+03
-1471	ADSMTA	adsmta	3e0aa95cbe0d24bd088ceb905dc864fa5bce0541	2015-04-02 08:58:55.827015+03
-1478	LLDKAR	lldkar	43b25551246037a4fe294e0ef4f3792a55e8351a	2015-04-02 09:22:31.706123+03
-1484	DXBAXD	dxbaxd	906ca890cd92d6851db2b93bc7b2e3df31bec132	2015-04-02 16:26:23.19988+03
-1485	OWHNGB	owhngb	895264146f3a60b74480e542ea8864e1ba10593a	2015-04-02 16:26:23.240158+03
-1491	OBPLHP	obplhp	5a60eab800b02b42d7d0072988ef8bf338e1aa6c	2015-04-03 13:52:19.391165+03
-1492	PDPDDQ	pdpddq	2924f61b62efa495fb234eb1d195abd08ac5d8b0	2015-04-03 13:52:19.45068+03
-1498	WIZKWQ	wizkwq	2f007a3cc5474db49bef83b747c1603a99ab4cec	2015-04-03 14:36:34.018229+03
-1504	UJSHYC	ujshyc	f6c2b2a5c09b31eaea9e2551a0c552cc2cc5853a	2015-04-03 17:47:22.786597+03
-1510	FARZBI	farzbi	01062d29e849523b2219be620ff97ce512a49035	2015-04-03 17:55:58.509478+03
-1518	RGWAEG	rgwaeg	4b1797f546e5ce725c082f4be1296ab1af5b845c	2015-05-03 20:10:15.019934+03
-1519	NWDSLC	nwdslc	95be0f9af808eb13d0fc72c119914060ede5b50f	2015-05-03 20:10:15.056054+03
-1525	QPNAAL	qpnaal	c62226c5f013d75b09c15f4e5c74a7f0d10acaff	2015-05-03 20:11:46.266098+03
-1531	LDZUUV	ldzuuv	3652d088e162bf76a9303eb7febd136c5b0ff8b7	2015-05-03 20:19:04.208291+03
-1537	UUOUYA	uuouya	023dfd8a51ceb8b9568b97d6e2d3e0975ddd6807	2015-05-03 22:09:29.856805+03
-1538	HGFBFN	hgfbfn	f61dfc357c9879dd491d60632879a05cf6406d59	2015-05-03 22:09:29.891463+03
-1544	HKYXLS	hkyxls	bf129618fee45d0433d2cca1dcc92f287e875858	2015-05-03 23:24:56.865034+03
-1550	GHQA	ghqa	0777dd1cbc8968c8d0fb38688954520d6028ea70	2015-05-04 02:15:37.413907+03
-1442	GFEOOB	gfeoob	ebe05d15abccd4a3802c44311ec13537776257d6	2015-04-02 08:24:58.922454+03
-1449	KFLPMG	kflpmg	bcc7ba0ce726a4991dbd400cefb4817ebd41adb9	2015-04-02 08:27:30.712118+03
-1456	SUFHFE	sufhfe	d72ac5d145f878c5d93739e8502ab69c3a6cdc69	2015-04-02 08:29:56.13531+03
-1464	JNIUPL	jniupl	32a0f325c50e58732801bb88382ab61326ebdcd7	2015-04-02 08:51:30.599914+03
-1472	DRDXYO	drdxyo	55f264b8e4389a9e360ac93d1d049ea38d4a0351	2015-04-02 08:59:16.23346+03
-1473	VGCHPJ	vgchpj	b61ecb0da99b25fd11d4b8579d389840e7f7d5da	2015-04-02 08:59:16.261726+03
-1479	AXUPTU	axuptu	b786efe8179f584995780cd49000b2bc18689cc2	2015-04-02 16:25:01.786776+03
-1486	OMXHHW	omxhhw	30fea4c38cc5ec6d6ba73f47ad44f86650d69a6d	2015-04-02 16:26:41.57215+03
-1493	FEESDT	feesdt	460deea339b4031bfb427d55bd53984db5757bf1	2015-04-03 14:00:30.412406+03
-1499	DMVGBL	dmvgbl	3de699bcd05ec5ed7c7220aad7fbc55e08b62717	2015-04-03 17:41:16.66948+03
-1505	DNCWIA	dncwia	7b3a00f2d085d1ff1f563f34ed43fc9dec41735b	2015-04-03 17:51:35.823256+03
-1511	HKQTDA	hkqtda	2b2711712182afe12328704c02ff5c217ee2118e	2015-04-03 18:02:05.606849+03
-1520	AHLKFD	ahlkfd	7bb0dd9f2e23ab4eafa85e76dfcc2bb8feb42007	2015-05-03 20:10:37.196028+03
-1526	UKXVLL	ukxvll	b8ee8a34d08609ca9f29b8fd28a5ecf4e9aa10ce	2015-05-03 20:11:52.650451+03
-1532	GJNSTU	gjnstu	4b8b77561f5a6596f017a00cb9cab0d046ab6352	2015-05-03 20:28:10.037607+03
-1539	DCUOTW	dcuotw	3343178127ccc127d619b1a4707eea7fed37cb93	2015-05-03 22:09:45.50662+03
-1545	DMRY	dmry	2a2d6007c8671a0c745b8d296a0813e0b1728685	2015-05-04 00:08:36.893007+03
-1551	EYTU	eytu	d0865057bb2a3d8a2dea7319a146ceec982d68fe	2015-05-04 02:36:58.861928+03
-1435	HNSQTT	hnsqtt	a0ca2bd7d119d9dda1c0bc9504b9a96e923b4e89	2015-04-02 02:22:25.145083+03
+1568	RTUI	rtui	cd7f5aad9891255cf4200948ff5442fe88130a6d	2015-05-04 04:26:35.980498+03
+1565	VFFE	vffe	a5ab1ae83e1318ac75fbe02e7169ba5ee0fc58c2	2015-05-04 04:25:20.802239+03
+1569	DXRI	dxri	49c62f274cbd2f19f57e80e4a0f10ae69fae3d21	2015-05-04 04:28:44.555111+03
+1570	PKOS	pkos	87b4b6e5cbbdb820fa7d85e33a240a755473a878	2015-05-04 04:32:01.160919+03
+1567	BADE	bade	64af8477884cc44729d5e01080cf9d0270617e89	2015-05-04 04:26:09.591295+03
 \.
 
 
@@ -1126,7 +982,7 @@ COPY captcha_captchastore (id, challenge, response, hashkey, expiration) FROM st
 -- Name: captcha_captchastore_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('captcha_captchastore_id_seq', 1554, true);
+SELECT pg_catalog.setval('captcha_captchastore_id_seq', 1570, true);
 
 
 --
@@ -1134,91 +990,6 @@ SELECT pg_catalog.setval('captcha_captchastore_id_seq', 1554, true);
 --
 
 COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2014-12-20 15:58:56.766158+02	1	cheva	2	Changed first_name and last_name.	4	1
-2	2014-12-20 15:59:21.712164+02	1	admins	1		3	1
-3	2014-12-20 15:59:46.575542+02	1	cheva	2	Changed groups.	4	1
-4	2014-12-20 20:14:40.134373+02	1	Lorem ipsum	1		7	1
-5	2014-12-21 01:17:54.101214+02	2	Що таке Lorem Ipsum?	1		7	1
-6	2014-12-21 01:18:35.692223+02	3	Nullam velit lorem	1		7	1
-7	2014-12-21 01:18:59.643931+02	4	Nam lobortis feugiat odio	1		7	1
-8	2014-12-21 01:19:32.085364+02	5	Aliquam erat volutpat	1		7	1
-9	2014-12-21 01:19:54.957788+02	6	Pellentesque elementum	1		7	1
-10	2014-12-21 01:20:12.88694+02	7	vel rutrum felis erat nec ex	1		7	1
-11	2014-12-21 01:20:31.556698+02	8	Integer vitae porta dui	1		7	1
-12	2014-12-21 01:20:51.139314+02	9	Maecenas mollis vel erat finibus placerat. Pellentesque elei	1		7	1
-13	2014-12-21 01:21:04.238072+02	10	Maecenas enim massa	1		7	1
-14	2014-12-21 01:21:55.993648+02	11	Згенеровано 11 абзаців, 977 слів, 6720 байт тексту Lorem Ips	1		7	1
-15	2014-12-21 07:00:57.535322+02	10	Maecenas enim massa: 	3		8	1
-16	2014-12-21 08:40:06.500944+02	10	Maecenas enim massa	3		7	1
-17	2014-12-21 08:43:28.245249+02	12	Add post	1		7	1
-18	2014-12-21 08:56:47.22601+02	13	Философия	1		7	1
-19	2014-12-21 08:57:06.208854+02	14	Система шаблонов	1		7	1
-20	2014-12-21 17:49:59.102761+02	15	Ссылка ведет на страницу опроса	1		7	1
-21	2014-12-21 17:50:17.544746+02	16	Вызов 404 исключения¶	1		7	1
-22	2014-12-29 14:59:50.846823+02	17	Коловрат или Солнцеворот	1		7	1
-23	2014-12-30 01:32:33.281753+02	2	dcheva	3		4	1
-24	2014-12-30 01:32:33.31949+02	3	dmcheva	3		4	1
-25	2014-12-30 01:40:15.900705+02	4	d.cheusov	3		4	1
-26	2014-12-30 01:40:15.916135+02	5	dm.cheusov	3		4	1
-27	2014-12-30 01:40:15.924462+02	6	dmv.cheusov	3		4	1
-28	2014-12-30 01:41:27.125535+02	7	dmv.cheusov	3		4	1
-29	2014-12-30 01:57:47.84227+02	8	dmv1.cheusov	3		4	1
-30	2014-12-30 01:57:47.857313+02	9	dmv2.cheusov	3		4	1
-31	2014-12-30 01:57:47.865489+02	10	ofghadofgh	3		4	1
-32	2014-12-30 17:59:33.896162+02	11	dcheva	3		4	1
-33	2014-12-30 17:59:33.921167+02	12	dncheva	3		4	1
-34	2015-01-20 17:15:50.171798+02	13	dmcheva	3		4	1
-35	2015-01-20 17:24:01.814748+02	14	dcheva	1		4	1
-36	2015-01-23 16:56:10.722833+02	1	Информация	1		12	1
-37	2015-01-23 16:56:21.456361+02	1	Информация	3		12	1
-38	2015-01-23 17:08:25.201818+02	2	информация	1		12	1
-39	2015-01-23 17:14:35.670398+02	3	истории	1		12	1
-40	2015-01-23 17:26:40.91751+02	16	Вызов 404 исключения¶	2	Changed alias, image, body and tags.	7	1
-41	2015-01-23 17:27:13.558225+02	17	Коловрат или Солнцеворот	2	Changed alias, image and tags.	7	1
-42	2015-01-23 17:30:44.083023+02	17	Коловрат или Солнцеворот	2	No fields changed.	7	1
-43	2015-01-23 17:30:49.028242+02	17	Коловрат или Солнцеворот	2	Changed image.	7	1
-44	2015-01-23 17:30:52.622608+02	17	Коловрат или Солнцеворот	2	No fields changed.	7	1
-45	2015-01-23 17:30:56.87602+02	16	Вызов 404 исключения¶	2	No fields changed.	7	1
-46	2015-01-23 17:31:08.297407+02	2	Що таке Lorem Ipsum?	2	Changed tags.	7	1
-47	2015-01-23 17:31:14.60874+02	1	Lorem ipsum	2	Changed tags.	7	1
-48	2015-01-23 17:43:44.40434+02	17	Коловрат или Солнцеворот	2	Changed image.	7	1
-49	2015-01-23 17:50:07.502673+02	16	Вызов 404 исключения¶	2	Changed image.	7	1
-50	2015-01-23 17:57:02.549809+02	17	Коловрат или Солнцеворот	2	Changed image.	7	1
-51	2015-01-23 18:53:08.397322+02	17	Коловрат или Солнцеворот	2	Changed index.	7	1
-52	2015-01-23 18:53:19.7197+02	16	Вызов 404 исключения¶	2	Changed index.	7	1
-53	2015-01-23 18:53:27.203334+02	2	Що таке Lorem Ipsum?	2	Changed index.	7	1
-54	2015-01-23 18:55:27.362484+02	4	Lorem	1		12	1
-55	2015-01-23 18:55:48.138334+02	15	Ссылка ведет на страницу опроса	2	Changed tags.	7	1
-56	2015-01-23 19:00:08.504132+02	16	Вызов 404 исключения¶	2	No fields changed.	7	1
-57	2015-01-23 19:00:14.49133+02	2	Що таке Lorem Ipsum?	2	No fields changed.	7	1
-58	2015-01-23 22:21:44.280886+02	16	Вызов 404 исключения¶	2	Changed main.	7	1
-59	2015-01-23 22:22:18.057404+02	6	Pellentesque elementum	2	Changed main and tags.	7	1
-60	2015-01-23 22:40:41.742137+02	15	Ссылка ведет на страницу опроса	2	Changed main.	7	1
-61	2015-01-23 22:40:58.788425+02	12	Add post	2	Changed main and tags.	7	1
-62	2015-01-23 22:41:22.227757+02	5	Aliquam erat volutpat	2	Changed main and tags.	7	1
-63	2015-01-23 22:41:29.625304+02	7	vel rutrum felis erat nec ex	2	Changed main and tags.	7	1
-64	2015-01-23 22:41:42.392682+02	9	Maecenas mollis vel erat finibus placerat. Pellentesque elei	2	Changed main and tags.	7	1
-65	2015-01-24 01:07:27.201594+02	16	Вызов 404 исключения¶	2	Changed image.	7	1
-66	2015-01-24 01:12:33.941144+02	2	Що таке Lorem Ipsum?	2	Changed image.	7	1
-67	2015-01-24 01:14:32.518776+02	6	Pellentesque elementum	2	Changed image.	7	1
-68	2015-01-24 01:15:57.096297+02	15	Ссылка ведет на страницу опроса	2	Changed image.	7	1
-69	2015-01-29 14:57:01.280488+02	12	Add post	2	Changed main.	7	1
-70	2015-01-29 14:57:16.673223+02	11	Згенеровано 11 абзаців, 977 слів, 6720 байт тексту Lorem Ips	2	Changed main and tags.	7	1
-71	2015-01-29 14:57:49.595135+02	11	Згенеровано 11 абзаців, 977 слів, 6720 байт тексту Lorem	2	Changed title.	7	1
-72	2015-01-30 12:50:06.697839+02	18	Вселенная – голограмма! Это означает, что нас нет!	1		7	1
-73	2015-01-30 13:45:05.950445+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-74	2015-01-30 13:45:43.618886+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	No fields changed.	7	1
-75	2015-01-30 13:49:48.667076+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-76	2015-01-30 13:50:53.236323+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-77	2015-01-30 13:53:26.469835+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-78	2015-01-30 13:53:48.916468+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-79	2015-01-30 14:12:39.483896+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-80	2015-01-30 14:13:00.212021+02	18	Вселенная – голограмма! Это означает, что нас нет!	2	Changed body.	7	1
-81	2015-01-30 14:21:48.281142+02	17	Коловрат или Солнцеворот	2	Changed body.	7	1
-82	2015-01-30 14:24:25.893061+02	17	Коловрат или Солнцеворот	2	Changed body.	7	1
-83	2015-01-30 14:24:58.091895+02	17	Коловрат или Солнцеворот	2	Changed body.	7	1
-84	2015-01-30 14:25:29.157181+02	17	Коловрат или Солнцеворот	2	Changed body.	7	1
-85	2015-01-30 14:25:56.986238+02	17	Коловрат или Солнцеворот	2	Changed body.	7	1
 \.
 
 
@@ -1226,26 +997,26 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 85, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 1, false);
 
 
 --
 -- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY django_content_type (id, app_label, model) FROM stdin;
-1	admin	logentry
-2	auth	permission
-3	auth	group
-4	auth	user
-5	contenttypes	contenttype
-6	sessions	session
-7	blog	post
-8	blog	comment
-9	captcha	captchastore
-10	guardian	userobjectpermission
-11	guardian	groupobjectpermission
-12	blog	tag
+COPY django_content_type (id, name, app_label, model) FROM stdin;
+1	log entry	admin	logentry
+2	permission	auth	permission
+3	group	auth	group
+4	user	auth	user
+5	content type	contenttypes	contenttype
+6	session	sessions	session
+7	captcha store	captcha	captchastore
+8	user object permission	guardian	userobjectpermission
+9	group object permission	guardian	groupobjectpermission
+10	tag	blog	tag
+11	post	blog	post
+12	comment	blog	comment
 \.
 
 
@@ -1261,9 +1032,6 @@ SELECT pg_catalog.setval('django_content_type_id_seq', 12, true);
 --
 
 COPY django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2014-12-20 12:38:20.557859+02
-2	auth	0001_initial	2014-12-20 12:38:21.214514+02
-3	admin	0001_initial	2014-12-20 12:38:21.392316+02
 4	sessions	0001_initial	2014-12-20 12:38:21.516778+02
 5	captcha	0001_initial	2014-12-21 04:44:53.494641+02
 6	blog	0001_initial	2014-12-21 04:48:09.049589+02
@@ -1282,6 +1050,9 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 19	auth	0004_alter_user_username_opts	2015-05-03 22:50:38.209753+03
 20	auth	0005_alter_user_last_login_null	2015-05-03 22:50:38.244421+03
 21	auth	0006_require_contenttypes_0002	2015-05-03 22:50:38.252705+03
+22	contenttypes	0001_initial	2015-05-04 04:19:15.68191+03
+23	auth	0001_initial	2015-05-04 04:19:16.490304+03
+24	admin	0001_initial	2015-05-04 04:19:16.683031+03
 \.
 
 
@@ -1289,7 +1060,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 21, true);
+SELECT pg_catalog.setval('django_migrations_id_seq', 24, true);
 
 
 --
@@ -1303,6 +1074,7 @@ ynpq1v1aglc9heb57ofg466q0knp8tht	ZjE2MTFmMTQ0ZGM4ZDg4Nzc5MmJkMzNiY2QwNTQ4YTIzNmY
 7q9j5p7bzi84ve5hn6h49pco7j8wlax1	YmU0NGFlOTFjNTg5MGE0ODI2YzNiNWExN2YyYWI0NTc3NTM3YTg2Mzp7fQ==	2015-01-12 08:37:52.81482+02
 wwn4noe1e3p1t0cidylnp4oi63a5kpjw	ZjE2MTFmMTQ0ZGM4ZDg4Nzc5MmJkMzNiY2QwNTQ4YTIzNmY2YTZlNjp7Il9hdXRoX3VzZXJfaGFzaCI6IjhiOWQ5ZjRjZWNlMjNlMDgyYjBlYzg5NGU3MjA2ZGVlOTYyZGM5ZWYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjF9	2015-01-11 23:36:26.491767+02
 8g1h05p8fcxh99cbven7fxpyfkif488q	ZjE2MTFmMTQ0ZGM4ZDg4Nzc5MmJkMzNiY2QwNTQ4YTIzNmY2YTZlNjp7Il9hdXRoX3VzZXJfaGFzaCI6IjhiOWQ5ZjRjZWNlMjNlMDgyYjBlYzg5NGU3MjA2ZGVlOTYyZGM5ZWYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjF9	2015-04-17 18:00:30.052012+03
+fza1v9eaei0jicpyojndz5k05fpaahu4	OTIzMjBlZjI3Mjk2YTA2N2U2OTczNzQ4NTY1NWNhMDkxZmU4ZWQ0NTp7Il9hdXRoX3VzZXJfaGFzaCI6IjI2MTI4YThhMDJjMDNiMmFlZWVkZDI3NWI2MjIwYTQzZmQ3ODZjNTMiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjF9	2015-05-18 04:21:26.246596+03
 li8jkt10w8hycoonx1keq9w60w1gspm4	YmU0NGFlOTFjNTg5MGE0ODI2YzNiNWExN2YyYWI0NTc3NTM3YTg2Mzp7fQ==	2015-01-12 03:12:13.245131+02
 flwbzhyjqpifvuzp8hytb6go2q1etp3h	YmU0NGFlOTFjNTg5MGE0ODI2YzNiNWExN2YyYWI0NTc3NTM3YTg2Mzp7fQ==	2015-01-12 03:13:27.544653+02
 dtl3icsftybdrcz95pf6mvl9pbtgojc9	YmU0NGFlOTFjNTg5MGE0ODI2YzNiNWExN2YyYWI0NTc3NTM3YTg2Mzp7fQ==	2015-01-12 03:15:09.439674+02
@@ -1571,6 +1343,13 @@ ALTER TABLE ONLY guardian_userobjectpermission
 
 
 --
+-- Name: auth_group_name_331666e8_like; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_group_name_331666e8_like ON auth_group USING btree (name varchar_pattern_ops);
+
+
+--
 -- Name: auth_group_permissions_0e939a4f; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1617,6 +1396,13 @@ CREATE INDEX auth_user_user_permissions_8373b171 ON auth_user_user_permissions U
 --
 
 CREATE INDEX auth_user_user_permissions_e8701ad4 ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_94b8aae_like; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_username_94b8aae_like ON auth_user USING btree (username varchar_pattern_ops);
 
 
 --
@@ -1797,54 +1583,6 @@ ALTER TABLE ONLY django_admin_log
 
 ALTER TABLE ONLY django_admin_log
     ADD CONSTRAINT django_admin_log_user_id_1c5f563_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: guardian_groupobjectpermission_content_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY guardian_groupobjectpermission
-    ADD CONSTRAINT guardian_groupobjectpermission_content_type_id_fkey FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: guardian_groupobjectpermission_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY guardian_groupobjectpermission
-    ADD CONSTRAINT guardian_groupobjectpermission_group_id_fkey FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: guardian_groupobjectpermission_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY guardian_groupobjectpermission
-    ADD CONSTRAINT guardian_groupobjectpermission_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: guardian_userobjectpermission_content_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY guardian_userobjectpermission
-    ADD CONSTRAINT guardian_userobjectpermission_content_type_id_fkey FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: guardian_userobjectpermission_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY guardian_userobjectpermission
-    ADD CONSTRAINT guardian_userobjectpermission_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: guardian_userobjectpermission_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY guardian_userobjectpermission
-    ADD CONSTRAINT guardian_userobjectpermission_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
