@@ -84,8 +84,8 @@ DATABASES = {
 '''
 
 if 'OPENSHIFT_POSTGRESQL_DB_HOST' in os.environ.keys():
-    psql_user = 'adminpkkgnjz'
-    psql_pass = 'r9vWmBmf-m4q'
+    psql_user = 'adminfet7rut'
+    psql_pass = 'HbG6R9uaKdvu'
     psql_host = os.environ['OPENSHIFT_POSTGRESQL_DB_HOST']
     psql_port = os.environ['OPENSHIFT_POSTGRESQL_DB_PORT']
 else:
