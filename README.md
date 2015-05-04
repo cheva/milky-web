@@ -1,7 +1,11 @@
 # CHANGELOG #
 
+**04.05.2015**
+OpenShift structure and settings deployed.
+Venv removed. See setup.py for pip install.
+
 **03.05.2015**
-Cleaned and prepared for OpenShift branch.
+Cleaned and prepared for OpenShift cloud hosting.
 
 **01.04.2015**
 User registration form simplified.
