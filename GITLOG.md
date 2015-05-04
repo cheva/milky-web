@@ -1,4 +1,5 @@
 ```
+* 8d761ff : Merged
 *   dda50f5 : New OpenShift application created and merged down
 |\  
 | * ea78fd4 : Creating template
